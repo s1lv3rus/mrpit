@@ -1,0 +1,14 @@
+{% extends 'shop/base.html' %}
+
+{% block title %} - Обратная связь{% endblock %}
+
+{% block content %}
+<div id="main">
+    <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / <a href="{% url 'shop:feedback' %}">Обратная связь</a>
+       / Обращение получено</p>
+    <p>Спасибо за Ваше обращение! В течении рабочего дня Вам ответит наш Специалист</p>
+    <p>Вернуться на <a href="{% url 'shop:index' %}">Главную</a> </p>
+</div>
+
+{% endblock %}
+

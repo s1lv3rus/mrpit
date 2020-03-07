@@ -1,0 +1,38 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% load thumbnail %}
+
+{% block title %}
+{{ category.name }}
+{% endblock %}
+
+{% block content %}
+
+<div id="main">
+    <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / {{ category.name }}</p>
+    {{ category.description }}
+    {% for subcategory in subcategories %}
+    <div class="list">
+        <h2>{{ subcategory.name }}</h2>
+        {% for product in subcategory.products_by_subcategory %}
+            <div class="obj-item">
+                <a href="{{ product.get_absolute_url }}">
+                <img src="{% thumbnail product.image 150x200 crop %}">
+                </a><br>
+                <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
+                <text style="color:orange"> {{ product.size }}</text> <br>
+                {% if product.available == False %}
+                    Под заказ
+                {% else %}
+                   {% if product.price2 %}
+                     <s>{{ product.price2 }} р.</s> {{ product.price }} р.
+                        {% else %}
+                    {{ product.price }} р.
+                        {% endif %}
+                {% endif %}
+             </div>
+        {% endfor %}
+    </div>
+{% endfor %} <br>
+</div>
+{% endblock %}

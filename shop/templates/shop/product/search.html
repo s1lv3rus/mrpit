@@ -1,0 +1,36 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% load thumbnail %}
+
+
+{% block title %}Результаты поиска{% endblock %}
+
+{% block content %}
+<div id="main">
+    <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / Поиск </p>
+    <h1>Результаты поиска</h1>
+      {% if object_list %}
+        {% for product in object_list %}
+        <div class="obj-item">
+                <a href="{{ product.get_absolute_url }}">
+                <img src="{% thumbnail product.image 150x200 crop %}">
+                </a><br>
+                <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
+                <text style="color:orange"> {{ product.size }}</text> <br>
+                {% if product.available == False %}
+                    Под заказ
+                {% else %}
+                   {% if product.price2 %}
+                     <s>{{ product.price2 }} р.</s> {{ product.price }} р.
+                        {% else %}
+                    {{ product.price }} р.
+                        {% endif %}
+                {% endif %}
+        </div>
+        {% endfor %}
+            {% else %}
+            <p> По Вашему запросу не найдено результатов. Попробуйте еще раз или воспользуйтесь меню сайта</p>
+            {% endif %}
+
+</div>
+{% endblock %}

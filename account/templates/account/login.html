@@ -1,0 +1,44 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}Вход на сайт{% endblock %}
+
+
+{% block content %}
+  <div id="main">
+      <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / Вход в аккаунт </p>
+      {% if messages %}
+              <ul class="messages">
+               {% for message in messages %}
+                <li class="{{ message.tags }}">
+                  {{ message|safe }}
+                    <a href="#" class="close">x</a>
+                </li>
+               </ul>
+              {% endfor %}
+             {% endif %}
+
+       <h4>Заполните имя пользователя и пароль. Если у вас нет аккаунта, перейдите на форму  <a href="{% url 'register' %}">Регистрации</a></h4><br>
+    <div class="login">
+        <div class="login_form">
+            <form action="{% url 'login' %}" method="post">
+                  {{ form.as_p }}
+                  {% csrf_token %}
+                  <input type="hidden" name="next" value="{{ next }}" />
+                  <input type="submit" value="Войти на сайт">
+            </form>
+              <a href="{% url 'register' %}"><input type="submit" value="Регистрация"></a><br><br>
+            <p><a style="font-size:20px;" href="{% url 'password_reset' %}">Забыли Ваш пароль?</a></p>
+        </div>
+
+         <div class="social">
+            Войдите на сайт через социальные сети<br>
+             <a class="vk" href="/login/vk-oauth2">
+                 <img src="{% static 'img/vk.png' %}"></a>
+
+             <a class="fb" href="{% url 'social:begin' 'facebook' %}">
+                  <img src="{% static 'img/facebook.png' %}"></a>
+         </div>
+    </div>
+</div>
+
+{% endblock %}

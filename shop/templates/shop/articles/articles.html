@@ -1,0 +1,11 @@
+{% extends 'shop/base.html' %}
+{% block title %} Полезные статьи{% endblock %}
+{% block content %}
+<div id="main">
+    <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / Статьи </p>
+        {% for article in articles %}
+     <div class="article"><a href="{{ article.get_url}}"> {{ article.name }} </a></div>
+        {% endfor %}
+</div>
+
+{% endblock %}

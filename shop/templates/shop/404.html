@@ -1,0 +1,11 @@
+{% extends 'shop/base.html' %}
+
+{% block title %} 404 {% endblock %}
+
+{% block content %}
+<div id="main">
+    <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / 404 ошибка</p>
+    <h3>Упс, страница не найдена.</h3>
+    <p> Перейти в <a href="{% url 'shop:index' %}">главное меню</a></p>
+</div>
+{% endblock %}

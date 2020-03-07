@@ -1,0 +1,76 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Профиль пользователя{% endblock %}
+
+{% block content %}
+<div id="main">
+     <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / Личный кабинет</p>
+
+    {% if editable == False %}
+        Вы не можете просматривать данную страницу
+    {% else %}
+    {% if messages %}
+      <ul class="messages">
+       {% for message in messages %}
+        <li class="{{ message.tags }}">
+          {{ message|safe }}
+            <a href="#" class="close">x</a>
+        </li>
+       {% endfor %}
+    {% endif %}
+      </ul>
+
+  <h1>Профиль ({{ user }})</h1>
+
+    <p>История заказов:</p>
+    <table id="table_order_history">
+         <tr>
+            <th>Номер заказа</th>
+            <th>Ссылка на заказ</th>
+            <th>Статус заказа</th>
+            <th>Оплата заказа</th>
+            <th>Действия с заказом</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>
+                 {{ order.id }}
+            </td>
+            <td>
+                <a href="{{ order.get_absolute_url }}">{{ order.created }}</a><br>
+            </td>
+             <td>
+                 {{ order.status }}
+            </td>
+            <td>
+                {% if order.paid %}
+                    Заказ оплачен!
+                {% else %}
+                    {% if order.status != 'Отказ' %}
+                Сумма: {{ order.get_total_cost }}
+                 <a href="{% url 'payment:process' order.id %}">Оплатить</a>
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td>
+                {% if order.status != 'Выполнен' %}
+                {% if order.status != 'Отказ' %}
+                   <a href="{% url 'orders:deny' order.id %}">Отказаться от заказа Х</a>
+                {% endif %}{% endif %}
+            </td>
+        </tr>
+           {% endfor %}
+    </table>
+    <div class="profile">
+        <p style="color:crimson">Вы можете изменить данные профиля:</p>
+        <form action="." method="post" enctype="multipart/form-data">
+              {{ user_form.as_p }}
+              {% csrf_token %}
+              <p><input type="submit" value="Сохранить изменения"></p>
+        </form><br/>
+        <a href="{% url 'password_change' %}">
+          <input type="submit" value="Сменить пароль"></a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

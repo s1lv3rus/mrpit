@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pdf.css' %}" media="all">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<title>  Заказ {{ order.id }}</title>
+<body>
+<div id="main">
+
+  <h1><a href="#" onclick="window.print();">Заказ {{ order.id }}</a></h1>
+
+  <table>
+    <tr>
+      <th>Создан</th>
+      <td>{{ order.created }}</td>
+    </tr>
+    <tr>
+      <th>Покупатель</th>
+      <td>{{ order.first_name }} {{ order.last_name }}</td>
+    </tr>
+    <tr>
+      <th>E-mail</th>
+      <td>{{ order.email }}</td>
+    </tr>
+    <tr>
+      <th>Адрес</th>
+      <td>{{ order.city }} {{ order.district }} {{ order.address }}, {{ order.postal_code }} </td>
+    </tr>
+    <tr>
+      <th>Итого</th>
+      <td>{{ order.get_total_cost }} р.</td>
+    </tr>
+    <tr>
+      <th>Оплачен</th>
+      <td>{% if order.paid %}Да{% else %}Нет{% endif %}</td>
+    </tr>
+  </table>
+
+
+    <h2>Товарная накладная</h2>
+      <table class="tabular">
+        <thead>
+          <tr>
+            <th>Товары</th>
+            <th>Цена</th>
+            <th>Количество</th>
+            <th>Итого</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in order.items.all %}
+            <tr>
+              <td class="td_name">{{ item.flavour.product.name }} {{ item.flavour.name }}</td>
+              <td class="td_price">{{ item.price }} р.</td>
+              <td class="td_quantity">{{ item.quantity }}</td>
+              <td class="td_cost">{{ item.get_cost }} </td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <td colspan="3">Итого</td>
+            <td>{{ order.get_total_cost }} р.</td>
+          </tr>
+        </tbody>
+      </table><br><br>
+      <p>Подпись Покупателя ______________</p>
+</div>
+</body>
+</html>

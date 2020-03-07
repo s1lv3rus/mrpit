@@ -1,0 +1,13 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Выход из профиля{% endblock %}
+
+{% block content %}
+  <div id="main">
+      <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / <a href="{% url 'login' %}">Авторизация на сайте</a>
+      / Выход из профиля</p>
+      <h1>Выход из профиля</h1>
+      <p>Вы успешно вышли из своего профиля. Вы можете снова войти на
+      <a href="{% url 'login' %}">сайт</a></p>
+  </div>
+{% endblock %}

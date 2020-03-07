@@ -1,0 +1,199 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% load thumbnail %}
+
+{% block title %}Корзина товаров{% endblock %}
+
+{% block content %}
+ {% if messages %}
+          <ul class="messages">
+           {% for message in messages %}
+            <li class="{{ message.tags }}">
+              {{ message|safe }}
+                <a href="#" class="close">x</a>
+            </li>
+           </ul>
+          {% endfor %}
+         {% endif %}
+<div id="main">
+    <a href="{% url 'shop:index' %}">MrPiT.online</a> / Корзина <br><br>
+    {% if cart %}
+        <h2>Ваша корзина покупок</h2>
+        <table id="cart_table">
+            <tr>
+                <th>Изображение</th>
+                <th>Товар</th>
+                <th>Количество</th>
+                <th>Удалить</th>
+                <th>Цена товара</th>
+                <th>Общая цена</th>
+            </tr>
+
+        {% for item in cart %}
+        {% with flavour=item.flavour %}
+        <tr>
+            <td class="td_image">
+                <a href="{{ flavour.product.get_absolute_url }}">
+                    <img src="{% thumbnail flavour.product.image 50x50 crop %}">
+                </a>
+            </td>
+
+            <td class="td_product">{{ flavour.product.name }} <br><text style="color:orange"> {{ flavour.product.size }}</text>
+                <text style="color:crimson"><br> Вкус: {{ flavour.name }}</text>
+            </td>
+
+            <td class="td_quantity">
+                <form action="{% url 'cart:cart_add' flavour.id %}" method="post">
+                    <input type="number" name='quantity' min="1" max="10" step="1"
+                       title="Укажите количество товара" value="{{ item.quantity }}">
+                    {{ item.update_quantity_form.update }}
+                    <input type="submit" value="Пересчитать">
+                    <p style="margin-left:10%;"> На складе <text style="color:crimson; ">{{ flavour.quantity }}</text> шт*</p>
+                    {% csrf_token %}
+                </form>
+            </td>
+            <td class="del"><a href="{% url 'cart:cart_remove' flavour.id %}">Удалить</a></td>
+            <td class="num">
+                {% if flavour.product.price2 %}
+                    <p><s>{{ flavour.product.price2 }} р.</s> {{ flavour.product.price }} р.  </p>
+                 {% else %}
+                     <p> {{ flavour.product.price }} р.</p>
+                 {% endif %}
+            </td>
+            <td class="num">{{ item.total_price }} р.</td>
+        </tr>
+    {% endwith %}
+    {% endfor %}
+        {% if cart.coupon %}
+         <tr class="subtotal">
+             <td>Общая цена</td>
+             <td colspan="4"></td>
+             <td class="num">{{ cart.get_total_price|floatformat:"2" }} р.</td>
+         </tr>
+         <tr>
+             <td>
+             "{{ cart.coupon.code }}" купон
+              (- {{ cart.coupon.discount }}% )
+             </td>
+             <td colspan="4"></td>
+             <td class="num neg">
+             - {{ cart.get_discount|floatformat:"2" }} р.
+             </td>
+         </tr>
+        {% endif %}
+        <tr class="total">
+             <td>Итого</td>
+             <td colspan="4"></td>
+             <td class="num">
+                 {% if cart.coupon %}
+             {{ cart.get_total_price_after_discount|floatformat:"2" }} р.
+                 {% else %}
+             {{ cart.get_total_price }} р.
+                 {% endif %}
+             </td>
+        </tr>
+    </table>
+
+        <div class="cart_hidden">
+             {% for item in cart %}
+            {% with flavour=item.flavour %}
+          <table id="cart_table1">
+               <tr>
+                  <td>
+                    <div class="product_image1">
+                        <a href="{{ flavour.product.get_absolute_url }}">
+                            <img src="{% thumbnail flavour.product.image 50x50 crop %}">
+                        </a>
+                    </div>
+
+                    <div class="product_name1">
+                        {{ flavour.product.name }}<text style="color:orange"> {{ flavour.product.size }}</text>
+                        <text style="color:crimson"><br> Вкус: {{ flavour.name }}</text>
+                    </div>
+
+                    <p class="delx"><a href="{% url 'cart:cart_remove' flavour.id %}">Х</a></p>
+
+                    <div class="quantity1">
+                        <form action="{% url 'cart:cart_add' flavour.id %}" method="post">
+                            <input type="number" name='quantity' min="1" max="10" step="1"
+                               title="Укажите количество товара" value="{{ item.quantity }}">
+                            {{ item.update_quantity_form.update }}
+                            <input type="submit" value="Пересчитать">
+                             {% csrf_token %}
+                            <p class="quantity1-1"> На складе <text style="color:crimson; ">{{ flavour.quantity }}</text> шт*</p>
+                        </form>
+                    </div>
+
+                    <div class="price1">
+                        {% if flavour.product.price2 %}
+                         Цена: <s>{{ flavour.product.price2 }} р.</s> {{ flavour.product.price }} р.<br>
+                         {% else %}
+                           Цена:  {{ flavour.product.price }} р. <br>
+                         {% endif %}
+                         <p style="color:red">  Сумма: {{ item.total_price }} р.</p>
+                    </div>
+                  </td>
+                </tr>
+           </table>
+
+
+        {% endwith %}
+        {% endfor %}
+            <table id="total1">
+            {% if cart.coupon %}
+                 <tr>
+                     <td>Общая цена:</td>
+                     <td>{{ cart.get_total_price|floatformat:"2" }} р.</td>
+                 </tr>
+
+                 <tr>
+                     <td>
+                     "{{ cart.coupon.code }}" купон
+                      (- {{ cart.coupon.discount }}% )
+                     </td>
+
+                     <td>
+                     - {{ cart.get_discount|floatformat:"2" }} р.
+                     </td>
+                 </tr>
+            {% endif %}
+
+                <tr>
+                     <td>Итого:</td>
+                     <td>
+                         {% if cart.coupon %}
+                    <text style="color:red"> {{ cart.get_total_price_after_discount|floatformat:"2" }} р.</text>
+                         {% else %}
+                   <text style="color:red">  {{ cart.get_total_price }} р.</text>
+                         {% endif %}
+                     </td>
+                </tr>
+            </table>
+    </div>
+
+    <p class="check_coupon">Применить купон:</p>
+    <div class="coupon_in_cart">
+        <form action="{% url 'coupons:apply' %}" method="post">
+            <input type="text" name='code' placeholder="Введите номер купона">
+            <input type="submit" value="Применить">
+            {% csrf_token %}
+        </form>
+        <p>
+            <a href="{% url 'shop:product_list' %}" class="button light">Продолжить покупки</a>
+            <a href="{% url 'orders:order_create' %}" class="button">Оформить заказ</a>
+        </p>
+    </div>
+    <p class="tovar_zakaz">*- Для заказа товара, который отсутствует на складе, воспользуйтесь инструкцией <a href="{% url 'orders:order' %}">Товары под заказ</a> </p>
+
+    {% else %}
+    <p>На данный момент Ваша корзина пуста.</p>
+    <p>Для того, чтобы выбрать товары по категориям, перейдите в раздел
+        <a href="{% url 'shop:product_list_by_category' 'protein' %}">Категории</a>
+    </p>
+    <p>Для того, чтобы выбрать товары по поставщикам, перейдите в раздел
+         <a href="{% url 'shop:product_list_by_supplier' 'BSN' %}">Производители</a>
+     </p>
+    {% endif %}
+
+</div>
+{% endblock %}

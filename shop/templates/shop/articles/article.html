@@ -1,0 +1,10 @@
+{% extends 'shop/base.html' %}
+{% block title %} Полезные статьи{% endblock %}
+{% block content %}
+<div id="main">
+    <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / <a href="{% url 'shop:articles' %}">Статьи</a>
+        / {{ article.name }} </p>
+    {{ article.body }}
+</div>
+
+{% endblock %}

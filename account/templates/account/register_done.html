@@ -1,0 +1,11 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Добро пожаловать на форум!{% endblock %}
+
+{% block content %}
+  <div id="main">
+    <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / Регистрация прошла успешно</p>
+    <h1>Добро пожаловать, {{ new_user.username }}!</h1>
+    <p>Ваш аккаунт успешно создан. Вы можете <a href="{% url 'login' %}">авторизоваться на сайте</a>.</p>
+  </div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Список товаров заказа{% endblock %}
+
+{% block content %}
+<div id="main">
+    <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / <a href="{% url 'profile' user.username %}">Личный кабинет</a>
+    / Товары в заказе</p>
+    <table id="table_order_history">
+        <tr>
+            <th>
+                Товары
+            </th>
+            <th>
+                Количество
+            </th>
+            <th>
+                Цена
+            </th>
+        </tr>
+        {% for item in items %}
+        <tr>
+            <td>
+                 {{ item.flavour.product }}  {{ item.flavour.product.size }} {{ item.flavour }}
+            </td>
+             <td>
+                  {{ item.quantity}}
+            </td>
+            <td>
+                  {{ item.price}}
+            </td>
+         {% endfor %}
+         </tr>
+    </table>
+
+
+
+
+    </table>
+
+</div>
+
+
+
+{% endblock %}

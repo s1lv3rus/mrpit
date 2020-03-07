@@ -1,0 +1,12 @@
+{% extends 'shop/base.html' %}
+
+{% block title %} Форма обратной связи{% endblock %}
+
+{% block content %}
+<div id="main">
+    <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / 500 ошибка</p>
+    <h3>Упс, проблемы с сервером</h3>
+    <p> Перейти в <a href="{% url 'shop:feedback' %}">Сообщить об ошибке</a></p>
+    <p> Перейти в <a href="{% url 'shop:index' %}">главное меню</a></p>
+</div>
+{% endblock %}

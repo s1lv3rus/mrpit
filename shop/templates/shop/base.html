@@ -1,0 +1,193 @@
+{% load static %}
+{% load thumbnail %}
+{% autoescape off %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="yandex-verification" content="0ebde61df6aa42db" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/media.css' %}">
+    <title>{% block title %}{% endblock %}</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/slider.js' %}"></script>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '{your-app-id}',
+          cookie     : true,
+          xfbml      : true,
+          version    : '{api-version}'
+        });
+
+        FB.AppEvents.logPageView();
+
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
+</head>
+<body>
+
+    <div id="header">
+         <div class="logo">
+             <a href="{% url 'shop:product_list' %}" class="logo" >𝓜𝓻 𝓟𝓘𝓽</a>
+         </div>
+        <div class="header_login">
+            {% if request.user.is_authenticated %}
+              <a href="{% url 'profile' request.user %}">Личный кабинет</a>
+              <a href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+              <a href="{% url 'register' %}">Регистрация</a>
+              <a href="{% url 'login' %}">Вход</a>
+            {% endif %}
+        </div>
+    </div>
+
+     <div id="subheader">
+         <div class="search">
+           <form action="{% url 'shop:search_results' %}" method="get">
+                <input name="q" type="text" placeholder="Поиск товаров">
+           </form>
+             <div class="search1"></div>
+         </div>
+
+         <div class="main_cart">
+             {% with total_items=cart|length %}
+             {% if cart|length > 0 %}
+          <a href="{% url 'cart:cart_detail' %}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                Корзина:
+                {{ total_items }} шт,
+                {{ cart.get_total_price }} р.
+          </a>
+                {% else %}
+          <a href="{% url 'cart:cart_detail' %}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                Корзина</a>
+
+             {% endif %}
+            {% endwith %}
+         </div>
+    </div>
+
+      <header>
+          <nav class="dws-menu">
+              <input type="checkbox" name="toggle" id="menu" class="toggleMenu">
+		      <label for="menu" class="toggleMenu"><i class="fa fa-bars"></i>Меню</label>
+              <ul>
+			<li>
+                <a href="{% url 'shop:product_list' %}"><i class="fa fa-home"></i>Главная</a>
+            </li>
+			<li>
+                <input type="checkbox" name="toggle" class="toggleSubMenu" id="category">
+                <a href="#"><i class="fa fa-th-list"></i>Категории</a>
+                <label for="category" class="toggleSubMenu"><i class="fa"></i></label>
+               	<ul>
+                    {% for cat in categories %}
+                    <li>
+                        <a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
+                    </li>
+                         {% endfor %}
+            	</ul>
+            </li>
+
+			<li>
+                <input type="checkbox" name="toggle" class="toggleSubMenu" id="objective">
+                <a href="#"><i class="fa fa-cogs"></i>Цели</a>
+                <label for="objective" class="toggleSubMenu"><i class="fa"></i></label>
+				<ul>
+                    {% for o in objectives %}
+					<li>
+                        <a href="{{ o.get_absolute_url }}">{{ o.name }}</a>
+                    </li>
+                    {% endfor %}
+                 </ul>
+			</li>
+
+            <li>
+                <input type="checkbox" name="toggle" class="toggleSubMenu" id="supplier">
+                <a href="#"><i class="fa fa-shopping-cart"></i>Производители</a>
+                <label for="supplier" class="toggleSubMenu"><i class="fa"></i></label>
+				<ul>
+                    {% for s in suppliers %}
+                    <li>
+                        <a href="{{ s.get_absolute_url }}">{{ s.name }}</a>
+                    {% endfor %}
+                    </li>
+				</ul>
+			</li>
+			<li><a href="{% url 'shop:info' %}"><i class="fa fa-info"></i>Информация</a></li>
+            <li><a href="{% url 'shop:delivery' %}"><i class="fa fa-truck" aria-hidden="true"></i>Доставка</a></li>
+            <li><a href="{% url 'shop:payment' %}"><i class="fa fa-rub" aria-hidden="true"></i>Оплата</a></li>
+            <li class="news"><a href="{% url 'shop:news' %}"><i class="fa fa-rss"></i>Новости</a></li>
+		   </ul>
+          </nav>
+        </header>
+
+<div class="wrapper">
+     {% block content %}{% endblock %}
+
+    <h3 class="rec">Популярные товары</h3>
+    <div id="recommendations">
+        <div class="slider">
+            <div class="slide-list">
+                <div class="slide-wrap">
+                     {% for product in products_rec %}
+                    <div class="slide-item">
+                            <a href="{{ product.get_absolute_url }}">
+                            <img src="{% thumbnail product.image 150x200 crop %}">
+                            </a><br><br>
+                            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
+                            <text style="color:orange"> {{ product.size }}</text> <br>
+                            {% if product.available == False %}
+                                Под заказ
+                            {% else %}
+                               {% if product.price2 %}
+                                 <s>{{ product.price2 }} р.</s> {{ product.price }} р.
+                                    {% else %}
+                                {{ product.price }} р.
+                                    {% endif %}
+                            {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="navy prev-slide"></div>
+            <div class="navy next-slide"></div>
+        </div>
+    </div>
+
+    <footer id="myFooter">
+
+        <div class="container">
+            <ul>
+                <li><a href="{% url 'shop:faq' %}">FAQ</a></li>
+                <li><a href="{% url 'shop:news' %}">Новости</a></li>
+                <li><a href="{% url 'shop:info' %}">Информация</a></li>
+                <li><a href="{% url 'shop:articles' %}">Полезные статьи</a></li>
+                <li><a href="{% url 'shop:feedback' %}">Связаться с нами</a></li>
+            </ul>
+            <p><a href="#" class="text-left"> Copyright ©2010-2020 Все права защищены</a></p>
+        </div>
+
+        <div class="groups">
+            <p style="color:#454547">Мы в социальных сетях</p>
+            <a href="https://vk.com/mrpit.online"><i class="fa fa-vk"></i></a>
+            <a href="https://www.facebook.com/MrPit-111718127103911/"><i class="fa fa-facebook"></i></a>
+            <a href="https://www.instagram.com/mrpit.online/"><i class="fa fa-instagram"></i></a>
+        </div>
+
+    </footer>
+</div>
+
+</body>
+</html>
+{% endautoescape %}

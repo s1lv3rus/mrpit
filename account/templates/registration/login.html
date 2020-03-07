@@ -1,0 +1,27 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Вход на сайт{% endblock %}
+
+{% block info %}
+  <div id="info">
+  <h1>Вход в аккаунт</h1>
+  {% if form.errors %}
+    <p>
+      Ваш логин и пароль не совпадают
+      Пожалуйста, попробуйте еще
+    </p>
+  {% else %}
+    <p>Заполните имя пользователя и пароль. Если у вас нет аккаунта, перейдите на форму
+      <a href="{% url 'register' %}">Регистрации</a></p>
+  {% endif %}
+    <form action="{% url 'login' %}" method="post">
+      {{ form.as_p }}
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}" />
+      <input type="submit" value="Войти на сайт">
+    </form>
+      <a href="{% url 'register' %}"><input type="submit" value="Регистрация"></a>
+    <br/><br/><br/><br/>
+    <p><a href="{% url 'password_reset' %}">Забыли Ваш пароль?</a></p>
+{% endblock %}
+    </div>

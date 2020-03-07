@@ -1,0 +1,20 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Создайте новый аккаунт{% endblock %}
+
+{% block content %}
+  <div id="main">
+    <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / Регистрация</p>
+    <h1>Создайте новый аккаунт</h1>
+    <p>Пожалуйста, заполните все необходимые поля в форме:</p>
+      <div class="login">
+          <div class="login_form">
+            <form action="." method="post">
+              {{ user_form.as_p }}
+              {% csrf_token %}
+              <p><input type="submit" value="Создать аккаунт"></p>
+            </form>
+      </div>
+    </div>
+</div>
+{% endblock %}

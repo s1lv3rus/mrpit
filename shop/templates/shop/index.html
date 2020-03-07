@@ -1,0 +1,63 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% load thumbnail %}
+
+{% block title %}
+{% if category %}{{ category.name }}{% else %}Интернет-магазин спортивного питания{% endif %}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="screen">
+    <img src="{% static 'img/font1.jpg' %}"><br><br>
+    <h1> “ Раз уж начал - ПОБЕЖДАЙ ” </h1>
+        <p> - Э. Хемингуэй</p><br>
+</div>
+
+<div id="main">
+    <h1 class="big"> Выбери СВОЮ ЦЕЛЬ:</h1>
+    <table id="maintable">
+         <tr>
+             <td>
+                {% for objective in objectives %}
+                {% if objective.name == "Для начинающих" %}
+                <a href="{{ objective.get_absolute_url }}">
+                    <img src="{% thumbnail objective.image 450x250 crop %}">
+                </a>
+                 {% endif %}
+                {% endfor %}
+            </td>
+            <td>
+                {% for objective in objectives %}
+                {% if objective.name == "Похудение" %}
+                    <a href="{{ objective.get_absolute_url }}">
+                        <img src="{% thumbnail objective.image 450x250 crop %}">
+                    </a>
+                {% endif %}
+                {% endfor %}
+            </td>
+         </tr>
+        <tr>
+            <td>
+                {% for objective in objectives %}
+                {% if objective.name == 'Набрать массу' %}
+             <a href="{{ objective.get_absolute_url }}">
+                 <img src="{% thumbnail objective.image 450x250 crop %}">
+             </a>
+                  {% endif %}
+                {% endfor %}
+            </td>
+            <td>
+                {% for objective in objectives %}
+                {% if objective.name == "Выносливость" %}
+                <a href="{{ objective.get_absolute_url }}">
+                   <img src="{% thumbnail objective.image 450x250 crop %}">
+                </a>
+                 {% endif %}
+                 {% endfor %}
+            </td>
+         </tr>
+    </table>
+</div>
+{% endblock %}

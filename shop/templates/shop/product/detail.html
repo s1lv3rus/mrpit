@@ -1,0 +1,96 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+
+<div id="main">
+    <a href="{% url 'shop:index' %}">MrPiT.online</a> / <a href="{% url 'shop:product_list_by_category' product.category.id %}">{{ product.category}}</a>
+    / <a href="{% url 'shop:product_list_by_supplier' product.supplier.id %}">{{ product.supplier}}</a>
+    / {{ product.name }} <br><br>
+
+   <div class="detail_table">
+        <div class="product">
+            <img src="{% thumbnail product.image 250x300 crop %}">
+            <h2>{{ product.name }} <br><text style="color:orange"> {{ product.size }}</text></h2>
+            <p style="color:green">{{product.subcategory }}</p>
+                {% if product.price2 %}
+            <p class="product_price">  <s>{{ product.price2 }} р.</s> {{ product.price }} р.</p>
+                {% else %}
+            <p class="product_price"> {{ product.price }} р.</p>
+                {% endif %}
+
+            <div class="flavours">
+                {% for flavour in flavours %}
+                <table class="flavour_table">
+                    <tr>
+                        <td class="t1">
+                            <form action="{% url 'cart:cart_add' flavour.id %}" method="post" >
+                            <text class="flavour_text"> {{ flavour }} </text>
+                        </td>
+                        <td>
+                            <input type="number" name='quantity' min="1" max="10" step="1" title="Укажите количество товара"  value="1">
+                             {% csrf_token %}
+                        </td>
+                        <td>
+                            {% if flavour.quantity == 0 %}
+                               <input type="submit" value="Под заказ">
+                            {% else %}
+                               <input type="submit" value="В корзину">
+                            {% endif %}
+                             </form>
+                        </td>
+                    </tr>
+                </table>
+                 {% endfor %}
+            </div>
+        </div>
+
+        <div class="tabs_product">
+            <input id="tab1" type="radio" name="tabs" checked>
+            <label for="tab1">Описание</label>
+            <input id="tab2" type="radio" name="tabs">
+            <label for="tab2">Состав</label>
+            <input id="tab3" type="radio" name="tabs">
+            <label for="tab3">Применение</label>
+            <input id="tab4" type="radio" name="tabs">
+            <label for="tab4">Отзывы ({{ count }})</label>
+
+            <section id="content-tab1">
+                 <p>{{ product.description|linebreaks }}</p>
+            </section>
+
+            <section id="content-tab2">
+               <img src="{% thumbnail product.sostav 700x700 crop %}">
+            </section>
+
+            <section id="content-tab3">
+                {{ product.body }}
+            </section>
+
+             <section id="content-tab4">
+                  {% if comments %}
+                 {% for comment in comments %}
+                     <text style="color:crimson">{{ comment.author }}</text>
+                     <text style="color:grey; font-size:10px;"> {{ comment.date }}</text><br>  {{ comment.body }}<br>
+                 {% endfor %}
+                 {% else %}
+                     <p>У этого товара еще нет отзывов. Будьте первым!</p>
+                 {% endif %}
+
+                  {% if request.user.is_authenticated %}
+                    <form action="." method="post">
+                     <input type="text" name="body" placeholder="Оставьте свой отзыв">
+                         {% csrf_token %}
+                     <input type="submit" name="form" value="Написать отзыв">
+                    </form>
+                 {% else %}
+                 <p>Для добавления отзыва необходимо <a href="{% url 'login'%}">авторизоваться</a> на сайте </p>
+                  {% endif %}
+            </section>
+        </div>
+   </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,1345 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu);
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+
+body, html {
+    font-family: Times New Roman;
+    background:black;
+    margin: 0;
+    padding: 0;
+    color:white;
+    height:100%;
+}
+
+
+.wrapper {
+    display: flex;
+	flex-direction: column;
+	min-height: 100%;
+	z-index:1;
+}
+
+a {
+    text-decoration:none;
+    color:crimson;
+}
+
+a:focus, a:hover {
+    text-decoration:none;
+    color:red;
+}
+form {
+    width:200px;
+}
+
+input {
+    color:black;
+}
+textarea {
+    color:black;
+}
+
+select {
+    color:black;
+}
+a.button, input[type="submit"] {
+    color:#fff;
+    background:green;
+    border-radius:4px;
+    padding:10px 20px;
+    font-size:14px;
+    border:0;
+}
+
+
+a.button.light {
+    color:#666;
+    background:#ededed;
+}
+
+.text-left {
+    text-align:left;
+}
+
+.text-right {
+    text-align:right;
+}
+
+/*шапки сайта */
+#header {
+    display:block;
+    justify-content: space-between;
+    padding:10px 10px 10px 0px;
+    height:50px;
+}
+
+#header .logo {
+	font-size:50px;
+    margin-left:20px;
+}
+
+#header .header_login {
+    position:absolute;
+    font-size:20px;
+    top:10px;
+    right:20px;
+    text-align:right;
+}
+
+#subheader{
+	display: flex;
+	/* Распределяем элементы внутри шапки */
+	justify-content: space-between;
+	/* Выравниваем элементы вертикально по центру. */
+	align-items: center;
+	height:100px;
+	font-size:18px;
+	padding: 0px 50px 0px 300px;
+}
+
+#subheader .main_cart {
+	font-size:30px;
+}
+
+header {
+    width:80%;
+    margin: 0 auto;
+}
+
+/*основные представления товаров */
+#main {
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 1%;
+    font-size: 17px;
+    color:white;
+    min-height:400px;
+    max-height:100%;
+}
+
+
+.promo img {
+    margin-left:10%;
+}
+#main category{
+    padding:0px 15px;
+}
+
+.screen {
+    margin: 0 auto;
+    color:crimson;
+}
+
+
+.screen h1{
+    margin-top:2%;
+    font-size:45px;
+    text-align:center;
+    font-family: 'Annabelle', cursive;
+}
+.screen p{
+    text-align:right;
+    font-size:19px;
+}
+.list {
+    clear: both;
+}
+.product_list {
+    display:flex;
+    border: 2px solid crimson;
+    border-radius: 50px;
+    width:60%;
+    height:350px;
+    padding:20px;
+}
+.offer_price {
+        display:flex;
+        justify-content: space-between;
+        width:100%;
+}
+.buy_offer {
+    margin-top:100px;
+    margin-right:200px;
+
+}
+.buy_offer button[type=submit] {
+        height:200px;
+        width:200px;
+        font-size:25px;
+        border-radius: 150px;
+        border:green;
+        background:green;
+        color:white;
+}
+
+.plus {
+    margin-top:80px;
+    margin-left:-40px;
+    margin-right:10px;
+}
+.plus:first-child {
+   display:none;
+}
+
+.obj-item {
+	width: 200px;
+	float: left;
+	height:300px;
+    text-align:center;
+    color:crimson;
+    position:relative;
+    margin-right:50px;
+}
+.obj-item img {
+    margin: 0 auto;
+}
+.obj-item:hover {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+.obj-item p{
+    margin:0 auto;
+    margin-top:50px;
+}
+
+.obj-item a{
+    color:white;
+}
+
+.obj-item a:hover{
+    color:red;
+}
+.product {
+    text-align:center;
+}
+
+/* messages */
+ul.messages {
+    margin-left:1%;
+    width:100%;
+    list-style-type: none;
+}
+ul.messages li.success,
+ul.messages li.warning,
+ul.messages li.error,
+ul.messages li.info {
+    height:30px;
+    width:1000px;
+    padding: 4px;
+    list-style:none;
+    color:#fff;
+}
+
+ul.messages li.success { background:#81ce81; }
+ul.messages li.success a { color:#0ac33e; }
+
+ul.messages li.error { background:#a30029; color:#e9828e; }
+ul.messages li.error a { color:#e9828e; }
+
+ul.messages li.info { background:#faffae; color:#696b4e; }
+ul.messages li.info a { color:#1586de; }
+
+ul.messages li.warning { background:#de9404; }
+ul.messages li.warning a { color:#f49000; }
+
+ul.messages li a.close {
+    margin:0;
+    float:right;
+    opacity:1;
+    border:0;
+    box-shadow:none;
+    text-shadow:none;
+}
+
+.order-form input{
+    margin-top:1%;
+    float:left;
+    width:100%;
+}
+.order-form {
+    float:left;
+}
+.order-form label{
+    color:white;
+
+}
+
+.card_pay {
+    width: 600px;
+    height: 800px;
+    background:white;
+}
+
+.card_pay input{
+    padding 50px;
+    margin-top:5%;
+    float:left;
+    width:100%;
+}
+
+.big {
+    font-size:40px;
+    color:crimson;
+    text-align:center;
+    margin-top:10%;
+    margin-bottom:2%;
+
+}
+
+
+/*таблицы */
+
+#table {
+    width: 70%; /* Ширина таблицы */
+    table-layout:fixed;
+}
+#table td {
+    text-align: left;
+}
+#table h2 {
+    color:crimson;
+}
+
+#maintable {
+    margin:0 auto;
+    margin-bottom:5%;
+    margin-top:3%;
+}
+
+#maintable tr td{
+    padding: 5px 5px 5px 5px;
+}
+
+.detail_table {
+    display:flex;
+
+}
+
+
+.supplier {
+    color:green;
+    font-size:22px;
+}
+
+
+#cart_table {
+    table-layout:auto;
+    margin: 0 auto;
+    width:100%;
+}
+
+#cart_table tr td {
+    border: 1px solid;
+    width:200px;
+    height:60px;
+    text-align:center;
+}
+#cart_table .td_quantity{
+    text-align:left;
+}
+
+#cart_table .td_product{
+}
+#cart_table .del{
+    width:100px;}
+
+#cart_table th {
+   text-align:center;
+}
+
+#cart_table input[type=submit] {
+    width:100px;
+    background:crimson;
+    color:white;
+    font-size:10px;
+    margin-left:5px;
+}
+
+#cart_table input[type=number] {
+    margin-left:5px;
+    margin-top:5px;
+    color:black;
+    width:50px;
+}
+.cart_hidden {
+    display:none;
+}
+.product_price {
+    font-size:25px;
+    color:crimson;
+}
+.flavours {
+    margin-right:20px;
+}
+
+.flavour_text {
+    font-size:20px;
+}
+.flavour_table {
+    margin-top:5px;
+    margin-left:-100px;
+}
+.t1 {
+    text-align:right;
+}
+
+.flavour_table input[type=number] {
+    margin-left:5px;
+    color:black;
+    width:50px;
+    height:30px;
+}
+
+.flavour_table input[type=submit] {
+    margin-left:5px;
+    margin-top:-2px;
+    width:100px;
+    font-weight:bold;
+    background:crimson;
+    color:white;
+    font-size:10px;
+}
+
+
+.delivery_table {
+    width:60%;
+}
+.delivery_table th, .delivery_table td, .delivery_table tr{
+    border: 1px solid white;
+    padding: 3px; /* Поля вокруг содержимого ячеек */
+    text-align:left;
+    }
+.accept {
+    display: flex;
+	justify-content: space-between;
+    width:100%;
+	min-height: 300px;
+	max-height: 100%;
+
+}
+.order-info {
+    margin-top:2%;
+    width:45%;
+    height:100%;
+    border: 5px solid crimson;
+    padding:10px 20px;
+    color:white;
+}
+
+.order-info h3 {
+    color:white;
+}
+
+.order-info ul li {
+    margin:0;
+    padding:0;
+    font-size:14px;
+}
+
+.order-info p {
+    font-weight:bold;
+    float:right;
+}
+
+.order-info span {
+    float:right;
+}
+
+
+/*Корзина*/
+
+
+.check_coupon {
+    margin-top:1%;
+}
+.coupon_in_cart {
+    display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height:100px;
+	margin-top:-3%;
+}
+
+.coupon_in_cart form {
+    display: flex;
+	justify-content: space-between;
+}
+
+.coupon_in_cart input[type=text]{
+   margin-right:3px;
+   height:38px;
+   margin-top:2px;
+}
+
+.coupon_in_cart input[type=submit] {
+    background:green;
+    color:white;
+}
+
+
+.coupon_in_cart a{
+    background:green;
+}
+.coupon_in_cart .check_coupon{
+   margin-top:0;
+   margin-left:1%;
+   height:30px;
+}
+/*подвал*/
+
+#myFooter{
+    display: flex;
+	/* Распределяем элементы внутри шапки */
+	justify-content: space-between;
+	/* Выравниваем элементы вертикально по центру. */
+	align-items: center;
+	height:120px;
+    flex: 0 0 auto;
+	font-size:18px;
+    background: crimson;
+    text-align: center;
+}
+
+#myFooter .container{
+    margin-right:-20px;
+}
+#myFooter ul{
+    padding: 0;
+
+}
+#myFooter li{
+    display:block;
+}
+
+#myFooter a{
+    color: #454547;
+    font-size: 18px;
+}
+#myFooter a:hover{
+    color: white;
+
+}
+#myFooter li{
+    display: inline-block;
+    margin: 0px 15px;
+    line-height: 3;
+}
+#myFooter .groups {
+    margin-right:100px;
+    text-align:center;
+
+}
+#myFooter .groups a{
+    padding:0px 10px 0 0;
+    font-size:30px;
+
+}
+
+/* base style */
+.stepper{
+  display: inline-block;
+  max-width: 120px;
+  width: 100%;
+  position: relative;
+}
+
+.stepper__input{
+  width: 100%;
+  height: 50px;
+  padding: .375rem .75rem;
+  border: 1px solid #c4c4c4;
+  -moz-appearance: textfield;
+}
+
+.stepper__input:focus{
+  color: #333;
+  background-color: #fff;
+  border-color: #c4c4c4;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+}
+
+.stepper__input::-webkit-inner-spin-button,
+.stepper__input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.stepper__controls{
+
+}
+
+.stepper__controls [spinner-button="up"],
+.stepper__controls [spinner-button="down"]{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding: 0;
+  outline: none;
+  border: 1px solid #c4c4c4;
+  background-color: #fff;
+  height: 50%;
+  font-size: 1.375em;
+  line-height: 0;
+  transition: all ease 0.25s;
+}
+
+.stepper__controls [spinner-button="up"]:hover,
+.stepper__controls [spinner-button="down"]:hover {
+  background-color: #333;
+  border-color: #333;
+  color: #fff;
+}
+
+/* style 2 */
+.stepper--style-2{
+  max-width: 140px;
+}
+.stepper--style-2 .stepper__input{
+  padding-left: 3.25rem;
+  padding-right: 3.25rem;
+  text-align: center;
+}
+.stepper--style-2 [spinner-button="up"],
+.stepper--style-2 [spinner-button="down"] {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  bottom: -1px;
+  width: 2.5rem;
+  z-index: 1;
+}
+.stepper--style-2 [spinner-button="up"] {
+  right: 0;
+  margin-left: -1px;
+}
+.stepper--style-2 [spinner-button="down"] {
+  left: 0;
+  margin-right: -1px;
+}
+
+
+.search input {
+  font-family: 'Inconsolata', monospace;
+   width:250px;
+   height:50px;
+  outline: none;
+  border: none;
+  background: crimson;
+  color: white;
+  text-shadow: 0 0 10px crimson;
+  padding: 0 80px 0 20px;
+  border-radius: 30px;
+  box-shadow: 0 0 25px 0 crimson, 0 20px 25px 0 rgba(0, 0, 0, 0.2);
+  transition: all 1s;
+  opacity: 1;
+  z-index: 5;
+  font-weight: bolder;
+  letter-spacing: 0.1em;
+}
+.search input:hover {
+  cursor: pointer;
+}
+.search input:focus {
+  width: 350px;
+  opacity: 1;
+  cursor: text;
+}
+.search input:focus ~ .search {
+  right: -250px;
+  background: #151515;
+  z-index: 6;
+}
+
+
+.search input::placeholder {
+  color: white;
+  opacity: 0.5;
+  font-weight: bolder;
+}
+/* настройки полосы прокрутки */
+
+::-webkit-scrollbar-button {
+background-image:url('');
+background-repeat:no-repeat;
+width:5px;
+height:0px
+}
+/* сама полоса */
+::-webkit-scrollbar-track {
+background-color:#000;
+}
+/* пользунок */
+::-webkit-scrollbar-thumb {
+-webkit-border-radius: 0px;
+border-radius: 0px;
+background-color: #615c5c;
+}
+
+::-webkit-scrollbar-thumb:hover{
+background-color:crimson;
+}
+
+::-webkit-resizer{
+background-image:url('');
+background-repeat:no-repeat;
+width:4px;
+height:0px
+}
+
+::-webkit-scrollbar{
+width: 4px;
+}
+
+/*рекоммендации */
+#recommendations  {
+    margin: 1%;
+    width: 98%;
+    font-size: 18px;
+    float: left;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    height:400px;
+}
+
+.rec {
+    text-align:  left;
+    height:10px;
+    margin-left: 10%;
+    margin-bottom: 20px;
+    margin-top: 2%;
+
+}
+/* Slider */
+.slider {
+	width: 85%;
+	margin: 0px auto;
+	padding: 0 10px;
+	position: relative;
+	overflow: hidden;
+}
+
+.slider::-moz-selection { background: transparent; color: #fff; text-shadow: none; }
+.slider::selection { background: transparent; color: #fff; text-shadow: none; }
+
+.slide-list {
+	position: static;
+	margin: 0;
+	padding: 0;
+    overflow-x: auto;
+    padding: 0 15px;
+    height:500px;
+}
+.slide-wrap {
+	position: relative;
+	left: 0px;
+	top: 0;
+	width: 12000%;
+}
+.slide-item {
+	width:300px;
+	padding: 10px;
+	float: left;
+	height:200px;
+    text-align:center;
+    color:crimson;
+    position:relative;
+}
+
+.slide-item:hover {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+.slide-item  p{
+    margin:0 auto;
+    margin-top:50px;
+}
+
+.slide-item a{
+    color:white;
+}
+
+.slide-item a:hover{
+    color:red;
+}
+
+.slide-title {
+	font: bold 16px monospace;
+	display: block;
+}
+
+.navy {
+	position: absolute;
+	top: 100px;
+	z-index: 1;
+	height: 75px;
+	width: 75px;
+	cursor: pointer;
+}
+.prev-slide {
+	left: 0;
+	background: url(bg/left-arrow.png) 1px 20% no-repeat;
+	opacity:0.5;
+}
+.next-slide {
+	right: 0;
+	background: url(bg/right-arrow.png) 13px 10% no-repeat;
+	opacity:0.3;
+}
+.prev-slide:hover, .next-slide:hover  {
+	opacity:1;
+}
+
+.navy.disable {
+	background: #dbdbdb;
+}
+
+
+.tabs {
+    width:50%;
+
+    padding:10px 0px 0px 20px;
+    margin-top: 2%;
+    height:100%;
+    border: 5px solid crimson;
+}
+.tabs label{
+        width:200px;
+
+    }
+/* Стили секций с содержанием */
+
+.tabs > section {
+    display: none;
+    margin:1%;
+
+}
+
+.tabs > section > p {
+    margin: 0 0 5px;
+    line-height: 1.5;
+    color: #383838;
+    /* прикрутим анимацию */
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+    color:white;
+}
+
+
+/* Описываем анимацию свойства opacity */
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Прячем чекбоксы */
+
+.tabs > input {
+    display: none;
+    position: absolute;
+}
+/* Стили переключателей вкладок (табов) */
+
+.tabs > label {
+    display: inline-block;
+    padding: 15px 25px;
+    font-weight: 600;
+    text-align: center;
+    color: #aaa;
+    border: 0px solid #ddd;
+    border-width: 1px 1px 1px 1px;
+    border-radius: 3px 3px 0 0;
+
+}
+/* Шрифт-иконки от Font Awesome в формате Unicode */
+
+.tabs > label:before {
+    font-family: fontawesome;
+    font-weight: normal;
+    margin-right: 10px;
+}
+
+
+/* Изменения стиля переключателей вкладок при наведении */
+
+.tabs > label:hover {
+    color: crimson;
+    cursor: pointer;
+}
+/* Стили для активной вкладки */
+
+.tabs > input:checked + label {
+    color: #555;
+    border-top: 1px solid #009933;
+    border-bottom: 1px solid #fff;
+    background: #fff;
+}
+/* Активация секций с помощью псевдокласса :checked */
+
+#tab1:checked ~ #content-tab1,
+#tab2:checked ~ #content-tab2,
+#tab3:checked ~ #content-tab3,
+#tab4:checked ~ #content-tab4 {
+    display: block;
+}
+#content-tab3 button, #content-tab4 button  {
+    background:green;
+}
+#content-tab4 {
+}
+
+.spoiler {
+    display: none;
+}
+
+.spoiler form{
+    width:200px;
+}
+.spoiler form input{
+    color:black;
+}
+
+.spoiler form label{
+    color:red;
+    margin-top:2px;
+}
+.spoiler form input[type=submit]{
+    color:black;
+    background:crimson;
+    margin-top:10px;
+}
+
+.trigger.close {
+    display: none;
+    color:crimson;
+    opacity:1;
+}
+
+.trigger.open:target {
+    display: none;
+}
+
+.trigger.open:target + .trigger.close {
+    display: inline;
+}
+
+.trigger.open:target + .trigger.close + .spoiler {
+    display: block;
+}
+
+
+.stepper{
+  display: inline-block;
+  max-width: 120px;
+  width: 100%;
+  position: relative;
+}
+
+.stepper__input{
+  width: 100%;
+  height: 50px;
+  padding: .375rem .75rem;
+  border: 1px solid #c4c4c4;
+  -moz-appearance: textfield;
+}
+
+.stepper__input:focus{
+  color: #333;
+  background-color: #fff;
+  border-color: #c4c4c4;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+}
+
+.stepper__input::-webkit-inner-spin-button,
+.stepper__input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.stepper__controls{
+
+}
+
+.stepper__controls [spinner-button="up"],
+.stepper__controls [spinner-button="down"]{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding: 0;
+  outline: none;
+  border: 1px solid #c4c4c4;
+  background-color: #fff;
+  height: 50%;
+  font-size: 1.375em;
+  line-height: 0;
+  transition: all ease 0.25s;
+}
+
+.stepper__controls [spinner-button="up"]:hover,
+.stepper__controls [spinner-button="down"]:hover {
+  background-color: #333;
+  border-color: #333;
+  color: #fff;
+}
+
+/* style 1 */
+.stepper--style-1 .stepper__input{
+  padding-right: 3.25rem;
+}
+.stepper--style-1 .stepper__controls{
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: -1px;
+  display: flex;
+  flex-direction: column;
+  width: 2.5rem;
+  z-index: 1;
+}
+.stepper--style-1 [spinner-button="up"] {
+  margin-bottom: -1px;
+}
+
+/* style 2 */
+.stepper--style-2{
+  max-width: 140px;
+}
+.stepper--style-2 .stepper__input{
+  padding-left: 3.25rem;
+  padding-right: 3.25rem;
+  text-align: center;
+}
+.stepper--style-2 [spinner-button="up"],
+.stepper--style-2 [spinner-button="down"] {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  bottom: -1px;
+  width: 2.5rem;
+  z-index: 1;
+}
+.stepper--style-2 [spinner-button="up"] {
+  right: 0;
+  margin-left: -1px;
+}
+.stepper--style-2 [spinner-button="down"] {
+  left: 0;
+  margin-right: -1px;
+}
+
+/* style 3*/
+.stepper--style-3{
+  max-width: 140px;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+.stepper--style-3 .stepper__input{
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+.stepper--style-3 [spinner-button="up"],
+.stepper--style-3 [spinner-button="down"] {
+  border: 0;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  bottom: -1px;
+  width: 2.5rem;
+}
+.stepper--style-3 [spinner-button="up"] {
+  right: 0;
+  margin-left: -1px;
+}
+.stepper--style-3 [spinner-button="down"] {
+  left: 0;
+  margin-right: -1px;
+}
+
+#table_order_history {
+    width:80%;
+}
+
+#table_order_history tr, #table_order_history td, #table_order_history th {
+    border: 2px solid grey;
+    text-align:center;
+}
+
+.profile {
+    width:30%;
+    min-height:500px;
+    max-height:100%;
+    margin-top:10px;
+
+}
+.profile p{
+    color:white;
+}
+.profile form label{
+    width:150px;
+}
+.profile form input[type=text]{
+   color:black;
+}
+.profile form input[type=email]{
+   color:black;
+}
+.profile input[type=submit]{
+   background:green;
+}
+
+.login {
+    display: flex;
+	justify-content: space-between;
+    width: 100%;
+	height: 400px;
+}
+
+.login_form {
+    width:20%;
+}
+
+.login_form input[type=submit]{
+    background:green;
+    margin-top:3%;
+    width:180px;
+}
+
+.social {
+    width:30%;
+    text-align: left;
+    height:150px;
+    margin-right:40%;
+}
+
+.social a{
+    margin-top:0;
+}
+
+.order_by_client {
+    width:100%;
+    height:300px;
+}
+
+.tabs_product {
+    width:100%;
+    border: 2px solid crimson;
+    padding: 5px;
+}
+/* Стили секций с содержанием */
+
+.tabs_product > section {
+    display: none;
+    margin:1%;
+}
+
+tabs_product > section > p {
+    margin: 0 0 5px;
+    line-height: 1.5;
+    color: #383838;
+    /* прикрутим анимацию */
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+    color:white;
+}
+
+
+/* Описываем анимацию свойства opacity */
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Прячем чекбоксы */
+
+.tabs_product > input {
+    display: none;
+    position: absolute;
+}
+/* Стили переключателей вкладок (табов) */
+
+.tabs_product > label {
+    display: inline-block;
+    padding: 15px 25px;
+    font-weight: 600;
+    text-align: center;
+    color: #aaa;
+    border: 0px solid #ddd;
+    border-width: 1px 1px 1px 1px;
+    border-radius: 3px 3px 0 0;
+
+}
+
+/* Изменения стиля переключателей вкладок при наведении */
+
+.tabs_product > label:hover {
+    color: crimson;
+    cursor: pointer;
+}
+/* Стили для активной вкладки */
+
+.tabs_product > input:checked + label {
+    color: #555;
+    border-top: 1px solid #009933;
+    border-bottom: 1px solid #fff;
+    background: #fff;
+}
+/* Активация секций с помощью псевдокласса :checked */
+
+#tab1:checked ~ #content-tab1,
+#tab2:checked ~ #content-tab2,
+#tab3:checked ~ #content-tab3,
+#tab4:checked ~ #content-tab4{
+    display: block;
+}
+#content-tab3 button, #content-tab4 button  {
+    background:green;
+}
+#content-tab4 input[type='text'] {
+    height:50px;
+    margin-top:5%;
+}
+
+/* меню с  */
+.dws-menu *{
+ margin: 0;
+ padding: 0;
+ z-index:100;
+
+}
+.dws-menu ul,
+.dws-menu ol{
+ list-style: none;
+ width:80%;
+ margin: 0 auto;
+}
+.dws-menu > ul{
+ display: flex;
+ justify-content: center;
+}
+.dws-menu > ul li{
+ position: relative;
+ border-right: 1px solid #c7c8ca;
+}
+.dws-menu > ul li:first-child{
+ border-left: 1px solid #b2b3b5;
+}
+.dws-menu > ul li:last-child{
+ border-right: 1px solid #babbbd;
+}
+.dws-menu > ul li > a i.fa{
+ position: absolute;
+ top: 15px;
+ left: 12px;
+ font-size: 20px;
+}
+.dws-menu > ul li a{
+ display: block;
+ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c9c9c9+0,f6f6f6+2,c4c5c7+98,757577+100;Custom+3 */
+ background: rgb(201,201,201); /* Old browsers */
+ background: -moz-linear-gradient(top,  rgba(201,201,201,1) 0%, rgba(246,246,246,1) 2%, rgba(196,197,199,1) 98%, rgba(117,117,119,1) 100%); /* FF3.6-15 */
+ background: -webkit-linear-gradient(top,  rgba(201,201,201,1) 0%,rgba(246,246,246,1) 2%,rgba(196,197,199,1) 98%,rgba(117,117,119,1) 100%); /* Chrome10-25,Safari5.1-6 */
+ background: linear-gradient(to bottom,  rgba(201,201,201,1) 0%,rgba(246,246,246,1) 2%,rgba(196,197,199,1) 98%,rgba(117,117,119,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c9c9c9', endColorstr='#757577',GradientType=0 ); /* IE6-9 */
+background: crimson;
+ padding: 15px 30px 15px 45px;
+ font-size: 17px;
+ color: #454547;
+ text-decoration: none;
+ text-transform:uppercase;
+ transition: all 0.3s ease;
+
+}
+.dws-menu li a:hover{
+ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e0e1e5+0,454547+2,454547+98,e0e1e5+100 */
+ background: rgb(224,225,229); /* Old browsers */
+ background: -moz-linear-gradient(top,  rgba(224,225,229,1) 0%, rgba(69,69,71,1) 2%, rgba(69,69,71,1) 98%, rgba(224,225,229,1) 100%); /* FF3.6-15 */
+ background: -webkit-linear-gradient(top,  rgba(224,225,229,1) 0%,rgba(69,69,71,1) 2%,rgba(69,69,71,1) 98%,rgba(224,225,229,1) 100%); /* Chrome10-25,Safari5.1-6 */
+ background: linear-gradient(to bottom,  rgba(224,225,229,1) 0%,rgba(69,69,71,1) 2%,rgba(69,69,71,1) 98%,rgba(224,225,229,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e0e1e5', endColorstr='#e0e1e5',GradientType=0 ); /* IE6-9 */
+background: crimson;
+ color: #ffffff;
+ box-shadow: 1px 5px 10px -5px black;
+ transition: all 0.3s ease;
+}
+
+/*sub menu*/
+.dws-menu li ul{
+ position: absolute;
+ min-width: 190px;
+ max-width: 300px;
+ display: none;
+ z-index:10000;
+}
+
+.dws-menu li > ul li{
+ border: 1px solid #c7c8ca;
+}
+.dws-menu li > ul li a{
+ padding: 10px;
+ text-transform: none;
+ background: crimson;
+}
+.dws-menu li > ul li ul{
+ position: absolute;
+ right: -150px;
+ top: 0;
+}
+.dws-menu li:hover > ul{
+ display: block;
+}
+
+.news {
+    display:none;
+}
+
+.article a{
+    color:white;
+}
+
+.article a:hover {
+    color:red;
+}
