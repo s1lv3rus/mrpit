@@ -19,7 +19,7 @@
     <h1 class="big"> Выбери СВОЮ ЦЕЛЬ:</h1>
     <table id="maintable">
          <tr>
-             <td>
+             <td class="new_blood">
                 {% for objective in objectives %}
                 {% if objective.name == "Для начинающих" %}
                 <a href="{{ objective.get_absolute_url }}">

@@ -4,22 +4,24 @@
 
 {% block content %}
 <div id="main">
-    <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / Обратная связь</p>
-    <h2>Форма обратной связи</h2>
+    <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / Форма обратной связи</p>
+    <p>Уважаемые посетители нашего сайта! Всю доступную информацию Вы можете получить в блоке <a href="{% url 'shop:info' %}">Информация</a></p>
+    <p>Если у Вас остались вопросы, пожалуйста, заполните форму ниже:</p>
+    <form action="{% url 'shop:feedback' %}" class="decor" method="post">
+      <div class="form-inner">
+          <h3>Написать нам</h3>
+          <label for="name">Тема:</label>
+          <input id="name" name="name" placeholder="Ваше имя" required="True">
 
-    <form action="{% url 'shop:feedback' %}" method="post">
+          <label for="email">E-mail:</label>
+          <input id="email" name="email" placeholder="Ваш e-mail" required="True">
 
-      <label for="theme">Тема:</label>
-      <input id="theme" name="subject" placeholder="Тема">
+          <label for="message">Сообщение:</label>
+          <textarea id="message" name="message" placeholder="Введите ваше сообщение" required="True"></textarea>
 
-      <label for="email">E-mail:</label>
-      <input id="email" name="email" placeholder="Ваш e-mail">
-
-      <label for="message">Сообщение:</label>
-      <textarea id="message" name="message" placeholder="Введите ваше сообщение"></textarea>
-
-          {% csrf_token %}
-      <input type="submit" value="Отправить сообщение"/>
+              {% csrf_token %}
+          <input type="submit" value="Отправить сообщение"/>
+      </div>
     </form>
 </div>
 

@@ -57,9 +57,9 @@ def order_create(request):
                                            price=item['price'],
                                            quantity=item['quantity'])
             cart.clear()
-            messages.success(request,
-                             'Заказ успешно создан. Ожидайте звонка менеджера. '
-                             'Вы можете предварительно оплатить заказ по форме ниже')
+            messages.success(request, 'Заказ успешно создан.')
+            messages.success(request, 'Ожидайте звонка менеджера.')
+            messages.success(request, 'Оплатить заказ можно ниже по форме')
             username = request.user.username
             # redirect to lk
             return redirect('profile', username)

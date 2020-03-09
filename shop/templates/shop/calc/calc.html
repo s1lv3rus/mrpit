@@ -1,0 +1,16 @@
+{% extends 'shop/base.html' %}
+
+{% block title %} Форма подбора питания{% endblock %}
+
+{% block content %}
+<div id="main">
+    <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / Форма подбора питания</p>
+
+    <form class="calc" method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+       <input type="submit" value="Подобрать питание"/>
+    </form>
+</div>
+
+{% endblock %}

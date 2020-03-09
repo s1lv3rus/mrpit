@@ -46,9 +46,9 @@ def cart_remove(request, flavour_id):
 
 def cart_detail(request):
     categories = Category.published.all()
-    products_rec = Product.published.filter(recommendation=True)
     suppliers = Supplier.published.all()
     objectives = Objective.published.all()
+    products_rec = Product.published.filter(recommendation=True)
     offers = Offer.published.all()
     cart = Cart(request)
     for item in cart:

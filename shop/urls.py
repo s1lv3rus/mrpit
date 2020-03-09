@@ -15,6 +15,7 @@ urlpatterns = [
     path('info/', views.info, name='info'),
     path('payment/', views.payment, name='payment'),
     path('faq/', views.faq, name='faq'),
+    path('calc/', views.calc, name='calc'),
     path('news/', views.news, name='news'),
     path('certificate/', views.certificate, name='certificate'),
     path('feedback/', views.feedback, name='feedback'),
@@ -22,6 +23,6 @@ urlpatterns = [
     path('articles/', views.articles, name='articles'),
     path('articles/<slug:article_slug>/', views.article, name='article'),
     path('delivery/', views.delivery, name='delivery'),
-    path('', views.product_list, name='product_list'),
+    path('', views.index, name='index'),
 ]
 

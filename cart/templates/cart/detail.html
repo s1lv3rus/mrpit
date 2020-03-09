@@ -179,7 +179,7 @@
             {% csrf_token %}
         </form>
         <p>
-            <a href="{% url 'shop:product_list' %}" class="button light">Продолжить покупки</a>
+            <a href="{% url 'shop:index' %}" class="button light">Продолжить покупки</a>
             <a href="{% url 'orders:order_create' %}" class="button">Оформить заказ</a>
         </p>
     </div>

@@ -8,39 +8,17 @@
     <meta name="yandex-verification" content="0ebde61df6aa42db" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/media.css' %}">
     <title>{% block title %}{% endblock %}</title>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/slider.js' %}"></script>
-    <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '{your-app-id}',
-          cookie     : true,
-          xfbml      : true,
-          version    : '{api-version}'
-        });
 
-        FB.AppEvents.logPageView();
-
-      };
-
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "https://connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
-    </script>
 </head>
 <body>
 
     <div id="header">
          <div class="logo">
-             <a href="{% url 'shop:product_list' %}" class="logo" >𝓜𝓻 𝓟𝓘𝓽</a>
+             <a href="{% url 'shop:index' %}" class="logo" >𝓜𝓻 𝓟𝓘𝓽</a>
          </div>
         <div class="header_login">
             {% if request.user.is_authenticated %}
@@ -84,7 +62,7 @@
 		      <label for="menu" class="toggleMenu"><i class="fa fa-bars"></i>Меню</label>
               <ul>
 			<li>
-                <a href="{% url 'shop:product_list' %}"><i class="fa fa-home"></i>Главная</a>
+                <a href="{% url 'shop:index' %}"><i class="fa fa-home"></i>Главная</a>
             </li>
 			<li>
                 <input type="checkbox" name="toggle" class="toggleSubMenu" id="category">
@@ -124,9 +102,9 @@
                     </li>
 				</ul>
 			</li>
-			<li><a href="{% url 'shop:info' %}"><i class="fa fa-info"></i>Информация</a></li>
             <li><a href="{% url 'shop:delivery' %}"><i class="fa fa-truck" aria-hidden="true"></i>Доставка</a></li>
             <li><a href="{% url 'shop:payment' %}"><i class="fa fa-rub" aria-hidden="true"></i>Оплата</a></li>
+            <li><a href="{% url 'shop:info' %}"><i class="fa fa-info" aria-hidden="true"></i>Информация</a></li>
             <li class="news"><a href="{% url 'shop:news' %}"><i class="fa fa-rss"></i>Новости</a></li>
 		   </ul>
           </nav>
@@ -164,6 +142,38 @@
             <div class="navy next-slide"></div>
         </div>
     </div>
+    <div id="container_form">
+            <!-- кнопка -->
+            <div class="button-wrapper" >
+                <div class="layer"></div>
+                <button class="main-button">
+                    <div class="ripple"></div>
+                </button>
+            </div>
+
+            <!-- форма -->
+            <div class="layered-content">
+                <button class="close-button">×</button>
+                <div class="form-box">
+                    <form class="feedback" action="{% url 'shop:feedback' %}" method="post">
+                        <div class="mail"></div>
+                        <h2>Задать вопрос</h2>
+                        <label>Ваше Имя
+                            <input id="name" class="txt" name="name" type="name" required="True" />
+                        </label>
+                        <label>Ваш Email
+                            <input id="email" class="txt" name="email" type="email" required="True" />
+                        </label>
+                        <label>Текст сообщения
+                            <textarea id="message" class="txtarea" name="message" required="True"></textarea>
+                        </label>
+                         {% csrf_token %}
+                        <input class="send" type="submit" value="Отправить сообщение"/>
+                    </form>
+                </div>
+            </div>
+    </div>
+
 
     <footer id="myFooter">
 
@@ -180,13 +190,27 @@
 
         <div class="groups">
             <p style="color:#454547">Мы в социальных сетях</p>
-            <a href="https://vk.com/mrpit.online"><i class="fa fa-vk"></i></a>
-            <a href="https://www.facebook.com/MrPit-111718127103911/"><i class="fa fa-facebook"></i></a>
-            <a href="https://www.instagram.com/mrpit.online/"><i class="fa fa-instagram"></i></a>
+            <a href="https://vk.com/mrpit.online"><i class="fab fa-vk"></i></a>
+            <a href="https://www.facebook.com/MrPit-111718127103911/"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/mrpit.online/"><i class="fab fa-instagram"></i></a>
+            <a href="https://ok.ru/group/57302511845550"><i class="fab fa-odnoklassniki"></i></a>
         </div>
-
     </footer>
 </div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="{% static 'js/slider.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/form.js' %}"></script>
+    <script>
+    document.querySelector('.button-wrapper').onclick = function() {
+    document.getElementById('container_form').style.width = '300px';
+    document.getElementById('container_form').style.height = '500px';
+    }
+
+    document.querySelector('.close-button').onclick = function() {
+    document.getElementById('container_form').style.width = '85px';
+    document.getElementById('container_form').style.height = '85px';
+    }
+    </script>
 
 </body>
 </html>

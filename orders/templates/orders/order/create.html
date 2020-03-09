@@ -32,11 +32,11 @@
 
         <div class="tabs">
             <input id="tab1" type="radio" name="tabs" checked>
-            <label for="tab1" title="Wordpress"><i class="fa fa-car" aria-hidden="true">Доставка (г.Пермь)</i></label>
+            <label for="tab1" title="Perm"><i class="fa fa-car" aria-hidden="true">Доставка (г.Пермь)</i></label>
             <input id="tab2" type="radio" name="tabs">
-            <label for="tab2" title="Windows"><i class="fa fa-male" aria-hidden="true">Самовывоз (г.Пермь)</i></label>
+            <label for="tab2" title="Samovivoz"><i class="fa fa-male" aria-hidden="true">Самовывоз (г.Пермь)</i></label>
             <input id="tab3" type="radio" name="tabs">
-            <label for="tab3" title="HTML5"><i class="fa fa-truck" aria-hidden="true">Доставка по России </i></label>
+            <label for="tab3" title="Russia"><i class="fa fa-truck" aria-hidden="true">Доставка по России </i></label>
             <section id="content-tab1">
                 <p> Доставка осуществляется в пределах г. Пермь </p>
                 <p>Стоимость доставки по городу, в зависимости от удаленности склада Вы можете посмотреть по ссылке <a href="{% url 'shop:delivery' %}"> Доставка</a> </p>
@@ -44,7 +44,7 @@
                 <a href="#spoiler-close-1" id="spoiler-close-1" class="trigger close">Закрыть форму</a>
                 <div class="spoiler">
                     {% if request.user.is_authenticated %}
-                        <form action="." method="post" class="order-form">
+                        <form action="." method="post" >
                               {% csrf_token %}
                              {{ perm_form.as_p }}
                             <input type="submit" name="perm_form" value="Подтвердить заказ">
@@ -73,7 +73,7 @@
                 <a href="#spoiler-close-3" id="spoiler-close-3" class="trigger close">Закрыть форму</a>
                 <div class="spoiler">
                      {% if request.user.is_authenticated %}
-                    <form action="." method="post">
+                    <form action="." method="post" >
                          {% csrf_token %}
                          {{ form.as_p }}
                         <input type="submit" name="form" value="Подтвердить заказ">

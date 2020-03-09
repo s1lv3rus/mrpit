@@ -10,8 +10,11 @@
 
 <div id="main">
  <a href="{% url 'shop:index' %}">MrPiT.online</a> / {{ objective.name }}  <br><br>
-         {{ objective.description }}
+
+        <p> Никак не получается выбрать?(</p>
+        <p> Воспользуйся нашим <a href="{% url 'shop:calc' %}">калькулятором подбора спортивного питания</a></p>
             {% if categories_p %}
+             {{ objective.description }}
                  {% for category in categories_p %}
                  <div class="list">
                    <h2>{{ category.name }}</h2>
@@ -39,44 +42,52 @@
 
                 {% for offer in offers %}
                     <h2 style="color:crimson">{{ offer.name }}</h2>
-                     {{ offer.description }} <br>
-                    <div class="offer_price">
-
                         <div class="product_list">
+                            <div class="item-list">
                            {% for product in offer.products_by_offer %}
 
-                             <div class="plus">
-                                <h1>+</h1>
-                             </div>
+                                 <div class="plus">
+                                    <h1>+</h1>
+                                 </div>
 
-                            <div class="obj-item">
-                                <a href="{{ product.get_absolute_url }}">
-                                <img src="{% thumbnail product.image 150x200 crop %}">
-                                </a><br>
-                                <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
-                                <text style="color:orange"> {{ product.size }}</text> <br>
-                                {% if product.available == False %}
-                                    Под заказ
-                                {% else %}
-                                   {% if product.price2 %}
-                                     <s>{{ product.price2 }} р.</s> {{ product.price }} р.
-                                        {% else %}
-                                    {{ product.price }} р.
-                                        {% endif %}
-                                {% endif %}
-                            </div>
+                                <div class="obj-item">
+                                    <a href="{{ product.get_absolute_url }}">
+                                    <img src="{% thumbnail product.image 150x200 crop %}">
+                                    </a><br>
+                                    <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
+                                    <text style="color:orange"> {{ product.size }}</text> <br>
+                                    {% if product.available == False %}
+                                        Под заказ
+                                    {% else %}
+                                       {% if product.price2 %}
+                                         <s>{{ product.price2 }} р.</s> {{ product.price }} р.
+                                            {% else %}
+                                        {{ product.price }} р.
+                                            {% endif %}
+                                    {% endif %}
+                                </div>
                            {% endfor %}
+                              </div>
+                            <div class="buy_offer">
+                                {{ offer.description }}
+                                <p style="color:crimson">Цена набора: {{ offer.price }} р. </p>
+                                {% if 2000 <= offer.price and offer.price < 3000 %}
+                                    <div class="gift">
+                                        <p>*Батончик в подарок!</p>
+                                    </div>
+                                {% endif %}
+                                {% if offer.price > 3000 %}
+                                    <div class="gift">
+                                        <p>*Фирменный шейкер в подарок!</p>
+                                    </div>
+                                {% endif %}
+                                <form action="{% url 'cart:add_offer' offer.id %}" method="post">
+                                    <input type="submit" value="В корзину">
+                                    {% csrf_token %}
+                                </form>
+                            </div>
                         </div>
-
-                    <div class="buy_offer">
-                        <form action="{% url 'cart:add_offer' offer.id %}" method="post">
-                            <button type="submit">Купить набор за {{ offer.price }} р.</button>
-                            {% csrf_token %}
-                        </form>
-                    </div>
-
-                </div>
-                <br>
+                    <br>
                 {% endfor %}
             {% endif %}
 </div>

@@ -4,8 +4,9 @@ from .models import *
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug']
+    list_display = ['name', 'slug', 'position']
     prepopulated_fields = {'slug': ('name',)}
+    list_editable = ['position']
 
 
 @admin.register(SubCategory)
@@ -44,21 +45,22 @@ class FlavourAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ("product", "author", "body", "date")
+    list_display = ["product", "author", "body", "date"]
 
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ("name",)
+    list_display = ["name"]
     prepopulated_fields = {'slug': ('name',)}
 
 
 @admin.register(News)
-class Newsadmin(admin.ModelAdmin):
-    list_display = ("name",)
+class NewsAdmin(admin.ModelAdmin):
+    list_display = ["name"]
 
 
 @admin.register(Offer)
 class OfferAdmin(admin.ModelAdmin):
-    list_display = ("name", )
+    list_display = ['name', 'calc']
     prepopulated_fields = {'slug': ('name',)}
+    list_editable = ['calc']

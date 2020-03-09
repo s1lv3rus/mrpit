@@ -4,7 +4,7 @@
 <div id="main">
     <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / <a href="{% url 'shop:articles' %}">Статьи</a>
         / {{ article.name }} </p>
-    {{ article.body }}
+    <div class="article_body">{{ article.body }}</div>
 </div>
 
 {% endblock %}

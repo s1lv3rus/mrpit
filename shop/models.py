@@ -46,11 +46,12 @@ class Category(models.Model):
     subcategories = models.ManyToManyField(SubCategory)
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, unique=True)
+    position = models.IntegerField(default='1', verbose_name='Позиция в списке категорий')
     description = RichTextUploadingField(blank=True, verbose_name='Описание')
     published = PublishedManager()
 
     class Meta:
-        ordering = ('-name',)
+        ordering = ('position',)
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
 
@@ -131,6 +132,7 @@ class Offer(models.Model):
     slug = models.SlugField(max_length=100, db_index=True)
     products = models.ManyToManyField(Product)
     description = RichTextUploadingField()
+    calc = models.CharField("Для калькулятора", max_length=100, default='', blank=True)
     date = models.DateTimeField("Дата создания", auto_now_add=True)
     published = PublishedManager()
 

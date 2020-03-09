@@ -14,7 +14,7 @@
         <div class="product">
             <img src="{% thumbnail product.image 250x300 crop %}">
             <h2>{{ product.name }} <br><text style="color:orange"> {{ product.size }}</text></h2>
-            <p style="color:green">{{product.subcategory }}</p>
+            <p class="product_subcategory">{{product.subcategory }}</p>
                 {% if product.price2 %}
             <p class="product_price">  <s>{{ product.price2 }} р.</s> {{ product.price }} р.</p>
                 {% else %}
@@ -71,10 +71,10 @@
 
              <section id="content-tab4">
                   {% if comments %}
-                 {% for comment in comments %}
-                     <text style="color:crimson">{{ comment.author }}</text>
-                     <text style="color:grey; font-size:10px;"> {{ comment.date }}</text><br>  {{ comment.body }}<br>
-                 {% endfor %}
+                     {% for comment in comments %}
+                         <text class="crimson">{{ comment.author }}</text>
+                         <text style="color:grey; font-size:10px;"> {{ comment.date }}</text><br>  {{ comment.body }}<br>
+                     {% endfor %}
                  {% else %}
                      <p>У этого товара еще нет отзывов. Будьте первым!</p>
                  {% endif %}

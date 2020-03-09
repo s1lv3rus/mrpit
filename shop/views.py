@@ -33,13 +33,6 @@ def search(request):
     return render(request, template, context)
 
 
-def product_list(request, category_slug=None, supplier_id=None):
-    [categories, suppliers, objectives, products_rec, offers] = list()
-    template = 'shop/index.html'
-    context = locals()
-    return render(request, template, context)
-
-
 def product_list_by_category(request, category_slug):
     [categories, suppliers, objectives, products_rec, offers] = list()
     category = Category.published.get(slug=category_slug)
@@ -143,10 +136,10 @@ def feedback(request):
         form = ContactForm(request.POST)
         # Если форма заполнена корректно, сохраняем все введённые пользователем значения
         if form.is_valid():
-            subject = form.cleaned_data['subject']
+            name = form.cleaned_data['name']
             sender = form.cleaned_data['email']
             message = form.cleaned_data['message']
-            send_mail(subject, message, sender, ['admin@mrpit.online'])
+            send_mail(name, message, sender, ['admin@mrpit.online'])
             # Переходим на другую страницу, если сообщение отправлено
             return redirect('shop:thanks')
     else:
@@ -213,5 +206,73 @@ def page_not_found_500(request):
     [categories, suppliers, objectives, products_rec, offers] = list()
     template = 'shop/500.html'
     status = 500
+    context = locals()
+    return render(request, template, context)
+
+
+def calc(request):
+    [categories, suppliers, objectives, products_rec, offers] = list()
+    if request.method == 'POST':
+        form = CalcForm(request.POST)
+        # Если форма заполнена корректно, сохраняем все введённые пользователем значения
+        if form.is_valid():
+            sex = form.cleaned_data['sex']
+            year = form.cleaned_data['year']
+            height = form.cleaned_data['height']
+            body_mass = form.cleaned_data['body_mass']
+            number_of_meals = form.cleaned_data['number_of_meals']
+            objective = form.cleaned_data['objective']
+            client_year = None
+            client_height = None
+            number_of_meals = None
+            client_body_mass = 0
+
+            if 25 <= year <= 40:
+                client_year = 'ЦА'
+            elif year < 25:
+                client_year = 'Меньше 25'
+            elif year > 40:
+                client_year = 'Больше 40'
+
+            if 160 <= height <= 180:
+                client_height = 'Средний'
+            elif height > 180:
+                client_height = 'Высокий'
+            elif height < 160:
+                client_height = 'Низкий'
+
+            if body_mass <= 60:
+                client_body_mass = 'Худой'
+            elif 60 < body_mass <= 75:
+                client_body_mass = 'Средний'
+            elif 76 < body_mass <= 90:
+                client_body_mass = 'Упитанный'
+            elif body_mass > 91:
+                client_body_mass = 'Большой'
+
+            if sex == 'муж':
+                client_sex = 'мужской'
+                bum = 66 + (13.7 * body_mass) + (5 * height) - (6.8 * year)
+
+            else:
+                client_sex = 'женский'
+                bum = 655 + (9.6 * body_mass) + (1.8 * height) - (4.7 * year)
+            calories_day = int(bum * 1.5)
+
+            if client_year == 'ЦА' and client_height == 'Средний' and objective == 'Набрать массу' and client_body_mass != 'Худой':
+                client_offer = Offer.published.get(calc='ЦСНС')
+            if client_year == 'ЦА' and client_height == 'Средний' and objective == 'Набрать массу' and client_body_mass == 'Худой':
+                client_offer = Offer.published.get(calc='ЦСНХ')
+            if client_year == 'ЦА' and client_height == 'Средний' and objective == 'Похудеть' and client_body_mass != 'Худой':
+                client_offer = Offer.published.get(calc='ЦСПС')
+            if client_year == 'ЦА' and client_height == 'Средний' and objective == 'Похудеть' and client_body_mass == 'Худой':
+                client_offer = Offer.published.get(calc='ЦСПХ')
+
+            template = 'shop/calc/completed.html'
+            context = locals()
+            return render(request, template, context)
+    else:
+        form = CalcForm()
+    template = 'shop/calc/calc.html'
     context = locals()
     return render(request, template, context)

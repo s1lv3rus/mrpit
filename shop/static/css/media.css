@@ -321,6 +321,7 @@
      max-width:100%;
      display:block;
     }
+
     .order-info {
         width:100%;
         padding:5px;
@@ -332,11 +333,14 @@
     .tabs {
         width:100%;
         margin-top:10px;
-        padding: 10px;
+        padding: 5px;
     }
     .tabs label{
         width:110px;
+        padding:10px;
+
     }
+
     .detail_table {
         margin-top:10px;
         display:block;
@@ -351,20 +355,33 @@
        margin-left:120px;
        margin-top:-100px;
     }
-    .product_category{
-        display:none;
+    .product_subcategory{
+        margin-left:100px;
     }
 
      .product_price {
       font-size:24px;
        margin-left:120px;
+
      }
       .flavours {
-       margin-left:90px;
-       margin-top:20px;
+       margin-top:10px;
+       width:100%;
     }
+    .flavour_table {
+        width:100%;
+        margin-left:0px;
+    }
+
+    .t1 {
+        width:220px;
+
+    }
+
     .flavour_text {
-        font-size:15px;
+        font-size:12px;
+        margin-right:-100px;
+
     }
 
     .tabs_product {
@@ -374,10 +391,9 @@
     .tabs_product > label {
         display:inline-block;
         width:150px;
-        margin-left: 12px;
+        margin-left: 20px;
         color:red;
     }
-
 
     #table_order_history {
         width:100%;
@@ -385,9 +401,7 @@
     .profile {
         width:100%;
     }
-    .list {
-    }
-    .obj-item img {
+    .obj-item img, .article_body img, #content-tab2 img  {
         display: block;
         max-width: 100%;
         height: auto;
@@ -406,28 +420,28 @@
         margin-top:30px;
     }
 
-
     ul.messages li.success,
     ul.messages li.warning,
     ul.messages li.error,
     ul.messages li.info {
         width:300px;
+        margin-left:0;
     }
     .plus {
         display:none;
     }
-    .offer_price {
-        display:block;
+    .item-list {
+
     }
     .product_list {
-        border:none;
+        display:block;
+        padding:5px;
+        border-radius: 0;
         width:100%;
-        height:300px;
-
+        height:100%;
     }
     .buy_offer {
         width:100%;
-        margin-top:-30px;
     }
     .buy_offer button[type=submit] {
         height:80px;
@@ -444,15 +458,15 @@
         padding:0;
         flex: 0;
     }
-    .groups {
+    #myFooter .groups {
          display:block;
          justify-content: center;
         text-align:center;
         border-bottom: 1px solid grey;
         width:100%;
         height:100px;
+        margin:0 auto;
         margin-top:10px;
-
     }
     #myFooter .container{
         width:100%;
@@ -473,6 +487,26 @@
     }
     label {
         width:100%;
+    }
+    .form-box {
+        width:100%;
+        margin-left:15%;
+        margin-right:15%;
+    }
+    .decor {
+        width:100%;
+    }
+    .thanks h2{
+        font-size:20px;
+    }
+    .thanks h4{
+        font-size:15px;
+    }
+    #container_form {
+        position: fixed;
+        bottom:0;
+        right:5px;
+
     }
 
 }
