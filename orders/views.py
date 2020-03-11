@@ -49,7 +49,7 @@ def order_create(request):
             subject = 'Новый заказ'
             sender = 'no-repeat@mrpit.online'
             message = 'Новый заказ!\n\n Номер заказа:{}\n Город: {}\n Перейти в админку для просмотра заказа: {}' \
-                .format(order.id, order.city, 'http://mrpit.online/admin/orders/order')
+                .format(order.id, order.city, 'https://mrpit.online/admin/orders/order')
             send_mail(subject, message, sender, ['admin@mrpit.online'])
             for item in cart:
                 OrderItem.published.create(order=order,
@@ -109,7 +109,7 @@ def denied(request, order_id):
     subject = 'Отмена заказа'
     sender = 'no-repeat@mrpit.online'
     message = 'Отмена заказа!\n\n Номер заказа:{}\n Перейти в админку для просмотра заказа: {}' \
-        .format(order.id, order.city, 'http://mrpit.online/admin/orders/order')
+        .format(order.id, 'https://mrpit.online/admin/orders/order')
     send_mail(subject, message, sender, ['admin@mrpit.online'])
     template = 'orders/order/deny_submit.html'
     context = locals()
@@ -121,3 +121,25 @@ def order(request):
     template = 'orders/order.html'
     context = locals()
     return render(request, template, context)
+
+
+def repeat(request, order_id):
+    order = Order.published.get(id=order_id)
+    order_new = Order.published.create(deliver=order.deliver,
+                                       first_name=order.first_name,
+                                       last_name=order.last_name,
+                                       email=order.email,
+                                       address=order.address,
+                                       postal_code=order.postal_code,
+                                       city=order.city,
+                                       status='Новый',
+                                       client=order.client,
+                                       paid=False)
+    for item in order.items.all():
+        OrderItem.published.create(order=order_new,
+                                   flavour=item.flavour,
+                                   price=item.price,
+                                   quantity=item.quantity)
+    order_new.total_cost = order.get_total_cost
+    order_new.save()
+    return redirect('profile', request.user.username)

@@ -5,6 +5,7 @@
     <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / <a href="{% url 'profile' user.username %}">Личный кабинет</a>
     / Отказ от заказа</p>
     <p>Вы отказались от заказа {{ order.name }}</p>
-    Вернуться на <a href="{% url 'shop:product_list' %}">Главную</a>
+    Вернуться в <a href="{% url 'profile' user.username %}">Личный Кабинет</a><br>
+    Вернуться на <a href="{% url 'shop:index' %}">Главную</a>
 </div>
 {% endblock %}

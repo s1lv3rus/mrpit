@@ -8,6 +8,7 @@ urlpatterns = [
     path('orders/<int:pk>/', views.order_list, name='orders'),
     path('orders/deny/<int:order_id>/', views.deny, name='deny'),
     path('orders/denied/<int:order_id>/', views.denied, name='denied'),
+    path('orders/repeat/<int:order_id>/', views.repeat, name='repeat'),
     path('order/', views.order, name='order'),
     path('admin/order/<int:order_id>/', views.admin_order_detail, name='admin_order_detail'),
 ]

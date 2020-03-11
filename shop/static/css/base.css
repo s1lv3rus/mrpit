@@ -73,9 +73,9 @@ a.button.light {
 }
 
 #header .logo {
-	font-size:50px;
-    margin-left:20px;
+    width:200px;
 }
+
 
 #header .header_login {
     position:absolute;
@@ -843,9 +843,8 @@ width: 4px;
     border: 5px solid crimson;
 }
 .tabs label{
-        width:200px;
+        width:165px;
     }
-
 
 /* Стили секций с содержанием */
 

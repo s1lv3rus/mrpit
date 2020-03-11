@@ -18,7 +18,9 @@
 
     <div id="header">
          <div class="logo">
-             <a href="{% url 'shop:index' %}" class="logo" >𝓜𝓻 𝓟𝓘𝓽</a>
+             <a href="{% url 'shop:index' %}">
+                 <img src="{% static 'img/mrpit-red.png' %}">
+             </a>
          </div>
         <div class="header_login">
             {% if request.user.is_authenticated %}

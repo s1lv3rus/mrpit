@@ -68,6 +68,10 @@ class Order(models.Model):
         return reverse('orders:orders',
                        args=[self.pk])
 
+    def order_items(self):
+        items = OrderItem.published.filter(order=self)
+        return items
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order,
