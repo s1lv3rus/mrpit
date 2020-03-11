@@ -22,6 +22,11 @@
                  <img src="{% static 'img/mrpit-red.png' %}">
              </a>
          </div>
+         <div class="logo1">
+             <a href="{% url 'shop:index' %}">
+                 MrPIT.ONLINE
+             </a>
+         </div>
         <div class="header_login">
             {% if request.user.is_authenticated %}
               <a href="{% url 'profile' request.user %}">Личный кабинет</a>

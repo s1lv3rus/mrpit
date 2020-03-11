@@ -11,53 +11,61 @@
 
 <div class="screen">
     <img src="{% static 'img/font1.jpg' %}"><br><br>
-    <h1> “ Раз уж начал - ПОБЕЖДАЙ ” </h1>
-        <p> - Э. Хемингуэй</p><br>
+    <h1> Первый в мире Интернет-сервис подбора спортивного питания онлайн! </h1>
 </div>
 
 <div id="main">
-    <h1 class="big"> Выбери СВОЮ ЦЕЛЬ:</h1>
-    <table id="maintable">
-         <tr>
-             <td class="new_blood">
-                {% for objective in objectives %}
-                {% if objective.name == "Для начинающих" %}
-                <a href="{{ objective.get_absolute_url }}">
-                    <img src="{% thumbnail objective.image 450x250 crop %}">
-                </a>
-                 {% endif %}
-                {% endfor %}
-            </td>
-            <td>
-                {% for objective in objectives %}
-                {% if objective.name == "Похудение" %}
+    <div class="index">
+        <h1 class="big"> Выбери СВОЮ ЦЕЛЬ:</h1>
+        <table id="maintable">
+             <tr>
+                 <td class="new_blood">
+                    {% for objective in objectives %}
+                    {% if objective.name == "Для начинающих" %}
                     <a href="{{ objective.get_absolute_url }}">
                         <img src="{% thumbnail objective.image 450x250 crop %}">
                     </a>
-                {% endif %}
-                {% endfor %}
-            </td>
-         </tr>
-        <tr>
-            <td>
-                {% for objective in objectives %}
-                {% if objective.name == 'Набрать массу' %}
-             <a href="{{ objective.get_absolute_url }}">
-                 <img src="{% thumbnail objective.image 450x250 crop %}">
-             </a>
-                  {% endif %}
-                {% endfor %}
-            </td>
-            <td>
-                {% for objective in objectives %}
-                {% if objective.name == "Выносливость" %}
-                <a href="{{ objective.get_absolute_url }}">
-                   <img src="{% thumbnail objective.image 450x250 crop %}">
-                </a>
-                 {% endif %}
-                 {% endfor %}
-            </td>
-         </tr>
-    </table>
+                     {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for objective in objectives %}
+                    {% if objective.name == "Похудение" %}
+                        <a href="{{ objective.get_absolute_url }}">
+                            <img src="{% thumbnail objective.image 450x250 crop %}">
+                        </a>
+                    {% endif %}
+                    {% endfor %}
+                </td>
+             </tr>
+            <tr>
+                <td>
+                    {% for objective in objectives %}
+                    {% if objective.name == 'Набрать массу' %}
+                 <a href="{{ objective.get_absolute_url }}">
+                     <img src="{% thumbnail objective.image 450x250 crop %}">
+                 </a>
+                      {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for objective in objectives %}
+                    {% if objective.name == "Выносливость" %}
+                    <a href="{{ objective.get_absolute_url }}">
+                       <img src="{% thumbnail objective.image 450x250 crop %}">
+                    </a>
+                     {% endif %}
+                     {% endfor %}
+                </td>
+             </tr>
+        </table>
+
+        <div class="calc_index">
+            <p>Никак не получается выбрать?<p/>
+            <p>Воспользуйся нашим
+                <a href="{% url 'shop:calc' %}">калькулятором подбора спортивного питания</a> !
+            </p>
+        </div>
+    </div>
 </div>
 {% endblock %}

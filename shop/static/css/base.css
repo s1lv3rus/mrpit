@@ -73,9 +73,12 @@ a.button.light {
 }
 
 #header .logo {
-    width:200px;
+   margin-left:50px;
+   width:200px;
 }
-
+#header .logo1 {
+    display:none;
+}
 
 #header .header_login {
     position:absolute;
@@ -126,8 +129,11 @@ header {
 
 .screen {
     margin: 0 auto;
-    color:crimson;
 }
+.screen img{
+    margin-left:10%;
+}
+
 .crimson {
     color:crimson;
 }
@@ -135,13 +141,11 @@ header {
 .screen h1{
     margin-top:2%;
     font-size:45px;
+    color:crimson;
     text-align:center;
     font-family: 'Annabelle', cursive;
 }
-.screen p{
-    text-align:right;
-    font-size:19px;
-}
+
 .new_blood {
     box-shadow: 0 0 25px 0 crimson, 0 20px 25px 0 rgba(0, 0, 0, 0.2);
 }
@@ -264,9 +268,6 @@ ul.messages li a.close {
     text-shadow:none;
 }
 
-
-
-
 .card_pay {
     width: 600px;
     height: 800px;
@@ -286,9 +287,15 @@ ul.messages li a.close {
     text-align:center;
     margin-top:10%;
     margin-bottom:2%;
-
 }
-
+.calc_index {
+    font-size:40px;
+    text-align:center;
+    color:crimson;
+}
+.calc_index a{
+    color:white;
+}
 
 /*таблицы */
 
@@ -302,7 +309,9 @@ ul.messages li a.close {
 #table h2 {
     color:crimson;
 }
-
+.index {
+    height:100vh;
+}
 #maintable {
     margin:0 auto;
     margin-bottom:5%;

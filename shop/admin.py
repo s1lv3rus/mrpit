@@ -64,3 +64,9 @@ class OfferAdmin(admin.ModelAdmin):
     list_display = ['name', 'calc']
     prepopulated_fields = {'slug': ('name',)}
     list_editable = ['calc']
+
+
+@admin.register(Lead)
+class LeadAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email']
+

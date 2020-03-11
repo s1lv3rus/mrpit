@@ -140,6 +140,7 @@ def feedback(request):
             sender = form.cleaned_data['email']
             message = form.cleaned_data['message']
             send_mail(name, message, sender, ['admin@mrpit.online'])
+            new_lead = Lead.published.create(email=sender, name=name)
             # Переходим на другую страницу, если сообщение отправлено
             return redirect('shop:thanks')
     else:

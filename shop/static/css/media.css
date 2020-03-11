@@ -81,10 +81,15 @@
         color:white;
     }
 
-    #header .logo {
-        width:50px;
-        height:50px;
-        background:yellow;
+    #header .logo img{
+      display:none;
+    }
+    #header .logo1 {
+        display:inline;
+        color:crimson;
+        position:absolute;
+        top:15px;
+        left:5px;
     }
      #subheader {
         height:50px;
@@ -203,12 +208,32 @@
       opacity: 0.5;
       font-weight: bolder;
     }
-
-    .screen, .promo img{
+    .index {
+        height:100%;
+    }
+    .screen img, .promo img{
          display:none;
     }
-    .big {
+    .screen h1 {
         font-size:20px;
+        margin-top:-20px;
+        color:white;
+    }
+    .big, .calc_index {
+       font-size:20px;
+       margin-top:10px;
+       color:crimson;
+    }
+    .calc_index {
+       font-size:20px;
+       margin-top:10px;
+       color:white;
+    }
+    .calc_index a {
+        color:crimson;
+    }
+    .calc input[type='submit'] {
+        width:100%;
     }
 
     #maintable td img{
@@ -422,7 +447,7 @@
     ul.messages li.warning,
     ul.messages li.error,
     ul.messages li.info {
-        width:300px;
+        width:100%;
         margin-left:0;
     }
     .plus {

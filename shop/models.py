@@ -248,3 +248,17 @@ class News(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Lead(models.Model):
+    name = models.CharField("Имя", max_length=100, default='Лид')
+    email = models.EmailField("Email")
+    published = PublishedManager()
+
+    class Meta:
+        ordering = ('email',)
+        verbose_name = "Лид"
+        verbose_name_plural = "Лиды"
+
+    def __str__(self):
+        return self.email
