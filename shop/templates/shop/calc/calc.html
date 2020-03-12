@@ -1,16 +1,73 @@
 {% extends 'shop/base.html' %}
-
+{% load static %}
 {% block title %} Форма подбора питания{% endblock %}
 
 {% block content %}
 <div id="main">
     <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / Форма подбора питания</p>
 
-    <form class="calc" method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-       <input type="submit" value="Подобрать питание"/>
-    </form>
+     <form action="{% url 'shop:calc' %}" method="post" class="calc_form">
+        <p>Выберете Ваш пол:</p>
+        <div class="form_toggle">
+            <div class="form_toggle-item item-1">
+                <input id="fid-1" type="radio" name="sex" value="муж" checked>
+                <label for="fid-1">Муж</label>
+            </div>
+            <div class="form_toggle-item item-2">
+                <input id="fid-2" type="radio" name="sex" value="жен">
+                <label for="fid-2">Жен</label>
+            </div>
+        </div>
+
+        <p>Укажите свои параметры:</p>
+            <div class="params">
+               <span class="params1">
+                   <label for="year">Возраст</label>
+                   <input id="year" type="number" name="year" min="10" max="90" placeholder="30" required="True">
+               </span>
+
+               <span class="params1">
+                    <label for="height">Рост</label>
+                    <input id="height" type="number" name="height" min="100" max="220" placeholder="170" required="True">
+               </span>
+
+               <span class="params1">
+                    <label for="body_mass">Вес</label>
+                    <input id="body_mass" type="number" name="body_mass" min="30" max="150" placeholder="80" required="True">
+               </span>
+            </div> <br>
+
+            <p>Сколько раз в день Вы питаетесь?</p>
+            <div class="meals">
+                <span class="meals1"><label for="1">1</label> <input id = '1' class="medium" type="radio" name="number_of_meals" value="1"></span>
+                <span class="meals1"><label for="2">2</label> <input id = '2' class="medium" type="radio" name="number_of_meals" value="2"></span>
+                <span class="meals1"><label for="3">3</label> <input id = '3' class="medium" type="radio" name="number_of_meals" value="3" checked></span>
+                <span class="meals1"><label for="4">4</label> <input id = '4' class="medium" type="radio" name="number_of_meals" value="4"></span>
+                <span class="meals1"><label for="5">5</label> <input id = '5' class="medium" type="radio" name="number_of_meals" value="5"></span>
+                <span class="meals1"><label for="6">6</label> <input id = '6' class="medium" type="radio" name="number_of_meals" value="6"></span>
+            </div><br>
+
+          <p>Какая у Вас цель?</p>
+            <div class="objectives_all">
+                <div class="objectives item-1">
+                    <input id="mass" type="radio" name="objective" value="Набрать массу" checked>
+                    <label for="mass">Набрать массу</label>
+                </div>
+                <div class="objectives item-2">
+                    <input id="pohudenie" type="radio" name="objective" value="Похудеть">
+                    <label for="pohudenie">Похудеть</label>
+                </div>
+                <div class="objectives item-3">
+                    <input id="sost" type="radio" name="objective" value="Поддержать форму">
+                    <label for="sost">Поддержать форму</label>
+                </div>
+            </div>
+
+        <br>
+            {% csrf_token %}
+           <input type="submit" value="Подобрать питание"/>
+     </form>
+
 </div>
 
 {% endblock %}

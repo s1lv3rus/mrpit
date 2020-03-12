@@ -44,7 +44,7 @@ NUMBER_OF_MEALS = [
 class CalcForm(forms.Form):
     sex = forms.ChoiceField(label="Выберете пол", choices=SEX_CHOISES)
     year = forms.IntegerField(label="Сколько Вам лет?", max_value=80, min_value=10)
-    height = forms.IntegerField(label="Какой у вас рост?", max_value=220, min_value=100)
+    height = forms.IntegerField(label="Какой у Вас рост?", max_value=220, min_value=100)
     body_mass = forms.IntegerField(label="Укажите массу тела", max_value=200, min_value=30)
     number_of_meals = forms.ChoiceField(label="Сколько раз в день Вы питаетесь?", choices=NUMBER_OF_MEALS)
     objective = forms.ChoiceField(label="Выберете Вашу цель", choices=OBJECTIVE_CHOISES)

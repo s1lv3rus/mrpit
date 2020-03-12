@@ -164,16 +164,7 @@ header {
     display:flex;
     width:100%;
 }
-.calc label{
-    width:300px;
-}
 
-.calc input {
-    width:100px;
-}
-.calc input[type='submit'] {
-    width:150px;
-}
 .buy_offer {
     width:600px;
 
@@ -1696,4 +1687,104 @@ button {
   font-weight: 500;
   font-size: 24px;
   color: crimson;
+}
+
+.calc_form {
+    width:250px;
+}
+.calc_form input[type=submit]{
+    width:200px;
+}
+.form_toggle {
+	display: inline-block;
+	overflow: hidden;
+}
+.form_toggle-item {
+	float: left;
+	display: inline-block;
+}
+.form_toggle-item input[type=radio] {
+	display: none;
+}
+.form_toggle-item label {
+	display: inline-block;
+	padding: 0px 15px;
+	line-height: 34px;
+	border: 1px solid #999;
+	border-right: none;
+	cursor: pointer;
+	user-select: none;
+}
+
+.form_toggle .item-1 label {
+	border-radius: 6px 0 0 6px;
+}
+.form_toggle .item-2 label {
+	border-radius: 0 6px 6px 0;
+	border-right: 1px solid #999;
+}
+
+/* Checked */
+.form_toggle .item-1 input[type=radio]:checked + label, .form_toggle .item-2 input[type=radio]:checked + label {
+	background: crimson;
+}
+
+.params {
+    display:flex;
+}
+.params1 {
+     padding:0 10px 0 0;
+}
+.params1 label {
+    width:70px;
+    text-align:center;
+}
+.params1 input[type='number'] {
+    width:70px;
+    height:40px;
+    border-radius: 10px;
+    border: 3px solid crimson;
+    text-align:center;
+}
+
+.meals {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  backface-visibility:hidden;
+}
+
+.meals label {
+   margin:0 15px 10px 0;
+  width: 20px;
+  height: 20px;
+  text-align:center;
+}
+
+.meals input[type=radio]   {
+  margin:0 15px 0 0;
+  width: 20px;
+  height: 20px;
+}
+
+.objectives_all {
+    display:block;
+    overflow: hidden;
+}
+.objectives input[type=radio] {
+    display:none;
+}
+.objectives label {
+    width:200px;
+    display: block;
+	padding: 0px 15px;
+	line-height: 34px;
+	border: 1px solid #999;
+	cursor: pointer;
+	user-select: none;
+}
+
+
+.objectives_all .item-1 input[type=radio]:checked + label, .objectives_all .item-2 input[type=radio]:checked + label, .objectives_all .item-3 input[type=radio]:checked + label {
+	background: crimson;
 }
