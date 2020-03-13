@@ -52,6 +52,7 @@
                     {% csrf_token %}
                 </form>
             </td>
+
             <td class="del"><a href="{% url 'cart:cart_remove' flavour.id %}">Удалить</a></td>
             <td class="num">
                 {% if flavour.product.price2 %}

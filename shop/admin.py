@@ -39,7 +39,7 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Flavour)
 class FlavourAdmin(admin.ModelAdmin):
     list_display = ['name', 'product', 'supplier', 'quantity', 'for_offer']
-    list_filter = ['product', 'name', 'quantity']
+    list_filter = ['product', 'supplier', 'name', 'quantity']
     list_editable = ['quantity', 'for_offer']
 
 

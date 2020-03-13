@@ -204,6 +204,7 @@ header {
   -webkit-transform: scale(1.1);
   -ms-transform: scale(1.1);
   transform: scale(1.1);
+   z-index:100;
 }
 .obj-item p{
     margin:0 auto;
@@ -282,10 +283,10 @@ ul.messages li a.close {
 .calc_index {
     font-size:40px;
     text-align:center;
-    color:crimson;
+    color:white;
 }
 .calc_index a{
-    color:white;
+    color:crimson;
 }
 
 /*таблицы */
