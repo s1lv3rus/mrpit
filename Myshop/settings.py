@@ -130,7 +130,7 @@ CKEDITOR_CONFIGS = {
 
     'default': {
 
-     'toolbar': 'None'
+        'toolbar': 'None'
 
     },
 
@@ -168,3 +168,17 @@ if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# from yandex_checkout import Configuration, Refund
+# import uuid
+#
+# Configuration.account_id = '681662'
+# Configuration.secret_key = 'test_u651SuGAV4prh_qhRk7OE1DvaboIciuK48ixpS7MBzg'
+# idempotence_key = str(uuid.uuid4())
+# refund = Refund.create({
+#     "amount": {
+#         "value": "2.00",
+#         "currency": "RUB"
+#     },
+#     "payment_id": "215d8da0-000f-50be-b000-0003308c89be"
+# }, idempotence_key)

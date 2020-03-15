@@ -2,7 +2,7 @@
 @import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 
 body, html {
-    font-family: Times New Roman;
+    font-family:Ubuntu;
     background:black;
     margin: 0;
     padding: 0;
@@ -20,6 +20,10 @@ body, html {
 
 a {
     text-decoration:none;
+    color:crimson;
+}
+h1, h2 {
+    text-align:left;
     color:crimson;
 }
 
@@ -131,21 +135,31 @@ header {
     margin: 0 auto;
 }
 .screen img{
-    margin-left:10%;
+    margin-left:5%;
 }
 
 .crimson {
     color:crimson;
 }
 
-.screen h1{
-    margin-top:2%;
-    font-size:45px;
+.screen h1, .screen h2 {
+    font-size:35px;
     color:crimson;
     text-align:center;
-    font-family: 'Annabelle', cursive;
+    margin-top:25px;
 }
+.form_main {
+     margin: 0 auto;
+     align-items: center;
+     width:400px;
+}
+.form_main  input[type=submit]{
+    background:crimson;
+    color: white;
+    font-size:30px;
+    margin-top:35px;
 
+}
 .new_blood {
     box-shadow: 0 0 25px 0 crimson, 0 20px 25px 0 rgba(0, 0, 0, 0.2);
 }
@@ -162,11 +176,11 @@ header {
 }
 .item-list {
     display:flex;
-    width:100%;
+    width:60%;
 }
-
 .buy_offer {
-    width:600px;
+    font-size:15px;
+    width:35%;
 
 }
 .buy_offer input[type=submit] {
@@ -176,6 +190,20 @@ header {
         background:green;
         color:white;
 }
+.offer_description {
+    z-index:100;
+}
+.offer_image {
+    width:0px;
+    z-index:-9;
+    margin-left:50%;
+    margin-top:-175px;
+}
+.offer_price_total {
+    color:crimson;
+    z-index:1;
+}
+
 .gift {
     color:grey;
 }
@@ -183,6 +211,9 @@ header {
     margin-top:80px;
     margin-left:-40px;
     margin-right:10px;
+}
+.plus h1 {
+    color:white;
 }
 .plus:first-child {
    display:none;
@@ -279,14 +310,6 @@ ul.messages li a.close {
     text-align:center;
     margin-top:10%;
     margin-bottom:2%;
-}
-.calc_index {
-    font-size:40px;
-    text-align:center;
-    color:white;
-}
-.calc_index a{
-    color:crimson;
 }
 
 /*таблицы */
@@ -628,7 +651,6 @@ ul.messages li a.close {
 
 
 .search input {
-  font-family: 'Inconsolata', monospace;
    width:250px;
    height:50px;
   outline: none;
@@ -912,7 +934,6 @@ width: 4px;
 /* Шрифт-иконки от Font Awesome в формате Unicode */
 
 .tabs > label:before {
-    font-family: fontawesome;
     font-weight: normal;
     margin-right: 10px;
 }
@@ -1312,7 +1333,6 @@ tabs_product > section > p {
 }
 .dws-menu > ul li a{
  display: block;
- /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c9c9c9+0,f6f6f6+2,c4c5c7+98,757577+100;Custom+3 */
  background: rgb(201,201,201); /* Old browsers */
  background: -moz-linear-gradient(top,  rgba(201,201,201,1) 0%, rgba(246,246,246,1) 2%, rgba(196,197,199,1) 98%, rgba(117,117,119,1) 100%); /* FF3.6-15 */
  background: -webkit-linear-gradient(top,  rgba(201,201,201,1) 0%,rgba(246,246,246,1) 2%,rgba(196,197,199,1) 98%,rgba(117,117,119,1) 100%); /* Chrome10-25,Safari5.1-6 */
@@ -1396,8 +1416,6 @@ button:focus {
 	width: 60px;
 	height: 100%;
 	position: absolute;
-	bottom: 0;
-	right: 0;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -1672,7 +1690,6 @@ button {
   line-height: 40px;
   border-width: 0;
   border-radius: 20px;
-  font-family: 'Roboto', sans-serif;
 }
 .form-inner input[type="submit"] {
   margin-top: 30px;
@@ -1684,7 +1701,6 @@ button {
 .form-inner textarea {resize: none;}
 .form-inner h3 {
   margin-top: 0;
-  font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 24px;
   color: crimson;

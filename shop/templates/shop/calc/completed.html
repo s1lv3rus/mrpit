@@ -12,8 +12,10 @@
     <p>Ваш базовый уровень метаболизма: <text class="crimson"> {{ bum }}</text></p>
     <p>Среднее необходимое количество калорий в день: <text class="crimson"> {{ calories_day }} калорий</text></p> <br>
 
-    {% if client_offer %}
-    <h2>Мы рекомендуем Вам набор <text style="color:crimson"> "{{client_offer}}"</text></h2>
+    {% if client_offers %}
+    <p>Основываясь на опыте профессионалов мы подобрали для Вас оптимальные наборы товаров, которые соответствуют Вашим целям! </p>
+    {% for client_offer in client_offers %}
+    <h2>Набор <text style="color:crimson"> "{{client_offer}}"</text></h2>
         <div class="offer_price">
             <div class="product_list">
                 <div class="item-list">
@@ -40,27 +42,34 @@
                         {% endif %}
                     </div>
                {% endfor %}
-                  </div>
+               </div>
+
                 <div class="buy_offer">
-                    <p>{{ client_offer.description }}</p>
-                    <p style="color:crimson">Цена набора: {{ client_offer.price }} р. </p>
-                    {% if 2000 <= client_offer.price and client_offer.price < 5000 %}
-                        <div class="gift">
-                            <p>*Протеиновый батончик в подарок!</p>
-                        </div>
-                    {% endif %}
-                    {% if client_offer.price > 5000 %}
-                        <div class="gift">
-                            <p>*Фирменный шейкер в подарок!</p>
-                        </div>
-                    {% endif %}
-                    <form action="{% url 'cart:add_offer' client_offer.id %}" method="post">
-                        <input type="submit" value="В корзину">
-                        {% csrf_token %}
-                    </form>
+                    <div class="offer_description">
+                        <p>{{ client_offer.description }}</p>
+                        <p style="color:red;">Цена набора: {{ client_offer.price }} р. </p>
+                        {% if 2000 <= client_offer.price and client_offer.price < 5000 %}
+                            <div class="gift">
+                                <p>*Протеиновый батончик в подарок!</p>
+                            </div>
+                        {% endif %}
+                        {% if client_offer.price > 5000 %}
+                            <div class="gift">
+                                <p>*Фирменный шейкер в подарок!</p>
+                            </div>
+                        {% endif %}
+                        <form action="{% url 'cart:add_offer' client_offer.id %}" method="post">
+                            <input type="submit" value="В корзину">
+                            {% csrf_token %}
+                        </form>
+                    </div>
+                    <div class="offer_image">
+                        <img src="{% thumbnail client_offer.image 200x200 crop %}">
+                     </div>
                 </div>
             </div>
-        </div>
+        </div> <br>
+    {% endfor %}
     {% else %}
         <p> По Вашим параметрам не удалось подобрать набора. </p>
         <p> Воспользуйтесь меню для выбора товаров по категориям или в зависимости от целей.</p>

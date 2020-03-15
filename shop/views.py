@@ -228,28 +228,28 @@ def calc(request):
             number_of_meals = None
             client_body_mass = 0
 
-            if 25 <= year <= 40:
-                client_year = 'ЦА'
-            elif year < 25:
-                client_year = 'Меньше 25'
-            elif year > 40:
-                client_year = 'Больше 40'
-
-            if 160 <= height <= 180:
-                client_height = 'Средний'
-            elif height > 180:
-                client_height = 'Высокий'
-            elif height < 160:
-                client_height = 'Низкий'
-
-            if body_mass <= 60:
-                client_body_mass = 'Худой'
-            elif 60 < body_mass <= 75:
-                client_body_mass = 'Средний'
-            elif 76 < body_mass <= 90:
-                client_body_mass = 'Упитанный'
-            elif body_mass > 91:
-                client_body_mass = 'Большой'
+            # if 25 <= year <= 40:
+            #     client_year = 'ЦА'
+            # elif year < 25:
+            #     client_year = 'Меньше 25'
+            # elif year > 40:
+            #     client_year = 'Больше 40'
+            #
+            # if 160 <= height <= 180:
+            #     client_height = 'Средний'
+            # elif height > 180:
+            #     client_height = 'Высокий'
+            # elif height < 160:
+            #     client_height = 'Низкий'
+            #
+            # if body_mass <= 60:
+            #     client_body_mass = 'Худой'
+            # elif 60 < body_mass <= 75:
+            #     client_body_mass = 'Средний'
+            # elif 76 < body_mass <= 90:
+            #     client_body_mass = 'Упитанный'
+            # elif body_mass > 91:
+            #     client_body_mass = 'Большой'
 
             if sex == 'муж':
                 client_sex = 'мужской'
@@ -260,14 +260,12 @@ def calc(request):
                 bum = 655 + (9.6 * body_mass) + (1.8 * height) - (4.7 * year)
             calories_day = int(bum * 1.5)
 
-            if client_year == 'ЦА' and client_height == 'Средний' and objective == 'Набрать массу' and client_body_mass != 'Худой':
-                client_offer = Offer.published.get(calc='ЦСНС')
-            if client_year == 'ЦА' and client_height == 'Средний' and objective == 'Набрать массу' and client_body_mass == 'Худой':
-                client_offer = Offer.published.get(calc='ЦСНХ')
-            if client_year == 'ЦА' and client_height == 'Средний' and objective == 'Похудеть' and client_body_mass != 'Худой':
-                client_offer = Offer.published.get(calc='ЦСПС')
-            if client_year == 'ЦА' and client_height == 'Средний' and objective == 'Похудеть' and client_body_mass == 'Худой':
-                client_offer = Offer.published.get(calc='ЦСПХ')
+            if objective == 'Набрать массу':
+                client_offers = Offer.published.filter(calc='gain')
+            elif objective == 'Похудеть':
+                client_offers = Offer.published.filter(calc='slim')
+            elif objective == 'Поддержать форму':
+                client_offers = Offer.published.filter(calc='mrpit')
 
             template = 'shop/calc/completed.html'
             context = locals()

@@ -131,13 +131,15 @@ class Offer(models.Model):
     name = models.CharField("Название предложения", max_length=100)
     slug = models.SlugField(max_length=100, db_index=True)
     products = models.ManyToManyField(Product)
+    sorting = models.IntegerField(default='1', verbose_name='Позиция в списке цели')
     description = RichTextUploadingField()
+    image = ThumbnailerImageField(upload_to=upload_path_purpose, blank=True)
     calc = models.CharField("Для калькулятора", max_length=100, default='', blank=True)
     date = models.DateTimeField("Дата создания", auto_now_add=True)
     published = PublishedManager()
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('sorting',)
         verbose_name = "Предложение"
         verbose_name_plural = "Предложения"
 

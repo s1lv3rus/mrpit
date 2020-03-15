@@ -142,4 +142,12 @@ def repeat(request, order_id):
                                    quantity=item.quantity)
     order_new.total_cost = order.get_total_cost
     order_new.save()
+    messages.success(request, 'Заказ успешно создан.')
+    messages.success(request, 'Ожидайте звонка менеджера.')
+    messages.success(request, 'Оплатить заказ можно ниже по форме')
+    subject = 'Новый заказ (повторный)'
+    sender = 'no-repeat@mrpit.online'
+    message = 'Новый заказ! (повторный)\n\n Номер заказа:{}\n Город: {}\n Перейти в админку для просмотра заказа: {}' \
+        .format(order_new.id, order_new.city, 'https://mrpit.online/admin/orders/order')
+    send_mail(subject, message, sender, ['admin@mrpit.online'])
     return redirect('profile', request.user.username)

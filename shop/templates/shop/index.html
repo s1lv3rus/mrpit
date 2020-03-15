@@ -11,7 +11,11 @@
 
 <div class="screen">
     <img src="{% static 'img/font1.jpg' %}"><br><br>
-    <h1> Первый в мире Интернет-сервис подбора спортивного питания онлайн! </h1>
+    <h1> Уникальный Интернет-сервис подбора спортивного питания онлайн! </h1>
+    <form action="{% url 'shop:calc' %}" method="post" class="form_main">
+        <input type="submit" value="Попробовать бесплатно">
+        {% csrf_token %}
+    </form>
 </div>
 
 <div id="main">
@@ -60,11 +64,12 @@
              </tr>
         </table>
 
-        <div class="calc_index">
-            <p>Никак не получается выбрать?<p/>
-            <p>Воспользуйся нашим
-                <a href="{% url 'shop:calc' %}">калькулятором подбора спортивного питания</a> !
-            </p>
+        <div class="screen">
+            <h2>Никак не получается выбрать? Воспользуйтесь калькулятором</h2>
+            <form action="{% url 'shop:calc' %}" method="post" class="form_main">
+                <input type="submit" value="Перейти в калькулятор">
+                {% csrf_token %}
+            </form>
         </div>
     </div>
 </div>

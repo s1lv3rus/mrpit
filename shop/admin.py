@@ -61,9 +61,9 @@ class NewsAdmin(admin.ModelAdmin):
 
 @admin.register(Offer)
 class OfferAdmin(admin.ModelAdmin):
-    list_display = ['name', 'calc']
+    list_display = ['name', 'calc', 'sorting']
     prepopulated_fields = {'slug': ('name',)}
-    list_editable = ['calc']
+    list_editable = ['calc', 'sorting']
 
 
 @admin.register(Lead)
