@@ -1,27 +1,29 @@
 {% extends "shop/base.html" %}
 
-{% block title %}Оплата заказа{% endblock %}
-
 {% block content %}
 <div id="main">
-    <!--Подключение библиотеки-->
-    <script src="https://kassa.yandex.ru/checkout-ui/v2.js"></script>
+    <form method="post" action="https://pay.modulbank.ru/pay">
 
-    <!--HTML-элемент, в котором будет отображаться платежная форма-->
-    <div id="payment-form"></div>
+        <input type="hidden" name="testing" value="1">
 
-    <script>
-    //Инициализация виджета. Все параметры обязательные.
-    const checkout = new window.YandexCheckout({
-        confirmation_token: 'test_u651SuGAV4prh_qhRk7OE1DvaboIciuK48ixpS7MBzg', //Токен, который перед проведением оплаты нужно получить от Яндекс.Кассы
-        return_url: 'https://mrpit.online', //Ссылка на страницу завершения оплаты
-        error_callback(error) {
-            //Обработка ошибок инициализации
-        }
-    });
+        <input type="hidden" name="order_id" value="{{ order.id }}">
 
-    //Отображение платежной формы в контейнере
-    checkout.render('payment-form');
-    </script>
-</div>
+        <input type="hidden" name="amount" value="{{ amount }}">
+
+        <input type="hidden" name="merchant" value="{{ merchant }}">
+
+        <input type="hidden" name="signature" value="{{ signature }}">
+
+        <input type="hidden" name="description" value="Заказ c магазина https://mrpit.online">
+
+        <input type="hidden" name="success_url" value="https://mrpit.online">
+
+        <input type="hidden" name="receipt_contact" value="admin@mrpit.online">
+
+        <input type="hidden" name="unix_timestamp" value="{{ unix_timestamp }}">
+
+        <input type="submit" value="Отправить платеж">
+
+    </form>
+ </div>
 {% endblock %}
