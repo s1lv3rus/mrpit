@@ -14,25 +14,31 @@ from io import BytesIO
 
 def payment_process(request, order_id):
     [categories, suppliers, objectives, products_rec, offers] = list()
-    order = Order.published.get(id=order_id)
     Configuration.account_id = '681662'
     Configuration.secret_key = 'test_u651SuGAV4prh_qhRk7OE1DvaboIciuK48ixpS7MBzg'
-
+    order = Order.published.get(id=order_id)
+    value = float(order.get_total_cost())
+    idempotence_key = str(uuid.uuid4())
     payment = Payment.create({
         "amount": {
-            "value": "2.00",
+            "value": value,
             "currency": "RUB"
         },
         "confirmation": {
-            "type": "embedded"
-        },
-        "capture": True,
-        "description": "Заказ №72"
-    })
+            "type": "redirect",
+            "return_url": "http://127.0.0.1:8000/"
 
-    template = 'payment/process.html'
-    context = locals()
-    return render(request, template, context)
+        },
+        "description": "Заказ от сайта https://mrpit.online"
+    }, idempotence_key)
+
+    return redirect(payment.confirmation.confirmation_url)
+
+
+def notifications(request):
+    payment_id = request.data['object']['id']
+    Payment.capture(payment_id)
+    return redirect('shop:profile', request.user.username)
 
 
 def payment_done(request):
