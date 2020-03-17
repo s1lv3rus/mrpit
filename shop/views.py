@@ -275,3 +275,10 @@ def calc(request):
     template = 'shop/calc/calc.html'
     context = locals()
     return render(request, template, context)
+
+
+def requisites(request):
+    [categories, suppliers, objectives, products_rec, offers] = list()
+    template = 'shop/requisites.html'
+    context = locals()
+    return render(request, template, context)

@@ -1,0 +1,17 @@
+{% extends 'shop/base.html' %}
+{% load thumbnail %}
+{% block title %} Реквизиты компании {% endblock %}
+{% block content %}
+<div id="main">
+    <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / <a href="{% url 'shop:info' %}">Информация о компании</a> / Реквизиты компании</p>
+    <p>ИП Курило Евгений Сергеевич</p>
+    <p>Юридический адрес: г. Пермь, улица снайперов 9, офис 15</p>
+    <p>ИНН: 591907595850</p>
+    <p>ОГРНИП: 320595800026962</p><br><br>
+
+    <p>Вернуться в блок<a href="{% url 'shop:info' %}"> информация</a></p>
+    <p>Вернуться на<a href="{% url 'shop:index' %}"> главную</a></p>
+</div>
+
+{% endblock %}
+
