@@ -7,11 +7,9 @@ import json
 from django.http import HttpResponse
 
 
-def payment_process(request, order_id):
-    order = Order.published.get(id=order_id)
+def payment_process(order_id):
     Configuration.account_id = '681662'
     Configuration.secret_key = 'test_u651SuGAV4prh_qhRk7OE1DvaboIciuK48ixpS7MBzg'
-
     order = Order.published.get(id=order_id)
     value = float(order.get_total_cost())
     description = order.id
