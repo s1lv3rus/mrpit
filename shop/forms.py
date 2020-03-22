@@ -48,3 +48,5 @@ class CalcForm(forms.Form):
     body_mass = forms.IntegerField(label="Укажите массу тела", max_value=200, min_value=30)
     number_of_meals = forms.ChoiceField(label="Сколько раз в день Вы питаетесь?", choices=NUMBER_OF_MEALS)
     objective = forms.ChoiceField(label="Выберете Вашу цель", choices=OBJECTIVE_CHOISES)
+
+

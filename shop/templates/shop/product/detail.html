@@ -13,7 +13,8 @@
    <div class="detail_table">
         <div class="product">
             <img src="{% thumbnail product.image 250x300 crop %}">
-            <h2>{{ product.name }} <br><text style="color:orange"> {{ product.size }}</text></h2>
+            <h2 class="product_name">{{ product.name }} </h2>
+            <h2 class="product_size"> {{ product.size }}</h2>
             <p class="product_subcategory">{{product.subcategory }}</p>
                 {% if product.price2 %}
             <p class="product_price">  <s>{{ product.price2 }} р.</s> {{ product.price }} р.</p>
@@ -24,16 +25,16 @@
             <div class="flavours">
                 {% for flavour in flavours %}
                 <table class="flavour_table">
-                    <tr>
-                        <td class="t1">
-                            <form action="{% url 'cart:cart_add' flavour.id %}" method="post" >
+                    <tr><form action="{% url 'cart:cart_add' flavour.id %}" method="post" >
+                        <td class="t1" >
+
                             <text class="flavour_text"> {{ flavour }} </text>
                         </td>
-                        <td>
+                        <td class="t2">
                             <input type="number" name='quantity' min="1" max="10" step="1" title="Укажите количество товара"  value="1">
                              {% csrf_token %}
                         </td>
-                        <td>
+                         <td class="t3">
                             {% if flavour.quantity == 0 %}
                                <input type="submit" value="Под заказ">
                             {% else %}

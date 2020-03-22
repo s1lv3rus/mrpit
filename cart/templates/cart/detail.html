@@ -5,7 +5,8 @@
 {% block title %}Корзина товаров{% endblock %}
 
 {% block content %}
- {% if messages %}
+<div id="main">
+     {% if messages %}
           <ul class="messages">
            {% for message in messages %}
             <li class="{{ message.tags }}">
@@ -15,7 +16,6 @@
            </ul>
           {% endfor %}
          {% endif %}
-<div id="main">
     <a href="{% url 'shop:index' %}">MrPiT.online</a> / Корзина <br><br>
     {% if cart %}
         <h2>Ваша корзина покупок</h2>

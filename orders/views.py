@@ -14,6 +14,8 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User
 from django.contrib import messages
+import requests
+import json
 
 
 def order_create(request):
@@ -22,57 +24,61 @@ def order_create(request):
     if not cart:
         messages.error(request, "Корзина пуста!")
         return redirect('cart:cart_detail')
-    try:
-        user = request.user
-        profile = Profile.published.get(user=user)
-        data = {'first_name': profile.first_name,
-                'last_name': profile.last_name,
-                'email': profile.email,
-                'address': profile.address,
-                'city': profile.city,
-                'postal_code': profile.postal_code}
 
-        if request.method == 'POST':
-            if 'form' in request.POST:
-                form = OrderCreateForm(request.POST, initial=data)
-                order = form.save(commit=False)
-            else:
-                perm_form = PermOrderCreateForm(request.POST, initial=data)
-                order = perm_form.save(commit=False)
-            if cart.coupon:
-                order.coupon = cart.coupon
-                order.discount = cart.coupon.discount
-
-            order.client = request.user
-            order.status = 'Новый'
-            order.save()
-            subject = 'Новый заказ'
-            sender = 'no-repeat@mrpit.online'
-            message = 'Новый заказ!\n\n Номер заказа:{}\n Город: {}\n Перейти в админку для просмотра заказа: {}' \
-                .format(order.id, order.city, 'https://mrpit.online/admin/orders/order')
-            send_mail(subject, message, sender, ['admin@mrpit.online'])
-            for item in cart:
-                OrderItem.published.create(order=order,
-                                           flavour=item['flavour'],
-                                           price=item['price'],
-                                           quantity=item['quantity'])
-            cart.clear()
-            messages.success(request, 'Заказ успешно создан.')
-            messages.success(request, 'Ожидайте звонка менеджера.')
-            messages.success(request, 'Оплатить заказ можно ниже по форме')
-            username = request.user.username
-            # redirect to lk
-            return redirect('profile', username)
+    user = request.user
+    profile = Profile.published.get(user=user)
+    data = {'first_name': profile.first_name,
+            'last_name': profile.last_name,
+            'email': profile.email,
+            'address': profile.address,
+            'city': profile.city,
+            'postal_code': profile.postal_code}
+    postal_code = 614000
+    form = None
+    if request.method == 'POST':
+        if 'form' in request.POST:
+            form = OrderCreateForm(request.POST, initial=data)
+            if form.is_valid():
+                postal_code = form.cleaned_data['postal_code']
+            order = form.save(commit=False)
         else:
-            form = OrderCreateForm(initial=data)
-            perm_form = PermOrderCreateForm(initial=data)
-        template = 'orders/order/create.html'
-        context = locals()
-        return render(request, template, context)
-    except:
-        template = 'orders/order/create.html'
-        context = locals()
-        return render(request, template, context)
+            perm_form = PermOrderCreateForm(request.POST, initial=data)
+            order = perm_form.save(commit=False)
+            order.city = 'Пермь'
+        if cart.coupon:
+            order.coupon = cart.coupon
+            order.discount = cart.coupon.discount
+
+        order.client = request.user
+        if form:
+            order.deliver_cost = russian_post_calc(postal_code)
+        else:
+            order.deliver_cost = 200
+        order.status = 'Новый'
+        order.save()
+        subject = 'Новый заказ'
+        sender = 'no-repeat@mrpit.online'
+        message = 'Новый заказ!\n\n Номер заказа:{}\n Город: {}\n Перейти в админку для просмотра заказа: {}' \
+            .format(order.id, order.city, 'https://mrpit.online/admin/orders/order')
+        send_mail(subject, message, sender, ['admin@mrpit.online'])
+        for item in cart:
+            OrderItem.published.create(order=order,
+                                       flavour=item['flavour'],
+                                       price=item['price'],
+                                       quantity=item['quantity'])
+        cart.clear()
+        messages.success(request, 'Заказ успешно создан.')
+        messages.success(request, 'Ожидайте звонка менеджера.')
+        messages.success(request, 'Оплатить заказ можно ниже по форме')
+        username = request.user.username
+        # redirect to lk
+        return redirect('profile', username)
+    else:
+        form = OrderCreateForm(initial=data)
+        perm_form = PermOrderCreateForm(initial=data)
+    template = 'orders/order/create.html'
+    context = locals()
+    return render(request, template, context)
 
 
 @staff_member_required
@@ -125,7 +131,7 @@ def order(request):
 
 def repeat(request, order_id):
     order = Order.published.get(id=order_id)
-    order_new = Order.published.create(deliver=order.deliver,
+    order_new = Order.published.create(deliver_cost=order.deliver_cost,
                                        first_name=order.first_name,
                                        last_name=order.last_name,
                                        email=order.email,
@@ -151,3 +157,40 @@ def repeat(request, order_id):
         .format(order_new.id, order_new.city, 'https://mrpit.online/admin/orders/order')
     send_mail(subject, message, sender, ['admin@mrpit.online'])
     return redirect('profile', request.user.username)
+
+
+def russian_post_calc(postal_code):
+    token = '5SHr_TxD2ZtxgxrlN6HI7Da_Jn4ajc5Y'
+    key = 'am9obl9rQGluYm94LnJ1OkdnNTU1NTU2'
+
+    host = "https://otpravka-api.pochta.ru"
+
+    request_headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json;charset=UTF-8",
+        "Authorization": "AccessToken " + token,
+        "X-User-Authorization": "Basic " + key
+    }
+
+    path = "/1.0/tariff"
+
+    url = host + path
+
+    try:
+        destination = {
+            "index-from": "614000",
+            "index-to": postal_code,
+            "mail-category": "ORDINARY",
+            "mail-type": "POSTAL_PARCEL",
+            "mass": 2000,
+            "fragile": "false"
+        }
+        response = requests.post(url, headers=request_headers, data=json.dumps(destination))
+        decoder_json = json.loads(response.text)
+        value = str(decoder_json['total-rate'] + decoder_json['total-vat'])
+        value = int(value[0:-2])
+        return value
+    except:
+        messages.error(request, message='Неверный индекс')
+        return redirect('orders:create')
+

@@ -1,10 +1,15 @@
+import json
 from itertools import chain
 
+import requests
+from django.contrib import messages
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views import View
+
+from orders.forms import IndexForm
 from .forms import *
 from .models import *
 from cart.forms import CartAddProductForm
@@ -118,6 +123,50 @@ def info(request):
 
 def delivery(request):
     [categories, suppliers, objectives, products_rec, offers] = list()
+    token = '5SHr_TxD2ZtxgxrlN6HI7Da_Jn4ajc5Y'
+    key = 'am9obl9rQGluYm94LnJ1OkdnNTU1NTU2'
+
+    host = "https://otpravka-api.pochta.ru"
+
+    request_headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json;charset=UTF-8",
+        "Authorization": "AccessToken " + token,
+        "X-User-Authorization": "Basic " + key
+    }
+
+    path = "/1.0/tariff"
+
+    url = host + path
+    if request.method == 'POST':
+        form = IndexForm(request.POST)
+        if form.is_valid():
+            try:
+                postal_code = form.cleaned_data['postal_code']
+                destination = {
+                    "index-from": "614000",
+                    "index-to": postal_code,
+                    "mail-category": "ORDINARY",
+                    "mail-type": "POSTAL_PARCEL",
+                    "mass": 2000,
+                    "fragile": "false"
+                }
+                response = requests.post(url, headers=request_headers, data=json.dumps(destination))
+                decoder_json = json.loads(response.text)
+                value = str(decoder_json['total-rate'] + decoder_json['total-vat'])
+                value = value[0:-2] + ' р.'
+                if value == ' р.':
+                    messages.error(request, message='Неверный индекс')
+                    return redirect('orders:create')
+                template = 'shop/delivery.html'
+                context = locals()
+                return render(request, template, context)
+            except:
+                messages.error(request, message='Неверный индекс')
+                return redirect('shop:delivery')
+    else:
+        form = IndexForm()
+
     template = 'shop/delivery.html'
     context = locals()
     return render(request, template, context)

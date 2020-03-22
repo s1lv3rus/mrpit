@@ -21,14 +21,7 @@ class Order(models.Model):
         ('Выполнен', 'Выполнен'),
         ('Отказ', 'Отказ'),
     )
-    Deliver_CHOISES = (
-        ('Почта России', 'Почта России'),
-        ('СДЭК', 'СДЭК'),
-        ('Деловые линии', 'Деловые линии'),
-        ('ПЭК', 'ПЭК'),
-        ('Другое (комментарий)', 'Другое (комментарий)'),
-    )
-    deliver = models.CharField(max_length=50, choices=Deliver_CHOISES, verbose_name='Перевозчик')
+
     first_name = models.CharField(max_length=50, verbose_name='Имя')
     last_name = models.CharField(max_length=50, verbose_name='Фамилия')
     email = models.EmailField(verbose_name='Email')
@@ -36,6 +29,7 @@ class Order(models.Model):
     postal_code = models.CharField(max_length=20, verbose_name='Почтовый индекс')
     city = models.CharField(max_length=100, verbose_name='Населенный пункт')
     status = models.CharField(max_length=50, choices=STATUS_CHOISES, verbose_name='Статус', blank=True)
+    deliver_cost = models.IntegerField(verbose_name='Стоимость доставки', default=300)
     client = models.ForeignKey(User, related_name='orders',
                                on_delete=models.CASCADE, default=True, verbose_name='Клиент')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создан')

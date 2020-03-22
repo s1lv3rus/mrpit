@@ -2,7 +2,6 @@
 @import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 
 body, html {
-    font-family:Ubuntu;
     background:black;
     margin: 0;
     padding: 0;
@@ -124,8 +123,8 @@ header {
 }
 
 
-.promo img {
-    margin-left:10%;
+.promo {
+    text-align:center;
 }
 #main category{
     padding:0px 15px;
@@ -250,9 +249,13 @@ header {
     color:red;
 }
 .product {
+    width:35%;
+    text-align:center;
+
+}
+.product h2 {
     text-align:center;
 }
-
 /* messages */
 ul.messages {
     margin-left:1%;
@@ -341,6 +344,7 @@ ul.messages li a.close {
     display:flex;
 }
 .product_subcategory {
+    font-size:22px;
     color:green;
 }
 
@@ -393,26 +397,24 @@ ul.messages li a.close {
     display:none;
 }
 .product_price {
-    font-size:25px;
+    font-size:22px;
     color:crimson;
 }
-.flavours {
-    margin-right:20px;
+.product_size {
+    color:orange;
+    text-align:center;
 }
-
 .flavour_text {
     font-size:20px;
-}
-.flavour_table {
-    margin-top:5px;
-    margin-left:-100px;
-}
-.t1 {
-    text-align:right;
+    margin-right:5px;
 }
 
+.flavour_table {
+    width:97%;
+    margin-top:5px;
+    margin-right:5px;
+}
 .flavour_table input[type=number] {
-    margin-left:5px;
     color:black;
     width:50px;
     height:30px;
@@ -428,6 +430,17 @@ ul.messages li a.close {
     font-size:10px;
 }
 
+.t1 {
+    text-align:right;
+    width:70%;
+
+}
+.t2 {
+    width:10%;
+}
+.t3 {
+    width:20%;
+}
 
 .delivery_table {
     width:60%;
@@ -651,7 +664,7 @@ ul.messages li a.close {
 
 
 .search input {
-   width:250px;
+   width:275px;
    height:50px;
   outline: none;
   border: none;
@@ -1137,7 +1150,7 @@ width: 4px;
 }
 
 #table_order_history {
-    width:80%;
+    width:100%;
 }
 
 #table_order_history tr, #table_order_history td, #table_order_history th {
@@ -1202,7 +1215,7 @@ width: 4px;
 }
 
 .tabs_product {
-    width:100%;
+    width:65%;
     border: 2px solid crimson;
     padding: 5px;
 }

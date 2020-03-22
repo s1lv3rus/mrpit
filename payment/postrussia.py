@@ -17,18 +17,17 @@ path = "/1.0/tariff"
 
 destination = {
     "index-from": "614000",
-    "index-to": "443000",
+    "index-to": "555555",
     "mail-category": "ORDINARY",
     "mail-type": "POSTAL_PARCEL",
-    "mass": 30000,
+    "mass": 19000,
     "fragile": "false"
 }
 url = host + path
 
 response = requests.post(url, headers=request_headers, data=json.dumps(destination))
 decoder_json = json.loads(response.text)
-value = str(decoder_json['total-rate'])
-len_value = len(value)
-value = value[-len_value:-(len_value-3)] + ' р.'
+value = str(decoder_json['total-rate']+decoder_json['total-vat'])
+value = value[0:-2] + ' р.'
 print("Status code: ", response.status_code)
-print(value)
+print(decoder_json)

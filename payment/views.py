@@ -7,11 +7,11 @@ import json
 from django.http import HttpResponse
 
 
-def payment_process(order_id):
+def payment_process(*args, order_id):
     Configuration.account_id = '681662'
     Configuration.secret_key = 'test_u651SuGAV4prh_qhRk7OE1DvaboIciuK48ixpS7MBzg'
     order = Order.published.get(id=order_id)
-    value = float(order.get_total_cost())
+    value = float(order.get_total_cost() + order.deliver_cost)
     description = order.id
 
     payment = Payment.create({
@@ -21,7 +21,7 @@ def payment_process(order_id):
         },
         "confirmation": {
             "type": "redirect",
-            "return_url": "https://mrpit.online"
+            "return_url": "http://127.0.0.1:8000/payment/notifications"
         },
         "description": description
     })
@@ -31,18 +31,18 @@ def payment_process(order_id):
 
 def notifications(request):
     event_json = json.loads(request.body)
-    try:
-        notification_object = WebhookNotification(event_json)
-        payment = notification_object.object
-        description = event_json.description
-        if payment.succeeded:
-            order = Order.published.get(id=description)
-            order.status = 'Выполнен'
-            order.save()
-            return payment_done(request)
-        return HttpResponse(status=200)
-    except Exception:
-        return HttpResponse(status=500)
+    result(request, event_json)
+    return HttpResponse(status=200)
+
+
+def result(request, event_json):
+    value = str(event_json['event'])
+    # order = Order.published.get(id=payment.description)
+    # order.paid = True
+    # order.save()
+    template = 'shop/paid.html'
+    context = locals()
+    return render(request, template, context)
 
 
 def payment_done(request):

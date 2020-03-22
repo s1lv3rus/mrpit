@@ -4,6 +4,16 @@
 
 {% block content %}
 <div id="main">
+    {% if messages %}
+      <ul class="messages">
+       {% for message in messages %}
+        <li class="{{ message.tags }}">
+          {{ message|safe }}
+            <a href="#" class="close">x</a>
+        </li>
+       {% endfor %}
+      </ul>
+    {% endif %}
     <a href="{% url 'shop:index' %}">MrPiT.online</a> / <a href="{% url 'cart:cart_detail' %}">Корзина</a>
     / Оформление заказа
 
@@ -31,11 +41,11 @@
         </div>
 
         <div class="tabs">
-            <input id="tab1" type="radio" name="tabs" checked>
+            <input id="tab1" type="radio" name="tabs">
             <label for="tab1" title="Perm"><i class="fa fa-car" aria-hidden="true">Доставка (г.Пермь)</i></label>
             <input id="tab2" type="radio" name="tabs">
             <label for="tab2" title="Samovivoz"><i class="fa fa-male" aria-hidden="true">Самовывоз (г.Пермь)</i></label>
-            <input id="tab3" type="radio" name="tabs">
+            <input id="tab3" type="radio" name="tabs" checked>
             <label for="tab3" title="Russia"><i class="fa fa-truck" aria-hidden="true">Доставка по России </i></label>
             <section id="content-tab1">
                 <p> Доставка осуществляется в пределах г. Пермь </p>
@@ -62,13 +72,9 @@
             </section>
 
             <section id="content-tab3">
-                <p> Доставка осуществляется в пределах Российской Федерации </p>
-                <p>Рассчитать стоимость можно на сайтах<a href="https://www.pochta.ru/parcels">Почты России</a> и <a href="https://cdek.ru/">СДЭК</a></p>
-                <p>Дополнительную информацию Вы можете получить по ссылке: <a href="{% url 'shop:delivery' %}"> Доставка</a> </p>
-                <p>В дальнейшем будет доступен автоматический расчет </p>
-<!--                <p> Введите индекс для того, чтобы рассчитать стоимость доставки:</p>-->
-<!--                <input type="text" placeholder="Введите индекс"><br>-->
-<!--                <button> Рассчитать </button> <br>-->
+                <p> Доставка осуществляется в пределах Российской Федерации Почтой России. </p>
+                <p> Стоимость доставки составляет в среднем 300 р. Конкретная стоимость рассчитается автоматически после создания заказа.</p>
+
                 <a href="#spoiler-open-3" id="spoiler-open-3" class="trigger open">Выбрать доставку почтой</a>
                 <a href="#spoiler-close-3" id="spoiler-close-3" class="trigger close">Закрыть форму</a>
                 <div class="spoiler">

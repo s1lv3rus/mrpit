@@ -15,7 +15,7 @@ class OrderCreateForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ['first_name', 'last_name', 'email', 'city', 'address', 'postal_code', 'deliver', 'comment']
+        fields = ['first_name', 'last_name', 'email', 'city', 'address', 'postal_code', 'comment']
 
 
 class PermOrderCreateForm(forms.ModelForm):
@@ -28,3 +28,8 @@ class PermOrderCreateForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['first_name', 'last_name', 'email', 'address', 'comment']
+
+
+class IndexForm(forms.Form):
+    postal_code = forms.IntegerField(label="Введите свой индекс")
+
