@@ -71,7 +71,7 @@ a.button.light {
 #header {
     display:block;
     justify-content: space-between;
-    padding:10px 10px 10px 0px;
+    padding:10px 10px 10px 0;
     height:50px;
 }
 
@@ -99,7 +99,7 @@ a.button.light {
 	align-items: center;
 	height:100px;
 	font-size:18px;
-	padding: 0px 50px 0px 300px;
+	padding: 0 50px 0 300px;
 }
 
 #subheader .main_cart {
@@ -114,8 +114,7 @@ header {
 /*основные представления товаров */
 #main {
     width: 70%;
-    margin: 0 auto;
-    margin-top: 1%;
+    margin: 1% auto 0;
     font-size: 17px;
     color:white;
     min-height:400px;
@@ -125,9 +124,6 @@ header {
 
 .promo {
     text-align:center;
-}
-#main category{
-    padding:0px 15px;
 }
 
 .screen {
@@ -193,7 +189,7 @@ header {
     z-index:100;
 }
 .offer_image {
-    width:0px;
+    width:0;
     z-index:-9;
     margin-left:50%;
     margin-top:-175px;
@@ -237,8 +233,7 @@ header {
    z-index:100;
 }
 .obj-item p{
-    margin:0 auto;
-    margin-top:50px;
+    margin: 50px auto 0;
 }
 
 .obj-item a{
@@ -292,19 +287,6 @@ ul.messages li a.close {
     border:0;
     box-shadow:none;
     text-shadow:none;
-}
-
-.card_pay {
-    width: 600px;
-    height: 800px;
-    background:white;
-}
-
-.card_pay input{
-    padding 50px;
-    margin-top:5%;
-    float:left;
-    width:100%;
 }
 
 .big {
@@ -562,7 +544,7 @@ ul.messages li a.close {
 }
 #myFooter li{
     display: inline-block;
-    margin: 0px 15px;
+    margin: 0 15px;
     line-height: 3;
 }
 #myFooter .groups {
@@ -572,7 +554,7 @@ ul.messages li a.close {
 
 }
 #myFooter .groups a{
-    padding:0px 10px 0 0;
+    padding:0 10px 0 0;
     font-size:30px;
 
 }
@@ -706,7 +688,7 @@ ul.messages li a.close {
 background-image:url('');
 background-repeat:no-repeat;
 width:5px;
-height:0px
+height:0;
 }
 /* сама полоса */
 ::-webkit-scrollbar-track {
@@ -714,8 +696,8 @@ background-color:#000;
 }
 /* пользунок */
 ::-webkit-scrollbar-thumb {
--webkit-border-radius: 0px;
-border-radius: 0px;
+-webkit-border-radius: 0;
+border-radius: 0;
 background-color: #615c5c;
 }
 
@@ -727,7 +709,7 @@ background-color:crimson;
 background-image:url('');
 background-repeat:no-repeat;
 width:4px;
-height:0px
+height:0;
 }
 
 ::-webkit-scrollbar{
@@ -759,7 +741,7 @@ width: 4px;
 /* Slider */
 .slider {
 	width: 85%;
-	margin: 0px auto;
+	margin: 0 auto;
 	padding: 0 10px;
 	position: relative;
 	overflow: hidden;
@@ -771,14 +753,13 @@ width: 4px;
 .slide-list {
 	position: static;
 	margin: 0;
-	padding: 0;
     overflow-x: auto;
     padding: 0 15px;
     height:500px;
 }
 .slide-wrap {
 	position: relative;
-	left: 0px;
+	left: 0;
 	top: 0;
 	width: 12000%;
 }
@@ -798,8 +779,7 @@ width: 4px;
   transform: scale(1.1);
 }
 .slide-item  p{
-    margin:0 auto;
-    margin-top:50px;
+    margin: 50px auto 0;
 }
 
 .slide-item a{
@@ -873,7 +853,7 @@ width: 4px;
 
 .tabs {
     width:50%;
-    padding:10px 0px 0px 20px;
+    padding:10px 0 0 20px;
     margin-top: 2%;
     height:100%;
     border: 5px solid crimson;
@@ -893,7 +873,6 @@ width: 4px;
 .tabs > section > p {
     margin: 0 0 5px;
     line-height: 1.5;
-    color: #383838;
     /* прикрутим анимацию */
     -webkit-animation-duration: 1s;
     animation-duration: 1s;
@@ -1226,10 +1205,9 @@ width: 4px;
     margin:1%;
 }
 
-tabs_product > section > p {
+.tabs_product > section > p {
     margin: 0 0 5px;
     line-height: 1.5;
-    color: #383838;
     /* прикрутим анимацию */
     -webkit-animation-duration: 1s;
     animation-duration: 1s;
@@ -1631,7 +1609,7 @@ button {
 	box-sizing: border-box;
 	margin-bottom: 5px;
 	border-radius: 3px;
-	border: 0px;
+	border: 0;
 }
 .form-box label{
     padding: 5px 10px;
@@ -1654,12 +1632,12 @@ button {
 .form-box p a {
 	font-size: 12px;
 	background: white;
-	padding: 2.5px 5px;
+	padding: 3px 5px;
 	color: #ff2670;;
 	text-decoration: none;
 	border-radius: 50px;
 	display: inline-block;
-	margin-left: 1.5px;
+	margin-left: 2px;
 }
 .form-box label {
 	opacity: 0;
@@ -1738,7 +1716,7 @@ button {
 }
 .form_toggle-item label {
 	display: inline-block;
-	padding: 0px 15px;
+	padding: 0 15px;
 	line-height: 34px;
 	border: 1px solid #999;
 	border-right: none;
@@ -1807,7 +1785,7 @@ button {
 .objectives label {
     width:200px;
     display: block;
-	padding: 0px 15px;
+	padding: 0 15px;
 	line-height: 34px;
 	border: 1px solid #999;
 	cursor: pointer;

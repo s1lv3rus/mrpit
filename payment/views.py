@@ -21,7 +21,7 @@ def payment_process(*args, order_id):
         },
         "confirmation": {
             "type": "redirect",
-            "return_url": "http://127.0.0.1:8000/payment/notifications"
+            "return_url": "http://127.0.0.1:8000"
         },
         "description": description
     })
@@ -31,18 +31,15 @@ def payment_process(*args, order_id):
 
 def notifications(request):
     event_json = json.loads(request.body)
-    result(request, event_json)
+    try:
+        notification_object = WebhookNotification(event_json)
+    except Exception:
+        notification_object = None
+    payment = notification_object.object
+    order = Order.published.get(id=payment.description)
+    order.paid = True
+    order.save()
     return HttpResponse(status=200)
-
-
-def result(request, event_json):
-    value = str(event_json['event'])
-    # order = Order.published.get(id=payment.description)
-    # order.paid = True
-    # order.save()
-    template = 'shop/paid.html'
-    context = locals()
-    return render(request, template, context)
 
 
 def payment_done(request):

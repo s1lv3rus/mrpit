@@ -10,7 +10,7 @@
     padding: 15px 40px;
     text-transform: uppercase;
     width:400px;
-    font-style: 14px;
+
     cursor: pointer;
     position: relative;
 }
@@ -59,7 +59,7 @@
         top: 0;
         right: 0;
         width: 100%;
-        height: 100;
+        height: 100%;
         cursor: pointer;
         display: block;
     }
@@ -181,7 +181,7 @@
       opacity: 1;
       cursor: text;
       position: absolute;
-      top: x;
+
     }
     .search input:focus ~ .search1 {
       right: -250px;
@@ -200,7 +200,7 @@
       height: 2px;
       border: none;
       background: white;
-      border-radius: 0%;
+      border-radius: 0;
       transform: rotate(-45deg);
     }
     .search input::placeholder {
@@ -240,7 +240,6 @@
          margin-left:25%;
     }
 
-
     #maintable td img{
         display: block;
         max-width: 100%;
@@ -255,9 +254,7 @@
     .social {
         position:absolute;
         left:60%;
-        right:15%
         top:5%;
-
     }
     .social .fb {
         margin-left:15px;
@@ -436,17 +433,15 @@
         height: auto;
     }
     .obj-item {
-        margin: 0px;
-        padding: 0px;
+        margin: 0;
+        padding: 0;
         width:190px;
         height:300px;
 
     }
     .rec {
         color:crimson;
-        margin:0 auto;
-        margin-bottom:30px;
-        margin-top:30px;
+        margin: 30px auto;
     }
 
     ul.messages li.success,
