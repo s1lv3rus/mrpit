@@ -17,10 +17,10 @@ path = "/1.0/tariff"
 
 destination = {
     "index-from": "614000",
-    "index-to": "555555",
+    "index-to": "614000",
     "mail-category": "ORDINARY",
     "mail-type": "POSTAL_PARCEL",
-    "mass": 19000,
+    "mass": 2000,
     "fragile": "false"
 }
 url = host + path
