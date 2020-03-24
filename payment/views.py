@@ -37,8 +37,8 @@ def notifications(request):
         notification_object = None
     payment = notification_object.object
     order = Order.published.get(id=payment.description)
-    order.paid = True
-    order.save()
+    # order.paid = True
+    # order.save()
     return HttpResponse(status=200)
 
 
