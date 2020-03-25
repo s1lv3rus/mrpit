@@ -378,6 +378,11 @@ ul.messages li a.close {
 .cart_hidden {
     display:none;
 }
+.check_cart {
+    text-align:right;
+    margin-top:-40px;
+}
+
 .product_price {
     font-size:22px;
     color:crimson;
@@ -468,45 +473,18 @@ ul.messages li a.close {
     float:right;
 }
 
-
 /*Корзина*/
 
 
-.check_coupon {
-    margin-top:1%;
-}
 .coupon_in_cart {
-    display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height:100px;
-	margin-top:-3%;
-}
-
-.coupon_in_cart form {
-    display: flex;
-	justify-content: space-between;
-}
-
-.coupon_in_cart input[type=text]{
-   margin-right:3px;
-   height:38px;
-   margin-top:2px;
-}
-
-.coupon_in_cart input[type=submit] {
-    background:green;
-    color:white;
-}
+	height:50px;
+	width:200px;
+	margin-top:20px;
 
 
-.coupon_in_cart a{
-    background:green;
 }
-.coupon_in_cart .check_coupon{
-   margin-top:0;
-   margin-left:1%;
-   height:30px;
+.coupon_in_cart a {
+    margin-top:-2%;
 }
 /*подвал*/
 
@@ -859,7 +837,8 @@ width: 4px;
     border: 5px solid crimson;
 }
 .tabs label{
-        width:165px;
+        width:45%;
+        margin-right:4%;
     }
 
 /* Стили секций с содержанием */
@@ -867,7 +846,6 @@ width: 4px;
 .tabs > section {
     display: none;
     margin:1%;
-
 }
 
 .tabs > section > p {
@@ -956,35 +934,36 @@ width: 4px;
 #content-tab3 button, #content-tab4 button  {
     background:green;
 }
-#content-tab4 {
-}
 
-.spoiler {
+
+.spoiler, .spoiler_coupon {
     display: none;
 }
 
 .spoiler form{
     width:200px;
 }
-.spoiler form input{
-    color:black;
+.spoiler_coupon form {
+    width:400px;
+    height:50px;
 }
 
-.spoiler form label{
-    color:red;
-    width:200px;
-
+.spoiler_coupon form input {
+    height:40px;
+    border-radius: 5px;
+    background:#ededed;
 }
-.spoiler form input[type=submit]{
-    color:black;
-    background:crimson;
-    margin-top:10px;
+.spoiler_coupon form input[type=submit] {
+    color:white;
+    background:green;
 }
 
 .trigger.close {
     display: none;
     color:crimson;
     opacity:1;
+    margin-right:-150px;
+    margin-top:6px;
 }
 
 .trigger.open:target {
@@ -998,7 +977,13 @@ width: 4px;
 .trigger.open:target + .trigger.close + .spoiler {
     display: block;
 }
-
+.trigger.open:target + .trigger.close + .spoiler_coupon {
+    display: block;
+}
+.trigger.open {
+    color:orange;
+    font-size:20px;
+}
 
 .stepper{
   display: inline-block;
@@ -1174,7 +1159,7 @@ width: 4px;
 .login_form input[type=submit]{
     background:green;
     margin-top:3%;
-    width:180px;
+    width:200px;
 }
 
 .social {

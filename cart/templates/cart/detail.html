@@ -171,25 +171,36 @@
                 </tr>
             </table>
     </div>
+    {% if request.user.is_authenticated %}
+    <!--        <p class="check_coupon">Применить купон:</p>-->
+        <div class="coupon_in_cart">
+            <a href="#spoiler-open-1" id="spoiler-open-1" class="trigger open" >Купон на скидку</a>
+            <a href="#spoiler-close-1" id="spoiler-close-1" class="trigger close">Х</a>
 
-    <p class="check_coupon">Применить купон:</p>
-    <div class="coupon_in_cart">
-        <form action="{% url 'coupons:apply' %}" method="post">
-            <input type="text" name='code' placeholder="Введите номер купона">
-            <input type="submit" value="Применить">
-            {% csrf_token %}
-        </form>
-        <p>
-            <a href="{% url 'shop:index' %}" class="button light">Продолжить покупки</a>
-            <a href="{% url 'orders:order_create' %}" class="button">Оформить заказ</a>
-        </p>
-    </div>
+            <div class="spoiler_coupon">
+                <form action="{% url 'coupons:apply' %}" method="post">
+                    <input type="text" name='code' placeholder="Введите номер купона">
+                    <input type="submit" value="Применить">
+                    {% csrf_token %}
+                </form>
+            </div>
+         </div>
+        <div class="check_cart">
+            <p>
+                <a href="{% url 'shop:index' %}" class="button light">Продолжить покупки</a>
+                <a href="{% url 'orders:order_create' %}" class="button">Оформить заказ</a>
+            </p>
+         </div>
+
+            {% else %}
+               <br> <p style="text-align:right"> Для того, чтоб оформить заказ, просим Вас <a href="{% url 'login' %}">Авторизоваться на сайте</a></p>
+            {% endif %}
     <p class="tovar_zakaz">*- Для заказа товара, который отсутствует на складе, воспользуйтесь инструкцией <a href="{% url 'orders:order' %}">Товары под заказ</a> </p>
 
     {% else %}
 
     {% if orders %}
-       Внимание! У вас есть есть неоплаченные заказы.
+        Внимание! У вас есть есть неоплаченные заказы.
         Перейти в <a href="{% url 'profile' user.username %}">Личный кабинет</a><br><br>
     {% endif%}
     На данный момент Ваша корзина пуста.<br>

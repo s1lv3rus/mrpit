@@ -33,27 +33,19 @@ def order_create(request):
             'address': profile.address,
             'city': profile.city,
             'postal_code': profile.postal_code}
-    postal_code = 614000
-    form = None
+
     if request.method == 'POST':
         if 'form' in request.POST:
             form = OrderCreateForm(request.POST, initial=data)
-            if form.is_valid():
-                postal_code = form.cleaned_data['postal_code']
             order = form.save(commit=False)
         else:
             perm_form = PermOrderCreateForm(request.POST, initial=data)
             order = perm_form.save(commit=False)
-            order.city = 'Пермь'
         if cart.coupon:
             order.coupon = cart.coupon
             order.discount = cart.coupon.discount
 
         order.client = request.user
-        if form:
-            order.deliver_cost = russian_post_calc(postal_code)
-        else:
-            order.deliver_cost = 200
         order.status = 'Новый'
         order.save()
         subject = 'Новый заказ'
@@ -79,6 +71,7 @@ def order_create(request):
     template = 'orders/order/create.html'
     context = locals()
     return render(request, template, context)
+
 
 
 @staff_member_required

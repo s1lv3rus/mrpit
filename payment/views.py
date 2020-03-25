@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.views.decorators.http import require_http_methods
+
 from orders.models import Order
 from yandex_checkout import Payment, Configuration, WebhookNotification
 from datetime import datetime
@@ -30,8 +32,9 @@ def payment_process(*args, order_id):
     return redirect(payment.confirmation.confirmation_url)
 
 
+@require_http_methods(["GET", "POST"])
 def notifications(request):
-    event_json = json.loads(request.body.decode('utf-8'))
+    event_json = json.loads(request.body)
     value = int(event_json["object"]["description"])
     order = Order.published.get(id=value)
     order.paid = True

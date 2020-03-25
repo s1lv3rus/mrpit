@@ -10,7 +10,6 @@
     padding: 15px 40px;
     text-transform: uppercase;
     width:400px;
-
     cursor: pointer;
     position: relative;
 }
@@ -312,12 +311,23 @@
         margin-left:220px;
         margin-top:-20px;
     }
+    .spoiler_coupon {
+        margin-top:70px;
+    }
+    .spoiler_coupon form input{
+        width:150px;
+        font-size:12px;
+    }
+    .spoiler_coupon form input[type=submit] {
+        margin-top:2px;
+    }
+
     #total1 {
         min-height:50px;
         max-height:100px;
         margin-top:20px;
-        margin-left:130px;
-        width:250px;
+        margin-left:180px;
+        width:200px;
     }
     #total1 tr td {
         border: 1px solid;
@@ -326,19 +336,23 @@
     .check_coupon {
         margin-top:10px;
     }
-     .coupon_in_cart form {
-        margin-top:-60px;
-        width:100px;
+    .coupon_in_cart {
+        margin-top:-50px;
+
+        font-size:10px;
     }
-    .coupon_in_cart form input{
-        font-size:12px;
-    }
-    .coupon_in_cart p{
-        margin-top:100px;
-        margin-left:-150px;
+
+    .check_cart {
+        margin-top:30px;
     }
     .button {
+       font-size:12px;
+    }
+    a.button {
        font-size:15px;
+    }
+    a.button.light {
+       font-size:14px;
     }
     .tovar_zakaz {
         margin-top:50px;
@@ -360,10 +374,6 @@
         width:100%;
         margin-top:10px;
         padding: 5px;
-    }
-    .tabs label{
-        width:110px;
-        padding:10px;
     }
 
     .detail_table {

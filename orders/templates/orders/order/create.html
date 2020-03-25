@@ -43,52 +43,26 @@
         <div class="tabs">
             <input id="tab1" type="radio" name="tabs">
             <label for="tab1" title="Perm"><i class="fa fa-car" aria-hidden="true">Доставка (г.Пермь)</i></label>
-            <input id="tab2" type="radio" name="tabs">
-            <label for="tab2" title="Samovivoz"><i class="fa fa-male" aria-hidden="true">Самовывоз (г.Пермь)</i></label>
             <input id="tab3" type="radio" name="tabs" checked>
             <label for="tab3" title="Russia"><i class="fa fa-truck" aria-hidden="true">Доставка по России </i></label>
             <section id="content-tab1">
                 <p> Доставка осуществляется в пределах г. Пермь </p>
                 <p>Стоимость доставки по городу, в зависимости от удаленности склада Вы можете посмотреть по ссылке <a href="{% url 'shop:delivery' %}"> Доставка</a> </p>
-                <a href="#spoiler-open-1" id="spoiler-open-1" class="trigger open">Выбрать доставку в г. Пермь</a>
-                <a href="#spoiler-close-1" id="spoiler-close-1" class="trigger close">Закрыть форму</a>
-                <div class="spoiler">
-                    {% if request.user.is_authenticated %}
-                        <form action="." method="post" >
-                              {% csrf_token %}
-                             {{ perm_form.as_p }}
-                            <input type="submit" name="perm_form" value="Подтвердить заказ">
-                        </form>
-                    {% else %}
-                        <p style="color:red">Внимание!</p> Для того, чтобы отслеживать свой заказ просим Вас <a href="{% url 'login' %}">авторизоваться</a> на сайте<br>
-                    (доступна авторизация через сервисы "Вконтакте", "Facebook")
-                    {% endif %}
-                </div>
-            </section>
-
-            <section id="content-tab2">
-               <p>На данный момент такая возможность отсутсвует.</p>
-               <p>Все детали передачи выбранного Вами товара можно обсудить с менеджером после осуществления заказа.</p>
+                    <form action="." method="post" >
+                          {% csrf_token %}
+                         {{ perm_form.as_p }}
+                        <input type="submit" name="perm_form" value="Подтвердить заказ">
+                    </form>
             </section>
 
             <section id="content-tab3">
                 <p> Доставка осуществляется в пределах Российской Федерации Почтой России. </p>
                 <p> Стоимость доставки составляет в среднем 300 р. Конкретная стоимость рассчитается автоматически после создания заказа.</p>
-
-                <a href="#spoiler-open-3" id="spoiler-open-3" class="trigger open">Выбрать доставку почтой</a>
-                <a href="#spoiler-close-3" id="spoiler-close-3" class="trigger close">Закрыть форму</a>
-                <div class="spoiler">
-                     {% if request.user.is_authenticated %}
-                    <form action="." method="post" >
-                         {% csrf_token %}
-                         {{ form.as_p }}
-                        <input type="submit" name="form" value="Подтвердить заказ">
-                    </form>
-                    {% else %}
-                        <p style="color:red">Внимание!</p> Для того, чтобы отслеживать свой заказ просим Вас <a href="{% url 'login' %}">авторизоваться</a> на сайте<br>
-                    (доступна авторизация через сервисы "Вконтакте", "Facebook")
-                    {% endif %}
-                </div>
+                <form action="." method="post" >
+                     {% csrf_token %}
+                     {{ form.as_p }}
+                    <input type="submit" name="form" value="Подтвердить заказ">
+                </form>
             </section>
         </div>
     </div>
