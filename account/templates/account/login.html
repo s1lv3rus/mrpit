@@ -27,11 +27,11 @@
                   <input type="submit" value="Войти на сайт">
             </form>
               <a href="{% url 'register' %}"><input type="submit" value="Регистрация"></a><br><br>
-            <p><a style="font-size:20px;" href="{% url 'password_reset' %}">Забыли Ваш пароль?</a></p>
+              <a href="{% url 'password_reset' %}">Забыли Ваш пароль?</a>
         </div>
 
          <div class="social">
-            Войдите на сайт через социальные сети<br>
+            Войдите через социальные сети<br>
              <a class="vk" href="/login/vk-oauth2">
                  <img src="{% static 'img/vk.png' %}"></a>
 

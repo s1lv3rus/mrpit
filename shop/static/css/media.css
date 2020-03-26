@@ -1,59 +1,69 @@
 @import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 
-.dws-menu [type="checkbox"],
-.dws-menu label.toggleSubMenu {
+.menu [type="checkbox"],
+.menu label.toggleSubMenu {
     display:none;
 }
-.dws-menu label.toggleMenu {
-    background: crimson;
+.menu label.toggleMenu {
     display: none;
     padding: 15px 40px;
     text-transform: uppercase;
-    width:400px;
+    border-radius:10px;
+    border:1px solid crimson;
+    width:98%;
+    height:50px;
     cursor: pointer;
-    position: relative;
+
 }
-.dws-menu label.toggleMenu .fa {
+.menu label.toggleMenu .fa  {
     position: absolute;
-    top: 15px;
-    left: 12px;
-    font-size: 18px;
+    top: 110px;
+    right: 20px;
+    font-size: 35px;
+    color:silver;
+}
+.menu label.toggleSubMenu .fa {
+    position: absolute;
+    top: 10px;
+    right: 20px;
 }
 
 @media all and (min-width: 200px) and (max-width: 1200px)  {
-    .dws-menu {
+    .menu {
         overflow:hidden;
-        border-radius: 10px;
-        margin-left:-30px;
-        margin-right:30px;
     }
-    .dws-menu ul {
+    .menu ul {
         display:none;
      }
-    .dws-menu li {
-        width:400px;
-        position:absolute;
-        top:0;
-        left:-13%;
-
+    .menu li {
+        width:98%;
+        border:none;
     }
-    .dws-menu li > ul li{
-         margin-left:-15px;
+    .menu li a{
+        border:none;
     }
-    .dws-menu label.toggleMenu{
+    .menu label.toggleMenu{
         display:block;
     }
-    input.toggleMenu:checked + label.toggleMenu {
-        background:red;
-        color: #fff;
+    .menu li ul {
+        width: 100%;
+    }
+    .menu li > ul li {
+        float:none;
+        width: 100%;
+    }
 
+    input.toggleMenu:checked + label.toggleMenu {
+        background:grey;
+        border:none;
+        color: #fff;
     }
     input.toggleMenu:checked ~ ul,
     input.toggleSubMenu:checked ~ ul{
         display:block;
         position: relative;
     }
-    .dws-menu label.toggleSubMenu {
+    .menu label.toggleSubMenu {
         position:absolute;
         top: 0;
         right: 0;
@@ -63,32 +73,34 @@
         display: block;
     }
     input.toggleSubMenu:checked ~ a {
-        background: red;
+        background: silver;
         color: #fff;
     }
-    .dws-menu label.toggleSubMenu .fa:before{
+    .menu label.toggleSubMenu .fa:before{
         content: "\f0d7";
-        color:#454547;
+        color:crimson;
     }
-    .dws-menu label.toggleSubMenu .fa {
-        margin-left:280px;
-        margin-top:10px;
+    .menu label.toggleSubMenu .fa {
         font-size:30px;
     }
-    .dws-menu input.toggleSubMenu:checked ~ label.toggleSubMenu .fa:before {
+    .menu input.toggleSubMenu:checked ~ label.toggleSubMenu .fa:before {
         content: "\f0d8";
-        color:white;
+        color:crimson;
     }
+
 
     #header .logo img{
       display:none;
     }
     #header .logo1 {
         display:inline;
-        color:crimson;
         position:absolute;
-        top:15px;
-        left:5px;
+        top:10px;
+        left:10px;
+        font-size:20px;
+    }
+    .logo1 a {
+        color:silver;
     }
      #subheader {
         height:50px;
@@ -97,133 +109,50 @@
         font-size:25px;
         position:absolute;
         top:50px;
-        right:20px;
+        left:10px;
+    }
+    .icon {
+        top:0px;
+        left:5px;
     }
     .search {
-        position: absolute;
-        top: 60px;
-        left: 10px;
-    }
-    .search .search1 {
-      position: absolute;
-      margin: auto;
-      top: 5px;
-      bottom: 0;
-      left: 5px;
-      width: 40px;
-      height: 40px;
-      background: crimson;
-      border-radius: 50%;
-      transition: all 1s;
-      z-index: 4;
-      box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
-    }
-    .search .search1:hover {
-      cursor: pointer;
-    }
-    .search .search1::before {
-      content: "";
-      position: absolute;
-      margin: auto;
-      top: 20px;
-      right: 0;
-      bottom: 0;
-      left: 20px;
-      width: 12px;
-      height: 2px;
-      background: white;
-      transform: rotate(45deg);
-      transition: all .5s;
-    }
-    .search .search1::after {
-      content: "";
-      position: absolute;
-      margin: auto;
-      top: -5px;
-      right: 0;
-      bottom: 0;
-      left: -5px;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      border: 2px solid white;
-      transition: all .5s;
+        position:absolute;
+        top:105px;
+        width:80%;
+        left:15px;
+        text-shadow: none;
+        box-shadow:none;
     }
     .search input {
-      font-family: 'Inconsolata', monospace;
-      position: absolute;
-      margin: auto;
-      top: 5px;
-      bottom: 0;
-      left: 5px;
-      width: 50px;
-      height: 50px;
-      outline: none;
-      border: none;
-      background: crimson;
-      color: white;
-      text-shadow: 0 0 10px crimson;
-      padding: 0 80px 0 20px;
-      border-radius: 30px;
-      box-shadow: 0 0 25px 0 crimson, 0 20px 25px 0 rgba(0, 0, 0, 0.2);
-      transition: all 1s;
-      opacity: 0;
-      z-index: 5;
-      font-weight: bolder;
-      letter-spacing: 0.1em;
-    }
-    .search input:hover {
-      cursor: pointer;
+        background:#222023;
+        border-radius:5px;
+        height:40px;
+        box-shadow:none;
     }
     .search input:focus {
-      width: 350px;
-      opacity: 1;
-      cursor: text;
-      position: absolute;
+        width:300px;
+    }
 
-    }
-    .search input:focus ~ .search1 {
-      right: -250px;
-      background: #151515;
-      z-index: 6;
-    }
-    .search input:focus ~ .search1::before {
-      top: 0;
-      left: 0;
-      width: 25px;
-    }
-    .search input:focus ~ .search1::after {
-      top: 0;
-      left: 0;
-      width: 25px;
-      height: 2px;
-      border: none;
-      background: white;
-      border-radius: 0;
-      transform: rotate(-45deg);
-    }
-    .search input::placeholder {
-      color: white;
-      opacity: 0.5;
-      font-weight: bolder;
-    }
     .index {
         height:100%;
     }
     .screen img, .promo img{
          display:none;
     }
+    .screen{
+        width:90%;
+    }
     .screen h1 {
-        font-size:21px;
-        margin-top:-20px;
+        font-size:20px;
+        margin-top:-10px;
     }
      .screen h2 {
-        font-size:21px;
+        font-size:20px;
         margin-top:60px;
     }
     .big {
        font-size:20px;
-       margin-top:15px;
+       margin-top:30px;
        color:crimson;
     }
 
@@ -232,11 +161,15 @@
         width:100%;
     }
 
+   .form_main {
+     width:100%;
+   }
     .form_main input[type=submit] {
          font-size:15px;
          text-align:center;
          margin-top:5px;
-         margin-left:25%;
+         margin-left:23%;
+         width:200px;
     }
 
     #maintable td img{
@@ -252,18 +185,14 @@
     }
     .social {
         position:absolute;
-        left:60%;
-        top:5%;
+        left:240px;
+        top:280px;
+        width:150px;
     }
     .social .fb {
         margin-left:15px;
     }
-    .login_form p {
-        width:200px;
-    }
-    .login_form input {
-        width:180px;
-    }
+
     #cart_table  {
         display:none;
     }
@@ -299,8 +228,13 @@
         margin-left:20px;
         margin-top:40px;
      }
+     .quantity1 input {
+         width:50px;
+     }
      .quantity1 input[type='submit']{
         font-size:10px;
+        margin-top:2px;
+        width:160px;
      }
 
      .quantity1-1 {
@@ -321,6 +255,11 @@
     .spoiler_coupon form input[type=submit] {
         margin-top:2px;
     }
+    .trigger.close {
+        margin-right:-150px;
+    }
+
+
 
     #total1 {
         min-height:50px;
@@ -361,7 +300,10 @@
      max-width:100%;
      display:block;
     }
-
+    .order_h1 {
+    margin-top:10px;
+        font-size:30px;
+    }
     .order-info {
         width:100%;
         padding:5px;
@@ -459,7 +401,7 @@
     ul.messages li.error,
     ul.messages li.info {
         width:100%;
-        margin-left:0;
+        margin-left:-20px;
     }
     .plus {
         display:none;
@@ -534,16 +476,14 @@
     .thanks h2{
         font-size:20px;
     }
-    .thanks h4{
+    h4{
         font-size:15px;
     }
     #container_form {
         position: fixed;
-        bottom:0;
+        bottom:10px;
         right:5px;
-
     }
-
 }
 
 @media all and (min-width: 1700px) and (max-width: 2000px) {
