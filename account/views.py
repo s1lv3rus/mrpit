@@ -58,16 +58,21 @@ def register(request):
         user_form = UserRegistrationForm(request.POST)
         profile_form = UserProfileForm(request.POST)
         if user_form.is_valid():
-            # Create a new user object but avoid saving it yet
             new_user = user_form.save(commit=False)
-            # Set the chosen password
             new_user.set_password(
                 user_form.cleaned_data['password'])
-            # Save the User object
-            new_user.save()
-            context = locals()
-            template = 'account/register_done.html'
-            return render(request, template, context)
+            email = user_form.cleaned_data["email"]
+            # проверка на наличие email в базе. Уникальное значение в базе не удалось проставить
+            if User.objects.filter(email=email).count() > 0 and email:
+                messages.error(request, 'Пользовать с указанным email уже существует')
+                context = locals()
+                template = 'account/register.html'
+                return render(request, template, context)
+            else:
+                new_user.save()
+                context = locals()
+                template = 'account/register_done.html'
+                return render(request, template, context)
     else:
         user_form = UserRegistrationForm()
     context = locals()

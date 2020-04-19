@@ -1,45 +1,40 @@
 {
-  "type": "notification",
-  "event": "payment.succeeded",
-  "object": {
-    "id": "260be206-000f-5000-a000-1db8f6dfd804",
-    "status": "succeeded",
-    "paid": true,
     "amount": {
-      "value": "2938.00",
-      "currency": "RUB"
+        "value": "600.00",
+        "currency": "RUB"
     },
-    "authorization_details": {
-      "rrn": "342400225654",
-      "auth_code": "224762"
+    "confirmation": {
+        "type": "redirect",
+        "return_url": "https://www.merchant-website.com/return_url"
     },
-    "captured_at": "2020-03-24T09:09:40.003Z",
-    "created_at": "2020-03-24T09:09:26.414Z",
-    "description": "22",
-    "metadata": {},
-    "payment_method": {
-      "type": "bank_card",
-      "id": "260be206-000f-5000-a000-1db8f6dfd804",
-      "saved": false,
-      "card": {
-        "first6": "555555",
-        "last4": "4444",
-        "expiry_month": "12",
-        "expiry_year": "2020",
-        "card_type": "MasterCard",
-        "issuer_country": "US"
-      },
-      "title": "Bank card *4444"
+    "receipt": {
+        "customer": {
+            "full_name": "Иванов Иван Иванович",
+            "phone": "79000000000"
+        },
+        "items": [
+            {
+                "description": "Наименование товара 1",
+                "quantity": "2.00",
+                "amount": {
+                    "value": "250.00",
+                    "currency": "RUB"
+                },
+                "vat_code": "2",
+                "payment_mode": "full_prepayment",
+                "payment_subject": "commodity"
+            },
+            {
+                "description": "Наименование товара 2",
+                "quantity": "1.00",
+                "amount": {
+                    "value": "100.00",
+                    "currency": "RUB"
+                },
+                "vat_code": "2",
+                "payment_mode": "full_prepayment",
+                "payment_subject": "commodity"
+            }
+        ]
     },
-    "recipient": {
-      "account_id": "681662",
-      "gateway_id": "1687646"
-    },
-    "refundable": true,
-    "refunded_amount": {
-      "value": "0.00",
-      "currency": "RUB"
-    },
-    "test": true
-  }
 }

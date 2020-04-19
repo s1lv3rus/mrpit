@@ -1,10 +1,11 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
+from .views import YandexNotifications
 
 app_name = 'payment'
 
 urlpatterns = [
-    path('notifications/', views.notifications, name='notifications'),
+    path('notifications/', YandexNotifications.as_view(), name='notifications'),
     path('canceled/', views.payment_canceled, name='canceled'),
     path('process/<int:order_id>/', views.payment_process, name='process'),
 ]

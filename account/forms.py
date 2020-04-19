@@ -10,7 +10,9 @@ class LoginForm(forms.Form):
 
 
 class UserRegistrationForm(forms.ModelForm):
-    username = forms.CharField(label='Логин')
+    username = forms.RegexField(label='Логин', regex='^[a-zA-Z0-9]+$', error_messages={'invalid': ("Только символы "
+                                                                                                   "латинского "
+                                                                                                   "алфавита ")})
     email = forms.EmailField(label='Email')
     password = forms.CharField(label='Пароль',
                                widget=forms.PasswordInput)
@@ -29,10 +31,8 @@ class UserRegistrationForm(forms.ModelForm):
 
 
 class UserProfileForm(forms.ModelForm):
+    email = forms.EmailField(label='Email для отправки чека')
+
     class Meta:
         model = Profile
-        fields = ('first_name', 'last_name', 'email', 'city', 'address', 'postal_code')
-
-
-
-
+        fields = ('first_name', 'last_name', 'email', 'city', 'address', 'postal_code', 'phone')

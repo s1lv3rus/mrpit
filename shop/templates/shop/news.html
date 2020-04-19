@@ -5,11 +5,40 @@
 
 {% block content %}
 <div id="main">
+    {% if messages %}
+          <ul class="messages">
+           {% for message in messages %}
+            <li class="{{ message.tags }}">
+              {{ message|safe }}
+                <a href="#" class="close">x</a>
+            </li>
+           {% endfor %}
+          </ul>
+        {% endif %}
     <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / Новости</p>
-    {% for new in news %}
-    <p style="color:red;font-size:20px">{{ new.name }}
-        <text style="color:grey;font-size:12px"> {{ new.date }}</text></p>
-    {{ new.body }}
-    {% endfor %}
+
+        <div class="spoiler_news">
+            <a href="#spoiler-open-1" id="spoiler-open-1" class="trigger open">Подписаться на новости</a>
+            <a href="#spoiler-close-1" id="spoiler-close-1" class="trigger2 close">Х</a>
+            <div class="podpiska">
+                <p style="color:orange">Подписаться на новости:</p>
+                <form action="{% url 'shop:news' %}" method="post" >
+                  <input name="email" placeholder="Введите Ваш Email">
+                   {% csrf_token %}
+                  <input type="submit" value="Подписаться "/>
+                </form>
+            </div>
+        </div>
+        <br>
+
+        <div class="news_list">
+            {% for new in news %}
+            <p style="color:red;font-size:20px">{{ new.name }}
+                <text class="news_date"> {{ new.date }}</text></p>
+            {{ new.body }}
+            <br>
+            {% endfor %}
+        </div>
+
 </div>
 {% endblock %}

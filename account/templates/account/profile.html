@@ -42,43 +42,43 @@
              <td>
                  {{ order.status }}
             </td>
-            <td style="text-align:left">
+            <td style="text-align:center">
                 {% if order.paid %}
                     Заказ оплачен!
                 {% else %}
                     {% if order.status != 'Отказ' %}
                 Стоимость заказа: {{ order.get_total_cost }} р.
                 Доставка: {{ order.deliver_cost }} р.
-                 <a style="text-align:right" href="{% url 'payment:process' order.id %}">Оплатить {{ order.get_total_cost|add:order.deliver_cost }} р.</a>
+                 <a style="text-align:right" href="{% url 'payment:process' order.id %}" target="_blank">Оплатить {{ order.get_total_cost|add:order.deliver_cost }} р.</a>
                     {% endif %}
                 {% endif %}
             </td>
             <td>
-                {% if order.status != 'Выполнен' %}
-                {% if order.status != 'Отказ' %}
-                   <a href="{% url 'orders:deny' order.id %}">Отказаться от заказа Х</a>
-                {% endif %}{% endif %}
 
-                {% if order.status == 'Отказ' %}
+                {% if order.status != 'Отказ' and order.paid == False %}
+                {% if order.status != 'Выполнен' and order.paid == False %}
+                    <a href="{% url 'orders:deny' order.id %}">Отказаться от заказа Х</a>
+                {% endif %}{% endif %}
+                {% if order.paid == True %}
                    <a href="{% url 'orders:repeat' order.id %}">Повторить заказ</a>
                 {% endif %}
-                {% if order.status == 'Выполнен' %}
-                    <a href="{% url 'orders:repeat' order.id %}">Повторить заказ</a>
-                {% endif %}
+<!--                {% if order.status == 'Выполнен' and order.paid == True %}-->
+<!--                    <a href="{% url 'orders:repeat' order.id %}">Повторить заказ</a>-->
+<!--                {% endif %}-->
             </td>
         </tr>
            {% endfor %}
-    </table>
-    <div class="profile">
-        <p style="color:crimson">Вы можете изменить данные профиля:</p>
-        <form action="." method="post">
-              {{ user_form.as_p }}
-              {% csrf_token %}
-              <p><input type="submit" value="Сохранить изменения"></p>
-        </form><br/>
-        <a href="{% url 'password_change' %}">
-          <input type="submit" value="Сменить пароль"></a>
-        {% endif %}
-    </div>
+    </table> <br>
+    <p>Подписывайся на нашу <a href="https://vk.com/mrpit.online">группу ВК</a> и получай всегда свежие новости и интересные статьи! </p>
+    <p>Вы можете изменить данные профиля:</p>
+    <form action="." method="post" class="register_form">
+          {{ user_form.as_p }}
+          {% csrf_token %}
+          <p><input type="submit" value="Сохранить изменения"></p>
+    </form><br/>
+    <a href="{% url 'password_change' %}">
+      <input type="submit" value="Сменить пароль"></a>
+    {% endif %}
+
 </div>
 {% endblock %}

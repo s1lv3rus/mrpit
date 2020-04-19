@@ -32,16 +32,22 @@
         {% for item in cart %}
         {% with flavour=item.flavour %}
         <tr>
+            {% if flavour.product.available == True %}
             <td class="td_image">
                 <a href="{{ flavour.product.get_absolute_url }}">
                     <img src="{% thumbnail flavour.product.image 50x50 crop %}">
                 </a>
             </td>
+            {% else %}
+                <td class="td_image">
+                    <img src="{% thumbnail flavour.product.image 50x50 crop %}">
+                </td>
+            {% endif %}
 
             <td class="td_product">{{ flavour.product.name }} <br><text style="color:orange"> {{ flavour.product.size }}</text>
                 <text style="color:crimson"><br> Вкус: {{ flavour.name }}</text>
             </td>
-
+            {% if flavour.product.available == True %}
             <td class="td_quantity">
                 <form action="{% url 'cart:cart_add' flavour.id %}" method="post">
                     <input type="number" name='quantity' min="1" max="10" step="1"
@@ -52,6 +58,9 @@
                     {% csrf_token %}
                 </form>
             </td>
+            {% else %}
+            <td></td>
+            {% endif %}
 
             <td class="del"><a href="{% url 'cart:cart_remove' flavour.id %}">Удалить</a></td>
             <td class="num">
@@ -65,47 +74,99 @@
         </tr>
     {% endwith %}
     {% endfor %}
-        {% if cart.coupon %}
-         <tr class="subtotal">
-             <td>Общая цена</td>
-             <td colspan="4"></td>
-             <td class="num">{{ cart.get_total_price|floatformat:"2" }} р.</td>
-         </tr>
-         <tr>
-             <td>
-             "{{ cart.coupon.code }}" купон
-              (- {{ cart.coupon.discount }}% )
-             </td>
-             <td colspan="4"></td>
-             <td class="num neg">
-             - {{ cart.get_discount|floatformat:"2" }} р.
-             </td>
-         </tr>
-        {% endif %}
-        <tr class="total">
-             <td>Итого</td>
-             <td colspan="4"></td>
-             <td class="num">
-                 {% if cart.coupon %}
-             {{ cart.get_total_price_after_discount|floatformat:"2" }} р.
-                 {% else %}
-             {{ cart.get_total_price }} р.
-                 {% endif %}
-             </td>
+
+    {% if gift_in_cart == False %}
+    {% if gift == 3000 or gift == 5000%}
+            {% if gift == 3000 %}
+                <td> <text style="color:orange"> Выберите подарок:</text></td>
+                <form action="{% url 'cart:add_gift' %}" method="post">
+                    <td class="td_product">
+                        <select name="gift">
+                            <option>Батончик</option>
+                            <option>Печенье</option>
+                        </select>
+                    </td>
+                    <td class="td_quantity">
+                        <input type="submit" value="Выбрать">
+                        {% csrf_token %}
+                    </td>
+                </form>
+                <td class="del"></td>
+                <td class="num"></td>
+                <td class="num"></td>
+
+            {% endif %}
+            {% if gift == 5000 %}
+                <td> <text style="color:orange"> Выберите подарок:</text></td>
+                <form action="{% url 'cart:add_gift' %}" method="post">
+                    <td class="td_product">
+                        <select name="gift">
+                            <option>Шейкер 3в1</option>
+                            <option>Батончик+печенье</option>
+                        </select>
+                    </td>
+                    <td class="td_quantity">
+                        <input type="submit" value="Выбрать">
+                        {% csrf_token %}
+                    </td>
+                </form>
+                <td class="del"></td>
+                <td class="num"></td>
+                <td class="num"></td>
+            {% else %}
+                <tr></tr>
+                <td colspan="6">Осталось еще <text style="color:orange"> {{balance2}} р. </text> для получения более крутого подарка!</td>
+            {% endif %}
+    {% else %}
+            <td colspan="6">Осталось еще <text style="color:orange"> {{balance}} р. </text> для получения подарка!</td>
+    {% endif %}
+    {% endif %}
+    {% if cart.coupon %}
+     <tr class="subtotal">
+         <td>Общая цена</td>
+         <td colspan="4"></td>
+         <td class="num">{{ cart.get_total_price|floatformat:"2" }} р.</td>
+     </tr>
+     <tr>
+         <td>
+         "{{ cart.coupon.code }}" купон
+          (- {{ cart.coupon.discount }}% )
+         </td>
+         <td colspan="4"></td>
+         <td class="num neg">
+         - {{ cart.get_discount|floatformat:"2" }} р.
+         </td>
+     </tr>
+    {% endif %}
+    <tr class="total">
+         <td>Итого</td>
+         <td colspan="4"></td>
+         <td class="num">
+             {% if cart.coupon %}
+         {{ cart.get_total_price_after_discount|floatformat:"2" }} р.
+             {% else %}
+         {{ cart.get_total_price }} р.
+             {% endif %}
+         </td>
         </tr>
     </table>
 
-        <div class="cart_hidden">
-             {% for item in cart %}
-            {% with flavour=item.flavour %}
-          <table id="cart_table1">
-               <tr>
-                  <td>
-                    <div class="product_image1">
-                        <a href="{{ flavour.product.get_absolute_url }}">
+    <div class="cart_hidden">
+        {% for item in cart %}
+          {% with flavour=item.flavour %}
+            <div id="cart_table1">
+
+                    {% if flavour.product.available == True %}
+                        <div class="product_image1">
+                            <a href="{{ flavour.product.get_absolute_url }}">
+                                <img src="{% thumbnail flavour.product.image 50x50 crop %}">
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="product_image1">
                             <img src="{% thumbnail flavour.product.image 50x50 crop %}">
-                        </a>
-                    </div>
+                        </div>
+                    {% endif %}
 
                     <div class="product_name1">
                         {{ flavour.product.name }}<text style="color:orange"> {{ flavour.product.size }}</text>
@@ -114,16 +175,18 @@
 
                     <p class="delx"><a href="{% url 'cart:cart_remove' flavour.id %}">Х</a></p>
 
-                    <div class="quantity1">
-                        <form action="{% url 'cart:cart_add' flavour.id %}" method="post">
-                            <input type="number" name='quantity' min="1" max="10" step="1"
-                               title="Укажите количество товара" value="{{ item.quantity }}">
-                            {{ item.update_quantity_form.update }}
-                            <input type="submit" value="Пересчитать">
-                             {% csrf_token %}
+                    {% if flavour.product.available == True %}
+                        <div class="quantity1">
+                            <form action="{% url 'cart:cart_add' flavour.id %}" method="post" class="quantity1_form">
+                                <input type="number" name='quantity' min="1" max="10" step="1"
+                                   title="Укажите количество товара" value="{{ item.quantity }}">
+                                   {{ item.update_quantity_form.update }}
+                                <input type="submit" value="Пересчитать">
+                                 {% csrf_token %}
+                            </form>
                             <p class="quantity1-1"> На складе <text style="color:crimson; ">{{ flavour.quantity }}</text> шт*</p>
-                        </form>
-                    </div>
+                        </div>
+                    {% endif %}
 
                     <div class="price1">
                         {% if flavour.product.price2 %}
@@ -133,13 +196,62 @@
                          {% endif %}
                          <p style="color:red">  Сумма: {{ item.total_price }} р.</p>
                     </div>
-                  </td>
-                </tr>
-           </table>
+
+           </div>
 
 
         {% endwith %}
         {% endfor %}
+         {% if gift_in_cart == False %}
+         {% if gift == 3000 or gift == 5000%}
+            {% if gift == 3000 %}
+            <div class="gift_select">
+                <div>
+                     <text> Выберите подарок:</text>
+                </div>
+
+                <div>
+                  <form action="{% url 'cart:add_gift' %}" method="post">
+                    <select name="gift">
+                        <option>Батончик</option>
+                        <option>Печенье</option>
+                    </select>
+                </div>
+                <div>
+                    <input type="submit" value="Выбрать">
+                    {% csrf_token %}
+                   </form>
+                </div>
+            </div>
+
+            {% endif %}
+            {% if gift == 5000 %}
+            <div class="gift_select">
+                <div>
+                     <text> Выберите подарок:</text>
+                </div>
+
+                <div>
+                  <form action="{% url 'cart:add_gift' %}" method="post">
+                    <select name="gift">
+                        <option>Шейкер 3в1</option>
+                        <option>Батончик+печенье</option>
+                    </select>
+                </div>
+                <div>
+                    <input type="submit" value="Выбрать">
+                    {% csrf_token %}
+                   </form>
+                </div>
+            </div>
+            {% else %}
+                <tr></tr>
+                <td colspan="6">Осталось еще <text style="color:orange"> {{balance2}} р. </text> для получения более крутого подарка!</td>
+            {% endif %}
+        {% else %}
+            <td colspan="6">Осталось еще <text style="color:orange"> {{balance}} р. </text> для получения подарка!</td>
+        {% endif %}
+        {% endif %}
             <table id="total1">
             {% if cart.coupon %}
                  <tr>
@@ -149,7 +261,7 @@
 
                  <tr>
                      <td>
-                     "{{ cart.coupon.code }}" купон
+                     "{{ cart.coupon.code }}"
                       (- {{ cart.coupon.discount }}% )
                      </td>
 

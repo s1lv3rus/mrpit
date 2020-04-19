@@ -8,7 +8,7 @@ from shop.models import PublishedManager
 
 class Profile(models.Model):
     STATUS_CHOICES = (
-        ('Новый покупатель', 'Новый покупатель'), ('Оптовый покупатель', 'Оптовый покупатель'), )
+        ('Новый покупатель', 'Новый покупатель'), ('Оптовый покупатель', 'Оптовый покупатель'),)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='profile')
     first_name = models.CharField(max_length=20, verbose_name='Имя', blank=True)
@@ -18,6 +18,7 @@ class Profile(models.Model):
     city = models.CharField(max_length=20, verbose_name='Населённый пункт', blank=True)
     address = models.CharField(max_length=100, verbose_name='Адрес', blank=True)
     postal_code = models.CharField(max_length=10, verbose_name='Почтовый индекс', blank=True)
+    phone = models.BigIntegerField(verbose_name='Номер телефона', blank=True, null=True)
     published = PublishedManager()
 
     class Meta:
@@ -31,6 +32,5 @@ class Profile(models.Model):
     # из спеки по django добавил функцию автосоздания профиля после регистрации юзера
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
-            Profile.published.create(user=instance, status='Новый покупатель')
-
+            Profile.published.create(user=instance, status='Новый покупатель', email=instance.email)
     post_save.connect(create_user_profile, sender=User)

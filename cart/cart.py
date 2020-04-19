@@ -21,7 +21,7 @@ class Cart(object):
         """Добавление товара в корзину или обновление его количества."""
         flavour_id = str(flavour.id)
         if flavour_id not in self.cart:
-            self.cart[flavour_id] = {'quantity': 0, 'price': str(flavour.product.price)}
+            self.cart[flavour_id] = {'quantity': 0, 'price': str(flavour.price)}
         if update_quantity:
             self.cart[flavour_id]['quantity'] = quantity
         else:

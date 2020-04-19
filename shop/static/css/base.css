@@ -78,7 +78,7 @@ a.button.light {
 }
 
 #header .logo {
-   margin-left:50px;
+   margin-left:20px;
    width:200px;
 }
 #header .logo1 {
@@ -358,12 +358,7 @@ ul.messages li a.close {
     height:60px;
     text-align:center;
 }
-#cart_table .td_quantity{
-    text-align:left;
-}
 
-#cart_table .td_product{
-}
 #cart_table .del{
     width:100px;}
 
@@ -493,8 +488,6 @@ ul.messages li a.close {
 	height:50px;
 	width:200px;
 	margin-top:20px;
-
-
 }
 .coupon_in_cart a {
     margin-top:-2%;
@@ -981,12 +974,11 @@ width: 4px;
 
 }
 
-.trigger.close {
+.trigger.close, .trigger2.close {
     display: none;
     color:crimson;
     opacity:1;
-    margin-right:-250px;
-    margin-top:6px;
+    margin-left:-20px;
 }
 
 .trigger.open:target {
@@ -996,11 +988,17 @@ width: 4px;
 .trigger.open:target + .trigger.close {
     display: inline;
 }
+.trigger.open:target + .trigger2.close {
+    display: inline;
+}
 
 .trigger.open:target + .trigger.close + .spoiler {
     display: block;
 }
 .trigger.open:target + .trigger.close + .spoiler_coupon {
+    display: block;
+}
+.trigger.open:target + .trigger2.close + .podpiska {
     display: block;
 }
 .trigger.open {
@@ -1145,28 +1143,6 @@ width: 4px;
     text-align:center;
 }
 
-.profile {
-    width:30%;
-    min-height:500px;
-    max-height:100%;
-    margin-top:10px;
-
-}
-.profile p{
-    color:white;
-}
-.profile form label{
-    width:150px;
-}
-.profile form input[type=text]{
-   color:black;
-}
-.profile form input[type=email]{
-   color:black;
-}
-.profile input[type=submit]{
-   background:green;
-}
 
 .login {
     display: flex;
@@ -1185,7 +1161,12 @@ width: 4px;
     background:green;
     margin-top:3%;
 }
-
+.register_form {
+    width:390px;
+}
+.register_form input, .register_form label{
+    width:200px;
+}
 .social {
     width:30%;
     text-align: left;
@@ -1377,6 +1358,26 @@ width: 4px;
 
 .news {
     display:none;
+}
+
+.news_list {
+    width:80%;
+}
+.news_date {
+    color:grey;
+    font-size:12px
+}
+.spoiler_news {
+   width:20%;
+}
+.podpiska {
+    display:none;
+}
+.podpiska input {
+    text-align:center;
+}
+.podpiska input[type=submit] {
+    margin-top:5px;
 }
 
 .article a{

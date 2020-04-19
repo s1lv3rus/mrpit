@@ -238,6 +238,21 @@ def certificate(request):
 
 def news(request):
     [categories, suppliers, objectives, products_rec, offers] = list()
+    if request.method == 'POST':
+        form = EmailForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            if Lead.published.filter(email=email).count() > 0:
+                messages.error(request, 'Пользователь с указанным email уже подписан ')
+                return redirect('shop:news')
+            try:
+                first_name = Profile.published.get(user=request.user).first_name
+                new_lead = Lead.published.create(email=email, name=first_name)
+            except:
+                new_lead = Lead.published.create(email=email, name='Пользователь сайта https://mrpit.online')
+            messages.success(request, message='Подписка оформлена ')
+    else:
+        form = EmailForm()
     news = News.published.all()
     template = 'shop/news.html'
     context = locals()
@@ -308,6 +323,7 @@ def calc(request):
                 client_sex = 'женский'
                 bum = 655 + (9.6 * body_mass) + (1.8 * height) - (4.7 * year)
             calories_day = int(bum * 1.5)
+            protein_day = int(body_mass * 2)
 
             if objective == 'Набрать массу':
                 client_offers = Offer.published.filter(calc='gain')

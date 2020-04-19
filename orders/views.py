@@ -24,15 +24,14 @@ def order_create(request):
     if not cart:
         messages.error(request, "Корзина пуста!")
         return redirect('cart:cart_detail')
-
-    user = request.user
-    profile = Profile.published.get(user=user)
+    profile = Profile.published.get(user=request.user)
     data = {'first_name': profile.first_name,
             'last_name': profile.last_name,
             'email': profile.email,
             'address': profile.address,
             'city': profile.city,
-            'postal_code': profile.postal_code}
+            'postal_code': profile.postal_code,
+            'phone': profile.phone}
 
     if request.method == 'POST':
         if 'form' in request.POST:
@@ -61,7 +60,7 @@ def order_create(request):
         cart.clear()
         messages.success(request, 'Заказ успешно создан.')
         messages.success(request, 'Ожидайте звонка менеджера.')
-        messages.success(request, 'Оплатить заказ можно ниже по форме')
+        messages.success(request, 'Оплатить заказ можно по форме ниже')
         username = request.user.username
         # redirect to lk
         return redirect('profile', username)
@@ -71,7 +70,6 @@ def order_create(request):
     template = 'orders/order/create.html'
     context = locals()
     return render(request, template, context)
-
 
 
 @staff_member_required
@@ -130,6 +128,7 @@ def repeat(request, order_id):
                                        email=order.email,
                                        address=order.address,
                                        postal_code=order.postal_code,
+                                       phone=order.phone,
                                        city=order.city,
                                        status='Новый',
                                        client=order.client,
@@ -186,4 +185,3 @@ def russian_post_calc(postal_code):
     except:
         messages.error(request, message='Неверный индекс')
         return redirect('orders:create')
-

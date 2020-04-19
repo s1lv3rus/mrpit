@@ -74,3 +74,10 @@ h1 {
 .tabular th, .tabular td  {
    text-align:left;
 }
+#main {
+    width: 70%;
+    margin: 1% auto 0;
+    font-size: 17px;
+    min-height:400px;
+    max-height:100%;
+}

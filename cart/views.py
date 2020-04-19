@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
+
 from shop.models import *
 from orders.models import Order
 from .cart import Cart
-from .forms import CartAddProductForm
+from .forms import CartAddProductForm, GiftForm
 from coupons.forms import CouponApplyForm
+import requests
 
 
 # Можно поменять редирект на карточку товара снова
@@ -60,7 +62,50 @@ def cart_detail(request):
         item['update_quantity_form'] = CartAddProductForm(
             initial={'quantity': item['quantity'],
                      'update': True})
+
     coupon_apply_form = CouponApplyForm()
+    gift_form = GiftForm()
+    list_of_gift = Product.published.filter(available=False)
+    gift = None
+    sum_for_gift = cart.get_total_price()
+    balance = 3000 - sum_for_gift
+    balance2 = 5000 - sum_for_gift
+    if 3000 <= sum_for_gift <= 5000:
+        gift = 3000
+    elif sum_for_gift > 5000:
+        gift = 5000
+    # Проверяем находится ли подарок в корзине перебором
+    gift_in_cart = False
+    for item in cart:
+        flavour = item['flavour']
+        # Если недоступный товар в корзине, значит подарок уже добавили
+        if flavour.product.available == False:
+            gift_in_cart = True
     template = 'cart/detail.html'
     context = locals()
     return render(request, template, context)
+
+
+@require_POST
+def add_gift(request):
+    cart = Cart(request)
+    gift_form = GiftForm(request.POST)
+    product = None
+    if gift_form.is_valid():
+        gift = gift_form.cleaned_data['gift']
+        if gift == 'Батончик':
+            product = Product.published.get(name='Батончик(подарок)')
+        elif gift == 'Шейкер 3в1':
+            product = Product.published.get(name='Шейкер(подарок)')
+        elif gift == 'Печенье':
+            product = Product.published.get(name='Печенье(подарок)')
+        try:
+            flavour = product.flavour_for_gift()
+            cart.add(flavour=flavour, quantity=1)
+        except:
+            if gift == 'Батончик+печенье':
+                products = Product.published.filter(name__in=('Батончик(подарок)', 'Печенье(подарок)'))
+                for product in products:
+                    flavour = product.flavour_for_gift()
+                    cart.add(flavour=flavour, quantity=1)
+    return redirect('cart:cart_detail')

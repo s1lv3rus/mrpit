@@ -7,7 +7,7 @@ from .models import Order, OrderItem
 class OrderCreateForm(forms.ModelForm):
     first_name = forms.Field(label='Имя')
     last_name = forms.Field(label='Фамилия')
-    email = forms.Field(label='Email', required=False)
+    email = forms.Field(label='Email для отправки чека')
     city = forms.Field(label='Населенный пункт')
     address = forms.Field(label='Адрес')
     postal_code = forms.Field(label='Почтовый индекс')
@@ -15,19 +15,19 @@ class OrderCreateForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ['first_name', 'last_name', 'email', 'city', 'address', 'postal_code', 'comment']
+        fields = ['first_name', 'last_name', 'email', 'city', 'address', 'postal_code', 'phone', 'comment']
 
 
 class PermOrderCreateForm(forms.ModelForm):
     first_name = forms.Field(label='Имя')
     last_name = forms.Field(label='Фамилия')
-    email = forms.EmailField(label='Email', required=False)
+    email = forms.EmailField(label='Email для отправки чека')
     address = forms.Field(label='Адрес')
     comment = forms.Field(label='Комментарий', required=False)
 
     class Meta:
         model = Order
-        fields = ['first_name', 'last_name', 'email', 'address', 'comment']
+        fields = ['first_name', 'last_name', 'email', 'address', 'phone', 'comment']
 
 
 class IndexForm(forms.Form):

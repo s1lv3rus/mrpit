@@ -49,7 +49,7 @@
         <thead>
           <tr>
             <th>Товары</th>
-            <th>Цена</th>
+            <th style="text-align:center">Цена</th>
             <th>Количество</th>
             <th>Итого</th>
           </tr>
@@ -57,10 +57,10 @@
         <tbody>
           {% for item in order.items.all %}
             <tr>
-              <td class="td_name">{{ item.flavour.product.name }} {{ item.flavour.name }}</td>
-              <td class="td_price">{{ item.price }} р.</td>
-              <td class="td_quantity">{{ item.quantity }}</td>
-              <td class="td_cost">{{ item.get_cost }} </td>
+              <td>{{ item.flavour.product.name }} {{ item.flavour.name }} {{ item.flavour.product.size }}</td>
+              <td style="text-align:center">{{ item.price }} р.</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.get_cost }} </td>
             </tr>
           {% endfor %}
           <tr>

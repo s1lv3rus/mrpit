@@ -2,7 +2,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.urls import reverse
 from shop.models import Flavour, Product
-
+from phonenumber_field.modelfields import PhoneNumberField
 from coupons.models import Coupon
 from decimal import Decimal
 
@@ -27,9 +27,10 @@ class Order(models.Model):
     email = models.EmailField(verbose_name='Email')
     address = models.CharField(max_length=250, verbose_name='Адрес')
     postal_code = models.CharField(max_length=20, verbose_name='Почтовый индекс')
+    phone = models.BigIntegerField(verbose_name='Номер телефона')
     city = models.CharField(max_length=100, verbose_name='Населенный пункт')
     status = models.CharField(max_length=50, choices=STATUS_CHOISES, verbose_name='Статус', blank=True)
-    deliver_cost = models.IntegerField(verbose_name='Стоимость доставки', default=300)
+    deliver_cost = models.IntegerField(verbose_name='Стоимость доставки', default=200)
     client = models.ForeignKey(User, related_name='orders',
                                on_delete=models.CASCADE, default=True, verbose_name='Клиент')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
@@ -57,10 +58,10 @@ class Order(models.Model):
     def get_total_cost(self):
         total_cost = sum(item.get_cost() for item in self.items.all())
         return total_cost - total_cost * (self.discount / Decimal('100'))
+    get_total_cost.short_description = 'Стоимость заказа'
 
     def get_absolute_url(self):
-        return reverse('orders:orders',
-                       args=[self.pk])
+        return reverse('orders:orders', args=[self.pk])
 
     def order_items(self):
         items = OrderItem.published.filter(order=self)
@@ -77,7 +78,7 @@ class OrderItem(models.Model):
                                 on_delete=models.CASCADE,
                                 verbose_name="Вкус",
                                 blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=0)
     quantity = models.PositiveIntegerField(default=1, verbose_name="Количество")
     published = PublishedManager()
 

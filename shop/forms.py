@@ -50,3 +50,5 @@ class CalcForm(forms.Form):
     objective = forms.ChoiceField(label="Выберете Вашу цель", choices=OBJECTIVE_CHOISES)
 
 
+class EmailForm(forms.Form):
+    email = forms.Field()

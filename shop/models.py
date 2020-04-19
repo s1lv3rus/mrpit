@@ -37,7 +37,7 @@ class SubCategory(models.Model):
         return self.name
 
     def products_by_subcategory(self):
-        products = Product.published.filter(subcategory=self)
+        products = Product.published.filter(subcategory=self).exclude(available=False)
         return products
 
 
@@ -62,7 +62,7 @@ class Category(models.Model):
         return reverse('shop:product_list_by_category', args=[self.slug])
 
     def products_by_category(self):
-        products = Product.published.filter(category=self)
+        products = Product.published.filter(category=self).exclude(available=False)
         return products
 
 
@@ -100,9 +100,7 @@ class Product(models.Model):
     description = RichTextUploadingField(blank=True, verbose_name='Описание')
     sostav = ThumbnailerImageField(upload_to=upload_path_author, blank=True, verbose_name='Состав')
     body = RichTextUploadingField(blank=True, verbose_name='Применение')
-    price = models.DecimalField(max_digits=10, decimal_places=0, default=0, verbose_name='Цена')
-    price2 = models.DecimalField(max_digits=10, decimal_places=0, default=None, blank=True,
-                                 null=True, verbose_name='Цена ранее(должна быть больше!')
+
     available = models.BooleanField(default=True, verbose_name='Доступен')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     updated = models.DateTimeField(auto_now=True, verbose_name='Обновлен')
@@ -124,6 +122,25 @@ class Product(models.Model):
     def flavour_by_product(self):
         flavour = Flavour.published.filter(product=self, for_offer=True).first()
         return flavour.id
+
+    def flavour_for_gift(self):
+        flavour = Flavour.published.filter(product=self).first()
+        return flavour
+
+    def price(self):
+        flavour = Flavour.published.filter(product=self).first()
+        return flavour.price
+
+    def price2(self):
+        flavour = Flavour.published.filter(product=self).first()
+        return flavour.price2
+
+    def quantity(self):
+        flavours = Flavour.published.filter(product=self)
+        quantity = 0
+        for flavour in flavours:
+            quantity += flavour.quantity
+        return quantity
 
 
 # Пакеты предложений
@@ -154,7 +171,7 @@ class Offer(models.Model):
         products = Product.published.filter(offer=self)
         price = 0
         for product in products:
-            price += product.price
+            price += product.price()
         return price
 
 
@@ -183,20 +200,43 @@ class Objective(models.Model):
 # Вкус у товара
 class Flavour(models.Model):
     product = models.ForeignKey(Product, related_name='flavours', on_delete=models.CASCADE, verbose_name='Товар')
-    supplier = models.ForeignKey(Supplier, related_name='supplier', on_delete=models.CASCADE,
-                                 verbose_name='Производитель', blank=True, default=True)  # Для админки
-    name = models.CharField(max_length=200, db_index=True, verbose_name='Название вкуса')
+    name = models.CharField(max_length=200, db_index=True, verbose_name='Вкус')
     quantity = models.IntegerField(verbose_name='Количество')
     for_offer = models.BooleanField(verbose_name='Для офера', default=False)
+    purchase_price = models.DecimalField(max_digits=10, decimal_places=0, default=100, verbose_name='Закупочная цена')
+    price = models.DecimalField(max_digits=10, decimal_places=0, default=100, verbose_name='Цена')
+    price2 = models.DecimalField(max_digits=10, decimal_places=0, blank=True,
+                                 null=True, verbose_name='Цена ранее(должна быть больше!')
     published = PublishedManager()
+    objects = models.Manager()
 
     class Meta:
-        ordering = ('name',)
-        verbose_name = "Вкус"
-        verbose_name_plural = "Вкусы"
+        ordering = ('id',)
+        verbose_name = "Товар"
+        verbose_name_plural = "Учет товаров"
 
     def __str__(self):
         return self.name
+
+    def supplier(self):
+        supplier = Product.published.get(flavours=self).supplier
+        return supplier
+    supplier.short_description = 'Производитель'
+
+    def size(self):
+        size = Product.published.get(flavours=self).size
+        return size
+    size.short_description = 'Размер'
+
+    def percent(self):
+        purchase_price = self.purchase_price
+        price = self.price
+        try:
+            percent = str(int((price / purchase_price)*100-100)) +'%'
+        except:
+            percent = 'на 0 делить нельзя'
+        return percent
+    percent.short_description = 'Процент накрутки'
 
 
 # Коммент к товару
@@ -240,11 +280,11 @@ class Article(models.Model):
 class News(models.Model):
     name = models.CharField("Название новости", max_length=100)
     body = RichTextUploadingField()
-    date = models.DateTimeField("Дата написания", auto_now_add=True)
+    date = models.DateTimeField("Дата написания")
     published = PublishedManager()
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('-date',)
         verbose_name = "Новость"
         verbose_name_plural = "Новости"
 

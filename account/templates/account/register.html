@@ -4,20 +4,31 @@
 {% block title %}Создайте новый аккаунт{% endblock %}
 
 {% block content %}
+
 <div id="main">
+        {% if messages %}
+          <ul class="messages">
+           {% for message in messages %}
+            <li class="{{ message.tags }}">
+              {{ message|safe }}
+                <a href="#" class="close">x</a>
+            </li>
+           {% endfor %}
+        {% endif %}
+          </ul>
     <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / Регистрация</p>
     <h1>Создайте новый аккаунт</h1>
     <p>Пожалуйста, заполните все необходимые поля в форме:</p>
-      <div class="login">
-          <div class="login_form">
-            <form action="." method="post">
-              {{ user_form.as_p }}
-              {% csrf_token %}
-              <p><input type="submit" value="Создать аккаунт"></p>
-            </form>
-          </div>
+
+    <form action="." method="post" class="register_form">
+      {{ user_form.as_p }}
+      {% csrf_token %}
+      <p><input type="submit" value="Создать аккаунт"></p>
+    </form>
+
+    <div>
+         Нажимая на кнопку, Вы подтверждаете своё
+         <a href="{% static 'Согласие на обработку персональных данных.pdf' %}">согласие на обработку персональных данных</a>
     </div>
-     Нажимая на кнопку, Вы подтверждаете своё
-     <a href="{% static 'Согласие на обработку персональных данных.pdf' %}">согласие на обработку персональных данных</a>
 </div>
 {% endblock %}

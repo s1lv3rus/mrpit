@@ -32,7 +32,7 @@
     <div id="header">
          <div class="logo">
              <a href="{% url 'shop:index' %}">
-                 <img src="{% static 'img/mrpit-red.png' %}">
+                 <img src="{% static 'img/new_logo2.jpg' %}">
              </a>
          </div>
          <div class="logo1">
@@ -148,7 +148,7 @@
                             </a><br><br>
                             <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
                             <text style="color:orange"> {{ product.size }}</text> <br>
-                            {% if product.available == False %}
+                            {% if product.quantity == 0 %}
                                 Под заказ
                             {% else %}
                                {% if product.price2 %}
