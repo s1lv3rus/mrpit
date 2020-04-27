@@ -1,0 +1,9 @@
+django
+social-auth-app-django
+django-ckeditor
+django-rest_framework
+django-import_export
+easy_thumbnails
+django-phonenumber-field
+django-phonenumbers
+yandex_checkout
