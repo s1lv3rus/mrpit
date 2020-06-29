@@ -1,4 +1,4 @@
-django
+django~=3.0.6
 social-auth-app-django
 django-ckeditor
 django-rest_framework
@@ -7,3 +7,6 @@ easy_thumbnails
 django-phonenumber-field
 django-phonenumbers
 yandex_checkout
+requests~=2.22.0
+djangorestframework~=3.11.0
+schedule~=0.6.0

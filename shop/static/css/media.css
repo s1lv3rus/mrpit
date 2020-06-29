@@ -121,7 +121,7 @@
     .search {
         position:absolute;
         top:105px;
-        width:80%;
+        width:100%;
         left:15px;
         text-shadow: none;
         box-shadow:none;
@@ -130,10 +130,11 @@
         background:#222222;
         border-radius:5px;
         height:40px;
+        width:calc(185%);
         box-shadow:none;
     }
     .search input:focus {
-        width:300px;
+        width:calc(185%);
     }
 
     .index {
@@ -385,7 +386,7 @@
     .tabs_product > label {
         display:inline-block;
         width:150px;
-        margin-left: 20px;
+        margin-left:4%;
         color:red;
     }
 
@@ -508,6 +509,13 @@
 
         margin-left:85px;
     }
+    .subscribe input {
+        height:32px;
+        width:170px;
+    }
+    .delivery_table {
+        width:100%;
+    }
 
 }
 
@@ -516,3 +524,4 @@
         display:inline;
     }
 }
+

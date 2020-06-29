@@ -3,7 +3,10 @@ from django.db import models
 from django.conf import settings
 from django.db.models.signals import post_save
 
-from shop.models import PublishedManager
+
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super(PublishedManager, self).get_queryset()
 
 
 class Profile(models.Model):

@@ -1,8 +1,13 @@
+from django.utils import timezone
+
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from easy_thumbnails.fields import ThumbnailerImageField
+from django.db.models import Q
+
+from account.models import Profile
 
 
 class PublishedManager(models.Manager):
@@ -100,7 +105,6 @@ class Product(models.Model):
     description = RichTextUploadingField(blank=True, verbose_name='Описание')
     sostav = ThumbnailerImageField(upload_to=upload_path_author, blank=True, verbose_name='Состав')
     body = RichTextUploadingField(blank=True, verbose_name='Применение')
-
     available = models.BooleanField(default=True, verbose_name='Доступен')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     updated = models.DateTimeField(auto_now=True, verbose_name='Обновлен')
@@ -118,6 +122,10 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('shop:product_detail', args=[self.slug])
+
+    def flavours_by_product(self):
+        flavours = Flavour.published.filter(product=self)
+        return flavours
 
     def flavour_by_product(self):
         flavour = Flavour.published.filter(product=self, for_offer=True).first()
@@ -141,6 +149,20 @@ class Product(models.Model):
         for flavour in flavours:
             quantity += flavour.quantity
         return quantity
+
+
+class Subscribe(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    published = PublishedManager()
+    email = models.EmailField("Email")
+
+    class Meta:
+        ordering = ('email',)
+        verbose_name = "Подписка на товар"
+        verbose_name_plural = "Подписки на товар"
+
+    def __str__(self):
+        return self.email
 
 
 # Пакеты предложений
@@ -221,21 +243,24 @@ class Flavour(models.Model):
     def supplier(self):
         supplier = Product.published.get(flavours=self).supplier
         return supplier
+
     supplier.short_description = 'Производитель'
 
     def size(self):
         size = Product.published.get(flavours=self).size
         return size
+
     size.short_description = 'Размер'
 
     def percent(self):
         purchase_price = self.purchase_price
         price = self.price
         try:
-            percent = str(int((price / purchase_price)*100-100)) +'%'
+            percent = str(int((price / purchase_price) * 100 - 100)) + '%'
         except:
             percent = 'на 0 делить нельзя'
         return percent
+
     percent.short_description = 'Процент накрутки'
 
 
@@ -256,6 +281,9 @@ class Comment(models.Model):
     def __str__(self):
         return self.body
 
+    def get_author_name(self):
+        profile = Profile.published.get(user=self.author)
+        return profile.first_name + ' ' + profile.last_name
 
 # Статьи
 class Article(models.Model):
@@ -295,6 +323,7 @@ class News(models.Model):
 class Lead(models.Model):
     name = models.CharField("Имя", max_length=100, default='Лид')
     email = models.EmailField("Email")
+    created = models.DateTimeField("Дата создания", auto_now_add=True)
     published = PublishedManager()
 
     class Meta:

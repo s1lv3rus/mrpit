@@ -10,6 +10,16 @@
     / <a href="{% url 'shop:product_list_by_supplier' product.supplier.id %}">{{ product.supplier}}</a>
     / {{ product.name }} <br><br>
 
+    {% if messages %}
+      <ul class="messages">
+       {% for message in messages %}
+        <li class="{{ message.tags }}">
+          {{ message|safe }}
+            <a href="#" class="close">x</a>
+        </li>
+       {% endfor %}
+    {% endif %}
+      </ul>
    <div class="detail_table">
         <div class="product">
             <img src="{% thumbnail product.image 250x300 crop %}">
@@ -44,8 +54,21 @@
                     </tr>
                 </table>
                  {% endfor %}
-            </div>
+                <br>
+             </div>
+                {% if available == 0 %}
+                 <table class="subscribe">
+                    <tr>
+                        <form action="{% url 'shop:subscribe' product.slug %}" method="post" >
+                          <td>  <input name="email" placeholder="Введите Ваш Email" required="True"></td>
+                          <td>  <input type="submit" value="Сообщить о поступлении"></td>
+                                {% csrf_token %}
+                        </form>
+                    </tr>
+                 </table>
+                {% endif %}
         </div>
+
 
         <div class="tabs_product">
             <input id="tab1" type="radio" name="tabs" checked>
@@ -72,20 +95,30 @@
              <section id="content-tab4">
                   {% if comments %}
                      {% for comment in comments %}
-                         <text class="crimson">{{ comment.author }}</text>
+                        {% if comment.author.first_name %}
+                            <text class="crimson">{{ comment.author.first_name }} {{ comment.author.last_name }}</text>
+                        {% else %}
+                            {% if comment.get_author_name == " " %}
+                               <text class="crimson">{{ comment.author }} </text>
+                            {% else %}
+                               <text class="crimson">{{ comment.get_author_name }} </text>
+                            {% endif %}
+                        {% endif %}
+
                          <text style="color:grey; font-size:10px;"> {{ comment.date }}</text><br>  {{ comment.body }}<br>
                      {% endfor %}
                  {% else %}
                      <p>У этого товара еще нет отзывов. Будьте первым!</p>
                  {% endif %}
-
+                 <br>
                   {% if request.user.is_authenticated %}
-                    <form action="." method="post">
-                     <input type="text" name="body" placeholder="Оставьте свой отзыв">
+                    <form action="." method="post" class="comment_form">
+                     <input type="text" placeholder="Оставьте свой отзыв" name="body" required="True">  </input>
                          {% csrf_token %}
                      <input type="submit" name="form" value="Написать отзыв">
                     </form>
                  {% else %}
+                 <br>
                  <p>Для добавления отзыва необходимо <a href="{% url 'login'%}">авторизоваться</a> на сайте </p>
                   {% endif %}
             </section>

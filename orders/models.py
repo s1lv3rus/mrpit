@@ -18,6 +18,7 @@ class Order(models.Model):
     STATUS_CHOISES = (
         ('Новый', 'Новый'),
         ('В работе', 'В работе'),
+        ('Отправлен', 'Отправлен'),
         ('Выполнен', 'Выполнен'),
         ('Отказ', 'Отказ'),
     )
@@ -28,9 +29,10 @@ class Order(models.Model):
     address = models.CharField(max_length=250, verbose_name='Адрес')
     postal_code = models.CharField(max_length=20, verbose_name='Почтовый индекс')
     phone = models.BigIntegerField(verbose_name='Номер телефона')
-    city = models.CharField(max_length=100, verbose_name='Населенный пункт')
+    city = models.CharField(max_length=100, verbose_name='Населенный пункт', default='Пермь')
     status = models.CharField(max_length=50, choices=STATUS_CHOISES, verbose_name='Статус', blank=True)
     deliver_cost = models.IntegerField(verbose_name='Стоимость доставки', default=200)
+    track_number = models.CharField(max_length=50, verbose_name='Номер отслеживания', default=' ', blank=True)
     client = models.ForeignKey(User, related_name='orders',
                                on_delete=models.CASCADE, default=True, verbose_name='Клиент')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
@@ -54,6 +56,10 @@ class Order(models.Model):
 
     def __str__(self):
         return 'Order {}'.format(self.id)
+
+    def discount_cost(self):
+        total_cost = sum(item.get_cost() for item in self.items.all())
+        return int(total_cost * (self.discount / Decimal('100')))
 
     def get_total_cost(self):
         total_cost = sum(item.get_cost() for item in self.items.all())

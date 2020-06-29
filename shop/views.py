@@ -32,7 +32,8 @@ def list():
 def search(request):
     [categories, suppliers, objectives, products_rec, offers] = list()
     query = request.GET.get('q')
-    object_list = Product.published.filter(Q(name__icontains=query) | Q(description__icontains=query))
+    object_list = Product.published.filter(Q(name__icontains=query) | Q(description__icontains=query)
+                                           | Q(supplier__name__icontains=query)).exclude(available=False)
     context = locals()
     template = 'shop/product/search.html'
     return render(request, template, context)
@@ -80,6 +81,10 @@ def product_detail(request, slug):
     comments = product.comments.all()
     count = product.comments.all().count
     flavours = product.flavours.all()
+    available = 0
+    for f in flavours:
+        if f.quantity > 0:
+            available += f.quantity
     cart_product_form = CartAddProductForm()
 
     if request.method == 'POST':
@@ -89,12 +94,32 @@ def product_detail(request, slug):
             new_comment.author = request.user
             new_comment.product = product
             new_comment.save()
+            return redirect('shop:product_detail', slug=slug)
     else:
         form = AddComment()
 
     template = 'shop/product/detail.html'
     context = locals()
     return render(request, template, context)
+
+
+def subscribe(request, product_slug):
+    product = Product.published.get(slug=product_slug)
+    if request.method == 'POST':
+        form = EmailForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            if Subscribe.published.filter(product=product, email=email).count() > 0:
+                messages.error(request, 'Пользователь с указанным email уже подписан на данный товар')
+                return redirect('shop:product_detail', slug=product.slug)
+            else:
+                Subscribe.published.create(product=product, email=email)
+                messages.success(request, message='Подписка оформлена ')
+                new_lead = Lead.published.create(email=email, name='Пользователь сайта https://mrpit.online')
+                return redirect('shop:product_detail', slug=product.slug)
+    else:
+        form = EmailForm()
+        return redirect('shop:product_detail', slug=product.slug)
 
 
 def objective_list(request, objective_slug):
@@ -144,7 +169,7 @@ def delivery(request):
             try:
                 postal_code = form.cleaned_data['postal_code']
                 destination = {
-                    "index-from": "614000",
+                    "index-from": "614961",
                     "index-to": postal_code,
                     "mail-category": "ORDINARY",
                     "mail-type": "POSTAL_PARCEL",

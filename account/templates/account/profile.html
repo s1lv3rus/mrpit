@@ -6,9 +6,6 @@
 <div id="main">
      <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / Личный кабинет</p>
 
-    {% if editable == False %}
-        Вы не можете просматривать данную страницу
-    {% else %}
     {% if messages %}
       <ul class="messages">
        {% for message in messages %}
@@ -19,8 +16,16 @@
        {% endfor %}
     {% endif %}
       </ul>
+    {% if user.first_name %}
+        <h1>Профиль ({{ user.first_name }} {{ user.last_name }})</h1>
+    {% else %}
+        {% if profile.first_name %}
+            <h1>Профиль ({{ profile.first_name }} {{ profile.last_name }})</h1>
+        {% else %}
+            <h1>Профиль ({{ user }})</h1>
+        {% endif %}
+    {% endif %}
 
-  <h1>Профиль ({{ user }})</h1>
 
     <p>История заказов:</p>
     <table id="table_order_history">
@@ -41,17 +46,24 @@
             </td>
              <td>
                  {{ order.status }}
+                 {% if order.status == 'Отправлен' %}
+                    {% if order.track_number != '' %}
+                       <br> Номер отслеживания: {{ order.track_number }}
+                    {% endif %}
+                {% endif %}
             </td>
             <td style="text-align:center">
                 {% if order.paid %}
                     Заказ оплачен!
                 {% else %}
                     {% if order.status != 'Отказ' %}
-                Стоимость заказа: {{ order.get_total_cost }} р.
-                Доставка: {{ order.deliver_cost }} р.
-                 <a style="text-align:right" href="{% url 'payment:process' order.id %}" target="_blank">Оплатить {{ order.get_total_cost|add:order.deliver_cost }} р.</a>
+                        Стоимость заказа: {{ order.get_total_cost }} р.
+                        Доставка: {{ order.deliver_cost }} р.
+                         <a style="text-align:right" href="{% url 'payment:process' order.id %}" target="_blank">
+                             Оплатить {{ order.get_total_cost|add:order.deliver_cost }} р.</a>
                     {% endif %}
                 {% endif %}
+
             </td>
             <td>
 
@@ -69,8 +81,10 @@
         </tr>
            {% endfor %}
     </table> <br>
+    <p>Отследить перемещение заказа Вы можете на <a href="https://www.pochta.ru/">официальном сайте Почты России</a> </p>
     <p>Подписывайся на нашу <a href="https://vk.com/mrpit.online">группу ВК</a> и получай всегда свежие новости и интересные статьи! </p>
-    <p>Вы можете изменить данные профиля:</p>
+    <br><br>
+    <h4>Вы можете изменить данные профиля:</h4>
     <form action="." method="post" class="register_form">
           {{ user_form.as_p }}
           {% csrf_token %}
@@ -78,7 +92,6 @@
     </form><br/>
     <a href="{% url 'password_change' %}">
       <input type="submit" value="Сменить пароль"></a>
-    {% endif %}
 
 </div>
 {% endblock %}

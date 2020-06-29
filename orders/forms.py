@@ -33,3 +33,6 @@ class PermOrderCreateForm(forms.ModelForm):
 class IndexForm(forms.Form):
     postal_code = forms.IntegerField(label="Введите свой индекс")
 
+
+class TrackForm(forms.Form):
+    track_number = forms.Field(label="Номер отслеживания")

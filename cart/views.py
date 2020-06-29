@@ -68,10 +68,10 @@ def cart_detail(request):
     list_of_gift = Product.published.filter(available=False)
     gift = None
     sum_for_gift = cart.get_total_price()
-    balance = 3000 - sum_for_gift
+    balance = 2500 - sum_for_gift
     balance2 = 5000 - sum_for_gift
-    if 3000 <= sum_for_gift <= 5000:
-        gift = 3000
+    if 2500 <= sum_for_gift <= 5000:
+        gift = 2500
     elif sum_for_gift > 5000:
         gift = 5000
     # Проверяем находится ли подарок в корзине перебором

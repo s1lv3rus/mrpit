@@ -160,12 +160,13 @@ SOCIAL_AUTH_FACEBOOK_KEY = '214271759945865'
 SOCIAL_AUTH_FACEBOOK_SECRET = '2a0533fe60abe2631e7795bf377dad0b'
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
-LOGIN_REDIRECT_URL = 'shop:product_list'
+
+LOGIN_REDIRECT_URL = 'cart:cart_detail'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
 EMAIL_HOST = 'smtp.mrpit.online'
-EMAIL_HOST_USER = 'no-repeat@mrpit.online'
+EMAIL_HOST_USER = 'no-reply@mrpit.online'
 EMAIL_HOST_PASSWORD = 'adminmrpitS555556'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
@@ -175,4 +176,3 @@ if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-

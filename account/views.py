@@ -26,7 +26,7 @@ def user_login(request):
             if user:
                 if user.is_active:
                     login(request, user)
-                    return redirect('shop:index')
+                    return redirect('cart:cart_detail')
                 else:
                     messages.error(request, 'Аккаунт неактивен!')
                     context = locals()
@@ -70,9 +70,10 @@ def register(request):
                 return render(request, template, context)
             else:
                 new_user.save()
+                login(request, new_user, backend='django.contrib.auth.backends.ModelBackend')
+                messages.success(request, 'Спасибо за регистрацию на нашем сайте!')
                 context = locals()
-                template = 'account/register_done.html'
-                return render(request, template, context)
+                return redirect('cart:cart_detail')
     else:
         user_form = UserRegistrationForm()
     context = locals()
@@ -81,21 +82,18 @@ def register(request):
 
 
 @login_required
-def profile(request, username, success_url=None):
+def profile(request):
     [categories, suppliers, objectives, products_rec, offers] = list()
     orders = Order.published.filter(client=request.user)
+    # Если юзер авторизован, то находим его профиль иначе редиректим на форму входа на сайт
     if request.user.is_authenticated:
-        user = User.objects.get(username=username)
-        profile = Profile.published.get(user=user)
+        profile = Profile.published.get(user=request.user)
     else:
-        return redirect('register')
-    editable = False
-    if request.user.is_authenticated and request.user == user:
-        editable = True
+        return redirect('login')
+
     # блок для редактирования профиля
     if request.method == 'POST':
         user_form = UserProfileForm(request.POST, instance=profile)
-
         if user_form.is_valid():
             user_form.save()
             messages.success(request, 'Профиль успешно изменён')
@@ -104,4 +102,3 @@ def profile(request, username, success_url=None):
     context = locals()
     template = 'account/profile.html'
     return render(request, template, context)
-

@@ -64,10 +64,10 @@ class ProductResource(resources.ModelResource):
 
 class OrderAdmin(ImportExportModelAdmin):
     resource_class = ProductResource
-    list_display = ['id', 'first_name', 'last_name', 'email', 'city', 'phone', 'paid', 'get_total_cost', 'deliver_cost',
-                    'status', order_detail, 'comment', 'coupon', 'created']
+    list_display = ['id', 'city', 'paid', 'get_total_cost', 'deliver_cost',
+                    'status', order_detail, 'track_number', 'comment', 'coupon', 'created']
     list_filter = ['paid', 'created', 'updated', 'status']
-    list_editable = ['status']
+    list_editable = ['status', 'track_number']
     inlines = [OrderItemInline]
 
 

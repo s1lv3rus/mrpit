@@ -10,9 +10,11 @@ class LoginForm(forms.Form):
 
 
 class UserRegistrationForm(forms.ModelForm):
-    username = forms.RegexField(label='Логин', regex='^[a-zA-Z0-9]+$', error_messages={'invalid': ("Только символы "
-                                                                                                   "латинского "
-                                                                                                   "алфавита ")})
+    # регулярка только на латиницу
+    # username = forms.RegexField(label='Логин', regex='^[a-zA-Z0-9]+$', error_messages={'invalid': ("Только символы "
+    #                                                                                                "латинского "
+    #                                                                                                "алфавита ")})
+    username = forms.CharField(label='Логин')
     email = forms.EmailField(label='Email')
     password = forms.CharField(label='Пароль',
                                widget=forms.PasswordInput)

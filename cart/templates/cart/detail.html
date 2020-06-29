@@ -16,9 +16,9 @@
            </ul>
           {% endfor %}
          {% endif %}
-    <a href="{% url 'shop:index' %}">MrPiT.online</a> / Корзина <br><br>
+    <a href="{% url 'shop:index' %}">MrPiT.online</a> / Корзина товаров <br><br>
     {% if cart %}
-        <h2>Ваша корзина покупок</h2>
+        <h2>Ваша Корзина товаров</h2>
         <table id="cart_table">
             <tr>
                 <th>Изображение</th>
@@ -76,8 +76,8 @@
     {% endfor %}
 
     {% if gift_in_cart == False %}
-    {% if gift == 3000 or gift == 5000%}
-            {% if gift == 3000 %}
+    {% if gift == 2500 or gift == 5000%}
+            {% if gift == 2500 %}
                 <td> <text style="color:orange"> Выберите подарок:</text></td>
                 <form action="{% url 'cart:add_gift' %}" method="post">
                     <td class="td_product">
@@ -203,8 +203,8 @@
         {% endwith %}
         {% endfor %}
          {% if gift_in_cart == False %}
-         {% if gift == 3000 or gift == 5000%}
-            {% if gift == 3000 %}
+         {% if gift == 2500 or gift == 5000%}
+            {% if gift == 2500 %}
             <div class="gift_select">
                 <div>
                      <text> Выберите подарок:</text>
@@ -283,8 +283,7 @@
                 </tr>
             </table>
     </div>
-    {% if request.user.is_authenticated %}
-    <!--        <p class="check_coupon">Применить купон:</p>-->
+
         <div class="coupon_in_cart">
             <a href="#spoiler-open-1" id="spoiler-open-1" class="trigger open" >Купон на скидку</a>
             <a href="#spoiler-close-1" id="spoiler-close-1" class="trigger close">Х</a>
@@ -300,28 +299,30 @@
         <div class="check_cart">
             <p>
                 <a href="{% url 'shop:index' %}" class="button light">Продолжить покупки</a>
-                <a href="{% url 'orders:order_create' %}" class="button">Оформить заказ</a>
+                    {% if request.user.is_authenticated %}
+                         <a href="{% url 'orders:order_create' %}" class="button">Оформить заказ</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="button">Оформить заказ</a>
+                    {% endif %}
             </p>
          </div>
 
-            {% else %}
-               <br> <p style="text-align:right"> Для того, чтоб оформить заказ, просим Вас <a href="{% url 'login' %}">Авторизоваться на сайте</a></p>
-            {% endif %}
-    <p class="tovar_zakaz">*- Для заказа товара, который отсутствует на складе, воспользуйтесь инструкцией <a href="{% url 'orders:order' %}">Товары под заказ</a> </p>
+<!--               <br> <p style="text-align:right"> Для того, чтобы оформить заказ, просим Вас <a href="{% url 'login' %}">Авторизоваться на сайте</a></p>-->
+
+    <p class="tovar_zakaz">*- Для заказа товара, который отсутствует на складе, воспользуйтесь инструкцией
+        <a href="{% url 'orders:order' %}">Товары под заказ</a> </p>
 
     {% else %}
 
     {% if orders %}
         Внимание! У вас есть есть неоплаченные заказы.
-        Перейти в <a href="{% url 'profile' user.username %}">Личный кабинет</a><br><br>
-    {% endif%}
-    На данный момент Ваша корзина пуста.<br>
-    <p>Для того, чтобы выбрать товары по категориям, перейдите в раздел
-        <a href="{% url 'shop:product_list_by_category' 'protein' %}">Категории</a>
+        Перейти в <a href="{% url 'profile' %}">Личный кабинет</a><br><br>
+    {% endif %}
+    На данный момент Ваша корзина товаров пуста.<br>
+    <p>Мы подобрали спортивное питание под любую цель для Вас. Переходите по
+        <a href="{% url 'shop:objective_list' 'dlya-nachinayushih' %}">ссылке</a> и делайте заказ!
     </p><br>
-    <p>Вернуться на
-         <a href="{% url 'shop:index' %}">Главную</a>
-     </p>
+    <p>Вернуться на  <a href="{% url 'shop:index' %}">Главную</a> </p>
     {% endif %}
 
 </div>

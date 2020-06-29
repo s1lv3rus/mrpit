@@ -6,14 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <title>{% block title %}{% endblock %}</title>
+    <title>Карточка заказа</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/pdf.css' %}" media="all">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <title>  Заказ {{ order.id }}</title>
 <body>
 <div id="main">
-
   <h1><a href="#" onclick="window.print();">Заказ {{ order.id }}</a></h1>
 
   <table>
@@ -57,19 +56,47 @@
         <tbody>
           {% for item in order.items.all %}
             <tr>
-              <td>{{ item.flavour.product.name }} {{ item.flavour.name }} {{ item.flavour.product.size }}</td>
+              <td>({{ item.flavour.product.supplier }}){{ item.flavour.product.name }} {{ item.flavour.name }} {{ item.flavour.product.size }}</td>
               <td style="text-align:center">{{ item.price }} р.</td>
               <td>{{ item.quantity }}</td>
               <td>{{ item.get_cost }} </td>
             </tr>
           {% endfor %}
+          {% if order.coupon %}
+              <td> Купон: {{ order.coupon.code }} </td>
+              <td></td>
+              <td>- {{ order.coupon.discount }} % </td>
+              <td>- {{ order.discount_cost }} р. </td>
+          {% endif %}
           <tr>
             <td colspan="3">Итого</td>
             <td>{{ order.get_total_cost }} р.</td>
           </tr>
         </tbody>
-      </table><br><br>
-      <p>Подпись Покупателя ______________</p>
+      </table>
+    <br>
+    <p style="color:red"> Внимание! Операция отправляет письмо Клиенту. Проверьте номер отслеживания и заказ перед отправкой!</p>
+      <form action="." method="post" >
+            {% csrf_token %}
+          Номер отслеживания:
+          {% if order.track_number != '' %}
+            {{ order.track_number }}
+          {% else %}
+            Не заполнен
+          {% endif %}
+          <br>
+          <input type="text" required="True" placeholder="Введите номер" name="track_number">
+          <input type="submit" name="perm_form" value="Отправить данные Клиенту" style='background:green; color:white;'>
+      </form>
+    {% if messages %}
+      <ul class="messages">
+       {% for message in messages %}
+        <li class="{{ message.tags }}">
+          {{ message|safe }}
+            <a href="#" class="close">x</a>
+        </li>
+       {% endfor %}
+    {% endif %}
 </div>
 </body>
 </html>

@@ -41,6 +41,7 @@ class ObjectiveAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ["product", "author", "body", "date"]
+    list_editable = ['author', 'body']
 
 
 @admin.register(Article)
@@ -54,16 +55,21 @@ class NewsAdmin(admin.ModelAdmin):
     list_display = ["name", 'date']
 
 
+@admin.register(Subscribe)
+class NewsAdmin(admin.ModelAdmin):
+    list_display = ["product", 'email']
+
+
 @admin.register(Offer)
 class OfferAdmin(admin.ModelAdmin):
-    list_display = ['name', 'calc', 'sorting']
+    list_display = ['name', 'calc', 'sorting', 'date']
     prepopulated_fields = {'slug': ('name',)}
     list_editable = ['calc', 'sorting']
 
 
 @admin.register(Lead)
 class LeadAdmin(admin.ModelAdmin):
-    list_display = ['name', 'email']
+    list_display = ['name', 'email', 'created']
 
 
 class ProductResource(resources.ModelResource):
@@ -79,9 +85,9 @@ class FlavoursInLine(admin.StackedInline):
 
 class ProductAdmin(ImportExportModelAdmin):
     resource_class = ProductResource
-    list_display = ['name', 'size', 'supplier', 'category', 'subcategory', 'recommendation']
+    list_display = ['name', 'size', 'supplier', 'category', 'subcategory', 'recommendation', 'available']
     list_filter = ['available', 'category', 'supplier', 'created', 'updated']
-    list_editable = ['recommendation']
+    list_editable = ['recommendation', 'available']
     prepopulated_fields = {'slug': ('name',)}
     inlines = [FlavoursInLine, ]
 

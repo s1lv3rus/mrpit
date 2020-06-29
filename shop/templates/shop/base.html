@@ -11,19 +11,19 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/media.css' %}">
     <title>{% block title %}{% endblock %}</title>
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript" >
-       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-       m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+<!--    &lt;!&ndash; Yandex.Metrika counter &ndash;&gt;-->
+<!--    <script type="text/javascript" >-->
+<!--       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};-->
+<!--       m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})-->
+<!--       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");-->
 
-       ym(60753694, "init", {
-            clickmap:true,
-            trackLinks:true,
-            accurateTrackBounce:true,
-            webvisor:true
-       });
-    </script>
+<!--       ym(60753694, "init", {-->
+<!--            clickmap:true,-->
+<!--            trackLinks:true,-->
+<!--            accurateTrackBounce:true,-->
+<!--            webvisor:true-->
+<!--       });-->
+<!--    </script>-->
     <noscript><div><img src="https://mc.yandex.ru/watch/60753694" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 </head>
@@ -42,7 +42,7 @@
          </div>
         <div class="header_login">
             {% if request.user.is_authenticated %}
-              <a href="{% url 'profile' request.user %}">Личный кабинет</a>
+              <a href="{% url 'profile' %}">Личный кабинет</a>
               <a href="{% url 'logout' %}">Выйти</a>
             {% else %}
               <a href="{% url 'register' %}">Регистрация</a>
@@ -127,7 +127,7 @@
 
             <li><a href="{% url 'shop:delivery' %}"><i class="fa fa-truck" aria-hidden="true"></i>Доставка</a></li>
             <li><a href="{% url 'shop:payment' %}"><i class="fa fa-rub" aria-hidden="true"></i>Оплата</a></li>
-            <li><a href="{% url 'shop:info' %}"><i class="fa fa-info" aria-hidden="true"></i>Информация</a></li>
+            <li class="information"><a href="{% url 'shop:info' %}"><i class="fa fa-info" aria-hidden="true"></i>Информация</a></li>
             <li class="news"><a href="{% url 'shop:news' %}"><i class="fa fa-rss"></i>Новости</a></li>
        </ul>
       </nav>

@@ -2,11 +2,11 @@
 {% block title %} Отказ от заказа {% endblock %}
 {% block content %}
 <div id="main">
-    <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / <a href="{% url 'profile' user.username %}">Личный кабинет</a>
+    <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / <a href="{% url 'profile' %}">Личный кабинет</a>
     / Отказ от заказа</p>
 
     <p>Вы уверены, что хотите отказаться от заказа?</p>
     <a style="font-size:20px;" href="{% url 'orders:denied' order.id %}">Да </a>
-    <a style="font-size:20px;" href="{% url 'profile' username %}"> Нет</a>
+    <a style="font-size:20px;" href="{% url 'profile' %}"> Нет</a>
     </div>
 {% endblock %}
