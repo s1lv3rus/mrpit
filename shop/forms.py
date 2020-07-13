@@ -17,7 +17,8 @@ class AddComment(forms.ModelForm):
 class ContactForm(forms.Form):
     name = forms.CharField(label="Ваше имя", max_length=100,
                            widget=forms.TextInput(attrs={'size': '40', 'class': 'form-control'}))
-    email = forms.EmailField(label='email', widget=forms.TextInput(attrs={'size': '40', 'class': 'form-control'}))
+    email = forms.CharField(label='email', required=False, widget=forms.TextInput(attrs={'size': '40', 'class': 'form-control'}))
+    phone = forms.IntegerField(label='Номер телефона', required=False)
     message = forms.CharField(label='Сообщение', widget=forms.Textarea(attrs={'class': 'form-control'}))
 
 

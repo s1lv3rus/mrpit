@@ -27,8 +27,8 @@ def upload_path_purpose(instance, filename):
     return 'images/purpose/{}'.format(filename)
 
 
-# Подкатегория товара
 class SubCategory(models.Model):
+    """Подкатегория товара"""
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, unique=True)
     published = PublishedManager()
@@ -46,8 +46,8 @@ class SubCategory(models.Model):
         return products
 
 
-# Категория товара
 class Category(models.Model):
+    """Категория товара"""
     subcategories = models.ManyToManyField(SubCategory)
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, unique=True)
@@ -71,8 +71,8 @@ class Category(models.Model):
         return products
 
 
-# Поставщики
 class Supplier(models.Model):
+    """Поставщики"""
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, unique=True)
     image = ThumbnailerImageField(upload_to=upload_path_supplier, blank=True)
@@ -91,8 +91,8 @@ class Supplier(models.Model):
         return reverse('shop:product_list_by_supplier', args=[self.slug])
 
 
-# Товар
 class Product(models.Model):
+    """Продукт"""
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE, verbose_name='Категория')
     subcategory = models.ForeignKey(SubCategory, related_name='sub', on_delete=models.CASCADE,
                                     verbose_name='ПодКатегория')
@@ -152,6 +152,7 @@ class Product(models.Model):
 
 
 class Subscribe(models.Model):
+    """Подписка на закончившийся товар"""
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     published = PublishedManager()
     email = models.EmailField("Email")
@@ -165,8 +166,8 @@ class Subscribe(models.Model):
         return self.email
 
 
-# Пакеты предложений
 class Offer(models.Model):
+    """Предложения для покупателя"""
     name = models.CharField("Название предложения", max_length=100)
     slug = models.SlugField(max_length=100, db_index=True)
     products = models.ManyToManyField(Product)
@@ -197,8 +198,8 @@ class Offer(models.Model):
         return price
 
 
-# Цели покупателя
 class Objective(models.Model):
+    """Цели покупателея"""
     categories = models.ManyToManyField(Category, blank=True)
     offers = models.ManyToManyField(Offer, blank=True, related_name='offers')
     name = models.CharField(max_length=200, db_index=True)
@@ -219,8 +220,8 @@ class Objective(models.Model):
         return reverse('shop:objective_list', args=[self.slug])
 
 
-# Вкус у товара
 class Flavour(models.Model):
+    """Вкус у товара"""
     product = models.ForeignKey(Product, related_name='flavours', on_delete=models.CASCADE, verbose_name='Товар')
     name = models.CharField(max_length=200, db_index=True, verbose_name='Вкус')
     quantity = models.IntegerField(verbose_name='Количество')
@@ -264,8 +265,8 @@ class Flavour(models.Model):
     percent.short_description = 'Процент накрутки'
 
 
-# Коммент к товару
 class Comment(models.Model):
+    """Комментарий к товару"""
     product = models.ForeignKey(Product, related_name='comments', on_delete=models.CASCADE)
     author = models.ForeignKey(User, related_name='user', verbose_name="Пользователь",
                                on_delete=models.CASCADE)
@@ -285,8 +286,9 @@ class Comment(models.Model):
         profile = Profile.published.get(user=self.author)
         return profile.first_name + ' ' + profile.last_name
 
-# Статьи
+
 class Article(models.Model):
+    """Статьи о товарах"""
     name = models.CharField("Название статьи", max_length=100)
     slug = models.CharField(max_length=100)
     body = RichTextUploadingField()
@@ -304,8 +306,9 @@ class Article(models.Model):
         return reverse('shop:article', args=[self.slug])
 
 
-# Новости
+
 class News(models.Model):
+    """Новости магазина"""
     name = models.CharField("Название новости", max_length=100)
     body = RichTextUploadingField()
     date = models.DateTimeField("Дата написания")
@@ -321,15 +324,17 @@ class News(models.Model):
 
 
 class Lead(models.Model):
+    """Лиды"""
     name = models.CharField("Имя", max_length=100, default='Лид')
-    email = models.EmailField("Email")
+    email = models.EmailField("Email", blank=True, null=True)
+    phone = models.BigIntegerField(verbose_name='Номер телефона', blank=True, null=True)
     created = models.DateTimeField("Дата создания", auto_now_add=True)
     published = PublishedManager()
 
     class Meta:
-        ordering = ('email',)
+        ordering = ('-created',)
         verbose_name = "Лид"
         verbose_name_plural = "Лиды"
 
     def __str__(self):
-        return self.email
+        return self.name

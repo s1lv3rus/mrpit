@@ -47,6 +47,7 @@ class Order(models.Model):
                                    validators=[MinValueValidator(0),
                                                MaxValueValidator(100)], verbose_name='Скидка')
     comment = models.CharField(max_length=250, verbose_name='Комментарий к заказу', blank=True)
+    total_mass = models.IntegerField(default=2000,verbose_name='Масса заказа')
     published = PublishedManager()
 
     class Meta:

@@ -6,8 +6,8 @@
 {% block content %}
 
 <div id="main">
-    <a href="{% url 'shop:index' %}">MrPiT.online</a> / <a href="{% url 'shop:product_list_by_category' product.category.id %}">{{ product.category}}</a>
-    / <a href="{% url 'shop:product_list_by_supplier' product.supplier.id %}">{{ product.supplier}}</a>
+    <a href="{% url 'shop:index' %}">MrPiT.online</a> / <a href="{% url 'shop:product_list_by_category' product.category.slug %}">{{ product.category.name}}</a>
+    / <a href="{% url 'shop:product_list_by_supplier' product.supplier.slug %}">{{ product.supplier}}</a>
     / {{ product.name }} <br><br>
 
     {% if messages %}

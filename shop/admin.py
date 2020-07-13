@@ -31,13 +31,6 @@ class ObjectiveAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
-# @admin.register(Flavour)
-# class FlavourAdmin(admin.ModelAdmin):
-#     list_display = ['name', 'product', 'supplier', 'quantity', 'for_offer']
-#     list_filter = ['product', 'supplier', 'name', 'quantity']
-#     list_editable = ['quantity', 'for_offer']
-
-
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ["product", "author", "body", "date"]
@@ -69,7 +62,7 @@ class OfferAdmin(admin.ModelAdmin):
 
 @admin.register(Lead)
 class LeadAdmin(admin.ModelAdmin):
-    list_display = ['name', 'email', 'created']
+    list_display = ['name', 'phone', 'email', 'created']
 
 
 class ProductResource(resources.ModelResource):

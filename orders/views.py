@@ -1,6 +1,8 @@
 from django.core.mail import send_mail, EmailMessage
 from django.urls import reverse
 from django.shortcuts import render, redirect
+
+from Myshop.settings import RUSSIAN_POST_TOKEN, RUSSIAN_POST_KEY
 from .models import OrderItem, Order
 from .forms import *
 from cart.cart import Cart
@@ -47,17 +49,22 @@ def order_create(request):
         order.client = request.user
         order.status = 'Новый'
         order.save()
-        # Высчитываем массу и создаём объекты заказа в функции calc_total_mass
-        total_mass = calc_total_mass(cart, order)
+        # Высчитываем массу и создаём объекты заказа в функции calc_order_total_mass
+        order.total_mass = calc_order_total_mass(cart, order)
         cart.clear()
         # Пробуем получить стоимость доставки по API почты России. 
         try:
-            order.deliver_cost = russian_post_calc(postal_code=order.postal_code, mass=total_mass)
-        except:
-            # если пользователь ввёл неверный индекс, то просто считаем доставку до Белгорода,
-            # если Пермь, то по дефолту будет стоить 200р
+            # если Пермь, то по дефолту будет стоить 200р. Если другой  населенный пункт,
+            # то пробуем рассчитать через API почты
             if order.city != 'Пермь':
-                order.deliver_cost = russian_post_calc(postal_code='308000', mass=total_mass)
+                order.deliver_cost = russian_post_calc(postal_code=order.postal_code, mass=order.total_mass)
+        except:
+            try:
+                # если пользователь ввёл неверный индекс, то пробуем посчитать доставку до белгорода
+                order.deliver_cost = russian_post_calc(postal_code='308000', mass=order.total_mass)
+            except:
+                # если пользователь ввёл неверный индекс и API почты не работает, то ставим среднюю доставку 350 р
+                order.deliver_cost = 350
         order.save()
         messages.success(request, 'Заказ успешно создан.')
         messages.success(request, 'Оплатить заказ можно по форме ниже.')
@@ -85,12 +92,12 @@ def order_create(request):
                          'Наши соцсети ждут именно Вас:<br>' \
                          '<a href="https://vk.com/mrpit.online">Вконтакте</a><br>' \
                          '<a href="https://instagram.com/mrpit.online">Instagram</a>' \
-            .format(order.id, order.get_total_cost(), order.deliver_cost, total_mass)
+            .format(order.id, order.get_total_cost(), order.deliver_cost, order.total_mass)
         mail = EmailMessage(client_subject, сlient_message, mail_from, mail_to)
         mail.content_subtype = "html"
         mail.send()
         username = request.user.username
-        # redirect to lk
+        # перенаправляем пользователя в личный кабинет, где он сможет оплатить заказ
         return redirect('profile')
     else:
         form = OrderCreateForm(initial=data)
@@ -189,6 +196,7 @@ def repeat(request, order_id):
                                        postal_code=order.postal_code,
                                        phone=order.phone,
                                        city=order.city,
+                                       total_mass=order.total_mass,
                                        status='Новый',
                                        client=order.client,
                                        paid=False)
@@ -216,6 +224,7 @@ def repeat(request, order_id):
     mail_to = [order.email]
     сlient_message = 'Спасибо за Ваш заказ!<br>Номер заказа:{}<br>' \
                      'Стоимость заказа:{} р., Стоимость доставки:{} р.' \
+                     'Масса посылки с учетом упаковки:{} гр.<br>' \
                      'Оплатить заказ Вы можете на сайте в ' \
                      '<a href="https://mrpit.online/account">Личном Кабинете</a><br>' \
                      'После оплаты заказа мы начнём сборку. ' \
@@ -223,7 +232,7 @@ def repeat(request, order_id):
                      'Наши соцсети ждут именно Вас:<br>' \
                      '<a href="https://vk.com/mrpit.online">Вконтакте</a><br>' \
                      '<a href="https://instagram.com/mrpit.online">Instagram</a>' \
-        .format(order.id, order.get_total_cost(), order.deliver_cost)
+        .format(order.id, order.get_total_cost(), order.deliver_cost, order.total_mass)
     mail = EmailMessage(client_subject, сlient_message, mail_from, mail_to)
     mail.content_subtype = "html"
     mail.send()
@@ -231,8 +240,8 @@ def repeat(request, order_id):
 
 
 def russian_post_calc(postal_code, mass):
-    token = '5SHr_TxD2ZtxgxrlN6HI7Da_Jn4ajc5Y'
-    key = 'am9obl9rQGluYm94LnJ1OkdnNTU1NTU2'
+    token = RUSSIAN_POST_TOKEN
+    key = RUSSIAN_POST_KEY
     host = "https://otpravka-api.pochta.ru"
     request_headers = {
         "Content-Type": "application/json",
@@ -264,7 +273,7 @@ def russian_post_calc(postal_code, mass):
         return redirect('orders:create')
 
 
-def calc_total_mass(cart, order):
+def calc_order_total_mass(cart, order):
     mass = 0
     total_mass = 0
     for item in cart:

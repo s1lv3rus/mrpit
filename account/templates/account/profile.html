@@ -59,8 +59,10 @@
                     {% if order.status != 'Отказ' %}
                         Стоимость заказа: {{ order.get_total_cost }} р.
                         Доставка: {{ order.deliver_cost }} р.
-                         <a style="text-align:right" href="{% url 'payment:process' order.id %}" target="_blank">
-                             Оплатить {{ order.get_total_cost|add:order.deliver_cost }} р.</a>
+                        <form action="{% url 'payment:process' order.id %}" class="payment_form"  method="post">
+                            {% csrf_token %}
+                            <p><input type="submit" value="Оплатить"></p>
+                        </form>
                     {% endif %}
                 {% endif %}
 
@@ -72,7 +74,7 @@
                     <a href="{% url 'orders:deny' order.id %}">Отказаться от заказа Х</a>
                 {% endif %}{% endif %}
                 {% if order.paid == True %}
-                   <a href="{% url 'orders:repeat' order.id %}">Повторить заказ</a>
+                   <a href="{% url 'orders:repeat' order.id %}" style="color:green; font-size:20px;">Повторить заказ</a>
                 {% endif %}
 <!--                {% if order.status == 'Выполнен' and order.paid == True %}-->
 <!--                    <a href="{% url 'orders:repeat' order.id %}">Повторить заказ</a>-->

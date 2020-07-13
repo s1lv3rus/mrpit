@@ -1,5 +1,5 @@
 import datetime
-
+from Myshop.settings import YANDEX_ID, YANDEX_KEY, TEST_YANDEX_ID, TEST_YANDEX_KEY, RUSSIAN_POST_TOKEN, RUSSIAN_POST_KEY
 
 from django.core.mail import send_mail, EmailMessage
 from django.shortcuts import render, redirect
@@ -18,10 +18,10 @@ from django.http import HttpResponse
 
 
 def payment_process(*args, order_id):
-    Configuration.account_id = '679610'
-    Configuration.secret_key = 'live_wVEGUqZMuZd0dNd8ns_D833ejkVJs4lCD3Eu4PwgLUw'
-    # Configuration.account_id = '681662'
-    # Configuration.secret_key = 'test_u651SuGAV4prh_qhRk7OE1DvaboIciuK48ixpS7MBzg'
+    Configuration.account_id = YANDEX_ID
+    Configuration.secret_key = YANDEX_KEY
+    # Configuration.account_id = TEST_YANDEX_ID
+    # Configuration.secret_key = TEST_YANDEX_KEY
     order = Order.published.get(id=order_id)
     value = float(order.get_total_cost() + order.deliver_cost)
 
@@ -138,10 +138,11 @@ class YandexNotifications(APIView):
 def russian_post_create_delivery(order_id):
     order = Order.published.get(id=order_id)
 
+
     protocol = "https://"
     host = "otpravka-api.pochta.ru"
-    token = "5SHr_TxD2ZtxgxrlN6HI7Da_Jn4ajc5Y"
-    key = "am9obl9rQGluYm94LnJ1OkdnNTU1NTU2"
+    token = RUSSIAN_POST_TOKEN
+    key = RUSSIAN_POST_KEY
 
     request_headers = {
         "Content-Type": "application/json",
@@ -164,7 +165,7 @@ def russian_post_create_delivery(order_id):
         "place-to": order.city,
         "street-to": order.address,
         "house-to": "Заполнить номер дома и кв!",
-        "mass": 2000,
+        "mass": order.total_mass,
         "mail-category": "ORDINARY",
         "mail-type": "ONLINE_PARCEL",
         "order-num": order.id
@@ -172,10 +173,5 @@ def russian_post_create_delivery(order_id):
 
     url = protocol + host + path
 
-    response = requests.put(
-        url, headers=request_headers, data=json.dumps(new_orders)
-    )
+    requests.put(url, headers=request_headers, data=json.dumps(new_orders))
 
-    # with open('russian_post_delivery_log.txt', 'a') as outFile:
-    #     outFile.write('\nВремя отправки:{}, Код: {} Текст: {}'
-    #                   .format(datetime.datetime.now(), response.status_code, response.text))

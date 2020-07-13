@@ -5,16 +5,42 @@
 {% block content %}
 <div id="main">
     <p><a href="{% url 'shop:index' %}">MrPiT.online</a> / Форма обратной связи</p>
+
+        {% if messages %}
+      <ul class="messages">
+       {% for message in messages %}
+        <li class="{{ message.tags }}">
+          {{ message|safe }}
+            <a href="#" class="close">x</a>
+        </li>
+       {% endfor %}
+    {% endif %}
+
     <p>Уважаемые посетители нашего сайта! Всю доступную информацию Вы можете получить в блоке <a href="{% url 'shop:info' %}">Информация</a></p>
-    <p>Если у Вас остались вопросы, пожалуйста, заполните форму ниже:</p>
+    <p>Если у Вас остались вопросы или Вам необходима конслультация по товару, пожалуйста, оставьте свои контакные данные в форме ниже:</p>
     <form action="{% url 'shop:feedback' %}" class="decor" method="post">
       <div class="form-inner">
           <h3>Написать нам</h3>
           <label for="name">Тема:</label>
           <input id="name" name="name" placeholder="Ваше имя" required="True">
 
+          <div class="form_toggle">
+                <p style="color:black">Как с Вами связаться?</p>
+                <div class="form_toggle-item item-1">
+                    <input id="fid-1" type="radio" name="method_feedback" value="Телефон" checked>
+                    <label for="fid-1">Телефон</label>
+                </div>
+                <div class="form_toggle-item item-2">
+                    <input id="fid-2" type="radio" name="method_feedback" value="Email">
+                    <label for="fid-2">E-mail</label>
+                </div>
+          </div>
+
+          <input id="email" name="email" placeholder="Ваш e-mail" type="email">
           <label for="email">E-mail:</label>
-          <input id="email" name="email" placeholder="Ваш e-mail" required="True">
+
+          <input id="phone" name="phone" placeholder="Ваш номер телефона" type="number">
+          <label for="phone">Номер телефона:</label>
 
           <label for="message">Сообщение:</label>
           <textarea id="message" name="message" placeholder="Введите ваше сообщение" required="True"></textarea>
@@ -24,5 +50,18 @@
       </div>
     </form>
 </div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+    document.getElementById('email').style.display = 'none';
+    document.getElementById('fid-2').onclick = function() {
+        document.getElementById('email').style.display = 'block';
+        document.getElementById('phone').style.display = 'none';
+      }
+    document.getElementById('fid-1').onclick = function() {
+        document.getElementById('phone').style.display = 'block';
+        document.getElementById('email').style.display = 'none';
+      }
+</script>
 
 {% endblock %}

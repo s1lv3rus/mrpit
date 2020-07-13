@@ -92,7 +92,10 @@ a.button.light {
     right:20px;
     text-align:right;
 }
-
+.consultation {
+    color: silver;
+    margin-right:150px;
+}
 #subheader{
 	display: flex;
 	/* Распределяем элементы внутри шапки */
@@ -1332,7 +1335,6 @@ width: 4px;
   opacity: 0;
   visibility: hidden;
   transform: translate3d(0,10px,0);
-  transition: .5s ease-out;
   transform-origin: 0% 0%;
   width: 900px;
 }
@@ -1705,7 +1707,9 @@ button {
 .form_toggle {
 	display: inline-block;
 	overflow: hidden;
+	margin-left:5px;
 }
+
 .form_toggle-item {
 	float: left;
 	display: inline-block;
@@ -1715,6 +1719,7 @@ button {
 }
 .form_toggle-item label {
 	display: inline-block;
+	color:black;
 	padding: 0 15px;
 	line-height: 34px;
 	border: 1px solid #999;
@@ -1814,4 +1819,12 @@ button {
 
 .comment_form input[type=submit]{
     margin-top:10px;
+}
+.payment_form {
+    position: relative;
+    margin: 0 auto;
+}
+.payment_form input {
+    font-size:15px;
+    width:150px;
 }

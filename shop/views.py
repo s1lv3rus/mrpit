@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views import View
 
+from Myshop.settings import RUSSIAN_POST_TOKEN, RUSSIAN_POST_KEY
 from orders.forms import IndexForm
 from .forms import *
 from .models import *
@@ -48,15 +49,6 @@ def product_list_by_category(request, category_slug):
     return render(request, template, context)
 
 
-def product_list_by_category_id(request, category_id):
-    [categories, suppliers, objectives, products_rec, offers] = list()
-    category = Category.published.get(id=category_id)
-    subcategories = Category.published.get(id=category_id).subcategories.all()
-    template = 'shop/product/products_by_category.html'
-    context = locals()
-    return render(request, template, context)
-
-
 def product_list_by_supplier(request, supplier_slug):
     [categories, suppliers, objectives, products_rec, offers] = list()
     supplier = Supplier.published.get(slug=supplier_slug)
@@ -65,14 +57,6 @@ def product_list_by_supplier(request, supplier_slug):
     context = locals()
     return render(request, template, context)
 
-
-def product_list_by_supplier_id(request, supplier_id):
-    [categories, suppliers, objectives, products_rec, offers] = list()
-    supplier = Supplier.published.get(id=supplier_id)
-    products = supplier.products_s.all()
-    template = 'shop/product/products_by_supplier.html'
-    context = locals()
-    return render(request, template, context)
 
 
 def product_detail(request, slug):
@@ -148,9 +132,8 @@ def info(request):
 
 def delivery(request):
     [categories, suppliers, objectives, products_rec, offers] = list()
-    token = '5SHr_TxD2ZtxgxrlN6HI7Da_Jn4ajc5Y'
-    key = 'am9obl9rQGluYm94LnJ1OkdnNTU1NTU2'
-
+    token = RUSSIAN_POST_TOKEN
+    key = RUSSIAN_POST_KEY
     host = "https://otpravka-api.pochta.ru"
 
     request_headers = {
@@ -211,12 +194,24 @@ def feedback(request):
         # Если форма заполнена корректно, сохраняем все введённые пользователем значения
         if form.is_valid():
             name = form.cleaned_data['name']
-            sender = form.cleaned_data['email']
             message = form.cleaned_data['message']
+            sender = 'no-reply@mrpit.online'
+            # Если пользователь указал номер телефона, то записываем его в сообщении администратору, добавляем лида с номером
+            if form.cleaned_data['phone']:
+                phone = form.cleaned_data['phone']
+                message += '\nНомер телефона:{}'.format(phone)
+                Lead.published.create(phone=phone, name=name)
+            # Если пользователь указал почту, то создаем лида с почтой
+            else:
+                email = form.cleaned_data['email']
+                message += '\nEmail:{}'.format(email)
+                Lead.published.create(email=email, name=name)
+
             send_mail(name, message, sender, ['admin@mrpit.online'])
-            new_lead = Lead.published.create(email=sender, name=name)
             # Переходим на другую страницу, если сообщение отправлено
             return redirect('shop:thanks')
+        else:
+            messages.error(request, 'Неверные данные формы. Попробуйте еще раз')
     else:
         form = ContactForm()
     template = 'shop/feedback.html'

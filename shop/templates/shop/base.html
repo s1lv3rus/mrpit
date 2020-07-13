@@ -24,8 +24,8 @@
 <!--            webvisor:true-->
 <!--       });-->
 <!--    </script>-->
-    <noscript><div><img src="https://mc.yandex.ru/watch/60753694" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
+<!--    <noscript><div><img src="https://mc.yandex.ru/watch/60753694" style="position:absolute; left:-9999px;" alt="" /></div></noscript>-->
+<!--    &lt;!&ndash; /Yandex.Metrika counter &ndash;&gt;-->
 </head>
 <body>
 
@@ -40,7 +40,12 @@
                  ᴍʀᴘɪᴛ.ᴏɴʟɪɴᴇ
              </a>
          </div>
+
+
         <div class="header_login">
+            <text class="consultation"> Нужна консультация? Оставьте свои контактные данные в
+            <a href="{% url 'shop:feedback' %}">форме</a> и мы перезвоним в этот же день!</text>
+
             {% if request.user.is_authenticated %}
               <a href="{% url 'profile' %}">Личный кабинет</a>
               <a href="{% url 'logout' %}">Выйти</a>
@@ -184,8 +189,8 @@
                         <label>Ваше Имя
                             <input id="name" class="txt" name="name" type="name" required="True" />
                         </label>
-                        <label>Ваш Email
-                            <input id="email" class="txt" name="email" type="email" required="True" />
+                        <label>Ваш Телефон или Email
+                            <input id="email" class="txt" name="email" required="True" />
                         </label>
                         <label>Текст сообщения
                             <textarea id="message" class="txtarea" name="message" required="True"></textarea>
